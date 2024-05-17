@@ -5,9 +5,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: fixed;
 
 }
 .p{
+
     cursor: pointer;
     background-color:#4483FD;
     color: white;

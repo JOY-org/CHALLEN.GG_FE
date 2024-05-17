@@ -17,11 +17,12 @@ import axios from 'axios';
 
 export default function SignUp() {
     const{
-        register, 
-        handleSubmit, 
+        register,
+        handleSubmit,
         formState:{isSubmitting, isSubmitted, errors},
         getValues
-    } = useForm() 
+    } = useForm()
+
 
     const navigate = useNavigate()
 
@@ -72,10 +73,11 @@ export default function SignUp() {
             <Typography component="h1" variant="h5">
                 회원가입
             </Typography>
-            <Box component="form" 
-                onSubmit={handleSubmit(onRegist)} 
-                
-                noValidate 
+
+            <Box component="form"
+                onSubmit={handleSubmit(onRegist)}
+
+                noValidate
                 sx={{ mt: 1 }}
             >
                 <TextField
@@ -86,13 +88,13 @@ export default function SignUp() {
                     id="id"
                     label="아이디"
                     name="id"
-                    {...register("id", 
-                                {   
+                    {...register("id",
+                                {
                                     required: '아이디는 필수 입력입니다.',
-                                    pattern: { 
-                                        value: /^[a-z0-9_-]{5,20}$/, 
-                                        message: "5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다." 
-                                    } 
+                                    pattern: {
+                                        value: /^[a-z0-9_-]{5,20}$/,
+                                        message: "5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다."
+                                    }
                                 }
                             )}
                             error={errors.id ? true : false}
@@ -109,13 +111,13 @@ export default function SignUp() {
                             fullWidth
                             id="password"
                             label="비밀번호"
-                            {...register("password", 
-                                {   
+                            {...register("password",
+                                {
                                     required: '비밀번호는 필수 입력입니다.',
-                                    pattern: { 
-                                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/, 
-                                        message: "8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요." 
-                                    } 
+                                    pattern: {
+                                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/,
+                                        message: "8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요."
+                                    }
                                 }
                             )}
                             error={errors.password ? true : false}
@@ -132,8 +134,8 @@ export default function SignUp() {
                             id="passwordCheck"
                             label="비밀번호 확인"
                             name="passwordCheck"
-                            {...register("passwordCheck", 
-                                {   
+                            {...register("passwordCheck",
+                                {
                                     required: '비밀번호는 필수 입력입니다.',
                                     validate: (e) => {
                                         if (e === getValues('password')) {
