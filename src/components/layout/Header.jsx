@@ -11,6 +11,8 @@ import Message from "../Message";
 import Banner from "../Banner";
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import SwipeableEdgeDrawer from "../AlarmDrawer"
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 //styleHeader.HeaderClass:헤더 전체
 //logo:challen.gg 로고
 
@@ -97,10 +99,23 @@ const Header = () => {
                         onClick={() => goToMenu('/shopping')}
                     />}
                 />
-                <BottomNavigationAction
+                {/* <BottomNavigationAction
                     label="Logout"
                     value="Logout"
-                    icon={<LogoutIcon />} />
+                    icon={<LogoutIcon />} /> */}
+                <BottomNavigationAction
+                    label="SignIn"
+                    value="SignIn"
+                    icon={<ExitToAppIcon
+                        onClick={() => goToMenu('/signin')}
+                    />}
+                />
+                <BottomNavigationAction
+                    label="SignUp"
+                    value="SignUp"
+                    icon={< VpnKeyIcon
+                        onClick={() => goToMenu('/signup')}
+                        />} />
                 </BottomNavigation>
         </div>
         <SwipeableEdgeDrawer openDrawer={openDrawer} toggleDrawer={toggleDrawer} />
