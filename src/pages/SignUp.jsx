@@ -19,19 +19,21 @@ export default function SignUp() {
     const{
         register,
         handleSubmit,
-        formState:{isSubmitting, isSubmitted, errors}
+        formState:{isSubmitting, isSubmitted, errors},
+        getValues
     } = useForm()
+
 
     const navigate = useNavigate()
 
     const onRegist = (async (data) => {
-        const { email, nickname, password, passwordCheck } = data
+        const { id, nickname, password, passwordCheck } = data
         try {
-            if (email && nickname && password && passwordCheck && (password === passwordCheck)) {
+            if (id && nickname && password && passwordCheck && (password === passwordCheck)) {
                 const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/join`, {
-                    email,
-                    nickname,
-                    password
+                    id,
+                    password,
+                    nickname
                 })
                 if (res.data.code === 200) {
                     Swal.fire({
@@ -41,7 +43,7 @@ export default function SignUp() {
                     });
                     navigate('/');
                 } else {
-                    throw new Error(res.data.message);
+                    throw new Error('알 수 없는 에러');
                 }
             } else {
                 throw new Error("입력값을 확인해주세요");
@@ -49,12 +51,11 @@ export default function SignUp() {
         } catch (err) {
             Swal.fire({
                 title: "에러 발생",
-                text: err.message,
+                text: err.response.data? err.response.data.message : '알 수 없는 에러',
                 icon: "error"
             });
         }
     });
-
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -72,8 +73,10 @@ export default function SignUp() {
             <Typography component="h1" variant="h5">
                 회원가입
             </Typography>
+
             <Box component="form"
                 onSubmit={handleSubmit(onRegist)}
+
                 noValidate
                 sx={{ mt: 1 }}
             >
@@ -82,44 +85,48 @@ export default function SignUp() {
                     margin="normal"
                     required
                     fullWidth
-                    id="userId"
+                    id="id"
                     label="아이디"
-                    name="userId"
-                    {...register("userId",
+                    name="id"
+                    {...register("id",
                                 {
+                                    required: '아이디는 필수 입력입니다.',
                                     pattern: {
                                         value: /^[a-z0-9_-]{5,20}$/,
                                         message: "5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다."
                                     }
                                 }
                             )}
-                            error={errors.userPassword ? true : false}
-                            helperText={errors.userPassword && "아이디는 필수 입력값입니다."}
+                            error={errors.id ? true : false}
+                            helperText={errors.id && errors.id.message}
                 />
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                         <TextField
+                            type='password'
                             autoComplete="off"
                             margin="normal"
-                            name="userPassword"
+                            name="password"
                             required
                             fullWidth
-                            id="userPassword"
+                            id="password"
                             label="비밀번호"
-                            {...register("userPassword",
+                            {...register("password",
                                 {
+                                    required: '비밀번호는 필수 입력입니다.',
                                     pattern: {
                                         value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/,
                                         message: "8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요."
                                     }
                                 }
                             )}
-                            error={errors.userPassword ? true : false}
-                            helperText={errors.userPassword && "비밀번호는 필수 입력값입니다."}
+                            error={errors.password ? true : false}
+                            helperText={errors.password && errors.password.message}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField
+                            type='password'
                             autoComplete="off"
                             margin="normal"
                             required
@@ -127,6 +134,20 @@ export default function SignUp() {
                             id="passwordCheck"
                             label="비밀번호 확인"
                             name="passwordCheck"
+                            {...register("passwordCheck",
+                                {
+                                    required: '비밀번호는 필수 입력입니다.',
+                                    validate: (e) => {
+                                        if (e === getValues('password')) {
+                                            return true
+                                        } else {
+                                            return "비밀번호 입력값과 같아야 합니다."
+                                        }
+                                    }
+                                }
+                            )}
+                            error={errors.passwordCheck ? true : false}
+                            helperText={errors.passwordCheck && errors.passwordCheck.message}
                         />
                     </Grid>
                 </Grid>
@@ -135,22 +156,24 @@ export default function SignUp() {
                     margin="normal"
                     required
                     fullWidth
-                    id="userNickName"
+                    id="nickname"
                     label="닉네임"
-                    name="userNickName"
-                    {...register('username',
+                    name="nickname"
+                    {...register('nickname',
                         {
                             required: '닉네임은 필수 입력입니다.',
-                            maxLength: {
-                                value: 8,
-                                message: '8자리 이하 아이디를 사용하세요.'
-                            },
                             minLength: {
                                 value: 2,
-                                message: '2자리 이상 아이디를 사용하세요.'
+                                message: '2자리 이상 닉네임을 사용하세요.'
+                            },
+                            maxLength: {
+                                value: 10,
+                                message: '10자리 이하 닉네임을 사용하세요.'
                             }
                         }
                     )}
+                    error={errors.nickname ? true : false}
+                    helperText={errors.nickname && errors.nickname.message}
                 />
                 <Button
                     type="submit"

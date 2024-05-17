@@ -46,8 +46,6 @@ export default function SignIn() {
                     id="userId"
                     label="아이디"
                     name="userId"
-                    autoComplete="userId"
-                    autoFocus
                 />
                 <TextField
                     margin="normal"
@@ -57,7 +55,6 @@ export default function SignIn() {
                     label="비밀번호"
                     type="password"
                     id="password"
-                    autoComplete="current-password"
                 />
                 <Button
                     type="submit"
