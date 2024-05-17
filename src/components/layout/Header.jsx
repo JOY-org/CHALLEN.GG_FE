@@ -70,7 +70,7 @@ const Header = () => {
         <div className={styleHeader.HeaderClass}>
             <h1 id={styleHeader['logo']}
                 onClick={() => goToMenu('/')}
-            >challen.gg</h1>
+            >CHALLEN.GG</h1>
 
             <BottomNavigation sx={{ width: 700 , backgroundColor:'#4483FD' }} value={value} onChange={handleChange}>
             <BottomNavigationAction
@@ -110,12 +110,6 @@ const Header = () => {
                         onClick={() => goToMenu('/signin')}
                     />}
                 />
-                <BottomNavigationAction
-                    label="SignUp"
-                    value="SignUp"
-                    icon={< VpnKeyIcon
-                        onClick={() => goToMenu('/signup')}
-                        />} />
                 </BottomNavigation>
         </div>
         <SwipeableEdgeDrawer openDrawer={openDrawer} toggleDrawer={toggleDrawer} />
