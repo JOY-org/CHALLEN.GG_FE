@@ -41,7 +41,7 @@ export default function SignUp() {
                         text: res.data.message,
                         icon: "success"
                     });
-                    navigate('/');
+                    navigate('/signin');
                 } else {
                     throw new Error('알 수 없는 에러');
                 }
