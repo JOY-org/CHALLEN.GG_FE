@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const useProvideAuth = () => {
     const [loginUser, setLoginUser] = useState({
-        id: localStorage.getItem('userId'),
+        id: localStorage.getItem('userId'), // 아이디가 그대로 노출된다
         token : localStorage.getItem("token")
     });
 
@@ -14,17 +14,17 @@ export const useProvideAuth = () => {
                 data
             );
             if (response.data.code === 200) {
-                const id = response.data.userId;
+                const id = response.data.userid;
                 const token = response.data.accessToken;
-                localStorage.setItem('userId', id);
+                localStorage.setItem('userId', id); // userId라는 키로 id 값을 저장하는 역할
                 localStorage.setItem('token', token); 
                 setLoginUser({
                     id, token
                 });
             }
-            callback(response);
+            // callback();
         } catch (error) {
-            console.error(error);
+            callback();
         }
     }
 

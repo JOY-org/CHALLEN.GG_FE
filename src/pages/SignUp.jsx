@@ -21,7 +21,7 @@ export default function SignUp() {
         handleSubmit,
         formState:{isSubmitting, isSubmitted, errors},
         getValues
-    } = useForm()
+    } = useForm({mode: 'onChange'})
 
 
     const navigate = useNavigate()
@@ -89,16 +89,17 @@ export default function SignUp() {
                     label="아이디"
                     name="id"
                     {...register("id",
-                                {
-                                    required: '아이디는 필수 입력입니다.',
-                                    pattern: {
-                                        value: /^[a-z0-9_-]{5,20}$/,
-                                        message: "5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다."
-                                    }
+                            {
+                                required: '아이디는 필수 입력입니다.',
+                                pattern: {
+                                    value: /^[a-z0-9_-]{5,20}$/,
+                                    message: "5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다."
                                 }
-                            )}
-                            error={errors.id ? true : false}
-                            helperText={errors.id && errors.id.message}
+                            }
+                        )
+                    }
+                    error={errors.id ? true : false}
+                    helperText={errors.id && errors.id.message}
                 />
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
