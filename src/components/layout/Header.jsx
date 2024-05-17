@@ -10,6 +10,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import Message from "../Message";
 import Banner from "../Banner";
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import SwipeableEdgeDrawer from "../AlarmDrawer"
 //styleHeader.HeaderClass:헤더 전체
 //logo:challen.gg 로고
 
@@ -55,8 +56,10 @@ const Header = () => {
 
     const [openDrawer, setOpenDrawer] = useState(false);
 
+
     const toggleDrawer = () => {
         setOpenDrawer(!openDrawer); // 알람 창 열기/닫기 토글
+        console.log(setOpenDrawer);
     };
 
     return (
@@ -100,6 +103,7 @@ const Header = () => {
                     icon={<LogoutIcon />} />
                 </BottomNavigation>
         </div>
+        <SwipeableEdgeDrawer openDrawer={openDrawer} toggleDrawer={toggleDrawer} />
         </>
     );
 }

@@ -21,10 +21,11 @@ export default function SignIn() {
     };
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="xs" >
             <CssBaseline />
             <Box
                 sx={{
+                height:'70vh',
                 marginTop: 8,
                 display: 'flex',
                 flexDirection: 'column',

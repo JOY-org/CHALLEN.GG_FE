@@ -32,15 +32,10 @@ const Puller = styled('div')(({ theme }) => ({
   left: 'calc(50% - 15px)',
 }));
 
-function SwipeableEdgeDrawer({setOpenDrawer}) {
-  const [open, setOpen] = useState(false); // Drawer 열기/닫기 상태
+function SwipeableEdgeDrawer({openDrawer,toggleDrawer}) {
 
-  const toggleDrawer = (newOpen) => () => {
-    setOpen(newOpen);
-    setOpenDrawer(newOpen); // 상위 컴포넌트의 상태 업데이트
-  };
   return (
-    <Root>
+    <Root >
       <CssBaseline />
       <Global
         styles={{
@@ -50,15 +45,11 @@ function SwipeableEdgeDrawer({setOpenDrawer}) {
           },
         }}
       />
-      <Box sx={{ textAlign: 'center', pt: 1 }}>
-        <Button onClick={toggleDrawer(true)}>Open</Button>
-      </Box>
       <SwipeableDrawer
-        container={container}
-        anchor="bottom"
-        open={open}
-        onClose={toggleDrawer(false)}
-        onOpen={toggleDrawer(true)}
+        open={openDrawer}
+        onClose={()=>{toggleDrawer(true)}}
+        onOpen={()=>{toggleDrawer(true)}}
+
         swipeAreaWidth={drawerBleeding}
         disableSwipeToOpen={false}
         ModalProps={{

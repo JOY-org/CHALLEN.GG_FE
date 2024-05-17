@@ -17,10 +17,10 @@ import axios from 'axios';
 
 export default function SignUp() {
     const{
-        register, 
-        handleSubmit, 
+        register,
+        handleSubmit,
         formState:{isSubmitting, isSubmitted, errors}
-    } = useForm() 
+    } = useForm()
 
     const navigate = useNavigate()
 
@@ -72,9 +72,9 @@ export default function SignUp() {
             <Typography component="h1" variant="h5">
                 회원가입
             </Typography>
-            <Box component="form" 
-                onSubmit={handleSubmit(onRegist)} 
-                noValidate 
+            <Box component="form"
+                onSubmit={handleSubmit(onRegist)}
+                noValidate
                 sx={{ mt: 1 }}
             >
                 <TextField
@@ -85,12 +85,12 @@ export default function SignUp() {
                     id="userId"
                     label="아이디"
                     name="userId"
-                    {...register("userId", 
+                    {...register("userId",
                                 {
-                                    pattern: { 
-                                        value: /^[a-z0-9_-]{5,20}$/, 
-                                        message: "5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다." 
-                                    } 
+                                    pattern: {
+                                        value: /^[a-z0-9_-]{5,20}$/,
+                                        message: "5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다."
+                                    }
                                 }
                             )}
                             error={errors.userPassword ? true : false}
@@ -106,12 +106,12 @@ export default function SignUp() {
                             fullWidth
                             id="userPassword"
                             label="비밀번호"
-                            {...register("userPassword", 
+                            {...register("userPassword",
                                 {
-                                    pattern: { 
-                                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/, 
-                                        message: "8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요." 
-                                    } 
+                                    pattern: {
+                                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/,
+                                        message: "8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요."
+                                    }
                                 }
                             )}
                             error={errors.userPassword ? true : false}

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../components/css_module/Message.module.css';
+import styles from '../components/css_module/Banner.module.css';
 const Banner = () => {
     return (
             <span className='first'>
