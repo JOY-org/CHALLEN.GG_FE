@@ -22,15 +22,15 @@ const StyledBox = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'light' ? '#fff' : grey[800],
 }));
 
-const Puller = styled('div')(({ theme }) => ({
-  width: 30,
-  height: 6,
-  backgroundColor: theme.palette.mode === 'light' ? grey[300] : grey[900],
-  borderRadius: 3,
-  position: 'absolute',
-  top: 8,
-  left: 'calc(50% - 15px)',
-}));
+// const Puller = styled('div')(({ theme }) => ({
+//   width: 30,
+//   height: 6,
+//   backgroundColor: theme.palette.mode === 'light' ? grey[300] : grey[900],
+//   borderRadius: 3,
+//   position: 'absolute',
+//   top: 8,
+//   left: 'calc(50% - 15px)',
+// }));
 
 function SwipeableEdgeDrawer({openDrawer,toggleDrawer}) {
 
@@ -40,7 +40,9 @@ function SwipeableEdgeDrawer({openDrawer,toggleDrawer}) {
       <Global
         styles={{
           '.MuiDrawer-root > .MuiPaper-root': {
-            height: `calc(50% - ${drawerBleeding}px)`,
+            height: '100%',
+            //`calc(50% - ${drawerBleeding}px)`
+            width:'400px',
             overflow: 'visible',
           },
         }}
@@ -49,7 +51,6 @@ function SwipeableEdgeDrawer({openDrawer,toggleDrawer}) {
         open={openDrawer}
         onClose={()=>{toggleDrawer(true)}}
         onOpen={()=>{toggleDrawer(true)}}
-
         swipeAreaWidth={drawerBleeding}
         disableSwipeToOpen={false}
         ModalProps={{
@@ -57,8 +58,8 @@ function SwipeableEdgeDrawer({openDrawer,toggleDrawer}) {
         }}
       >
         <StyledBox
+        //회색박스
           sx={{
-            position: 'absolute',
             top: -drawerBleeding,
             borderTopLeftRadius: 8,
             borderTopRightRadius: 8,
@@ -67,8 +68,7 @@ function SwipeableEdgeDrawer({openDrawer,toggleDrawer}) {
             left: 0,
           }}
         >
-          <Puller />
-          <Typography sx={{ p: 2, color: 'text.secondary' }}>51 results</Typography>
+          <Typography sx={{ p: 2, color: 'text.secondary' }}>My Message</Typography>
         </StyledBox>
         <StyledBox
           sx={{

@@ -7,10 +7,10 @@ import PeopleIcon from '@mui/icons-material/People';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import LogoutIcon from '@mui/icons-material/Logout';
-import Message from "../Message";
 import Banner from "../Banner";
+import AdMessage from "../AdMessage";
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import SwipeableEdgeDrawer from "../AlarmDrawer"
+import SwipeableEdgeDrawer from "../MyMessage"
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 //styleHeader.HeaderClass:헤더 전체
@@ -66,11 +66,11 @@ const Header = () => {
 
     return (
         <>
-        <Message ><Banner /></Message>
+        <Banner ><AdMessage /></Banner>
         <div className={styleHeader.HeaderClass}>
             <h1 id={styleHeader['logo']}
                 onClick={() => goToMenu('/')}
-            >challen.gg</h1>
+            >CHALLEN.GG</h1>
 
             <BottomNavigation sx={{ width: 700 , backgroundColor:'#4483FD' }} value={value} onChange={handleChange}>
             <BottomNavigationAction
@@ -110,12 +110,6 @@ const Header = () => {
                         onClick={() => goToMenu('/signin')}
                     />}
                 />
-                <BottomNavigationAction
-                    label="SignUp"
-                    value="SignUp"
-                    icon={< VpnKeyIcon
-                        onClick={() => goToMenu('/signup')}
-                        />} />
                 </BottomNavigation>
         </div>
         <SwipeableEdgeDrawer openDrawer={openDrawer} toggleDrawer={toggleDrawer} />
