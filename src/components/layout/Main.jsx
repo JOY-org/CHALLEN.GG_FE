@@ -1,8 +1,10 @@
+import { Box } from "@mui/material";
+
 const Main = ({children}) => {
-    return ( 
-        <>
+    return (
+        <Box sx={{minHeight: "calc(90vh - 100px)"}}>
             {children}
-        </>
+        </Box>
     );
 }
 

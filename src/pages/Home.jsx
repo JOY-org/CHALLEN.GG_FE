@@ -1,8 +1,8 @@
 import styleHome from "../components/css_module/Home.module.css"
 import Challenge from "../components/Challenge";
-import Ranker from "./Ranker";
+import Ranker from "../components/Ranker";
 import { Children, useEffect, useState } from "react";
-import ChallengeModal from "./ChallengeModal";
+import ChallengeModal from "../components/ChallengeModal";
 import Btn from "../components/Btn";
 
 
