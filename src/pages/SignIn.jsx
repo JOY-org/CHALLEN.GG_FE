@@ -12,10 +12,18 @@ import Container from '@mui/material/Container';
 import Swal from 'sweetalert2';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function SignIn() {
     const {loginUser, login, logout} = useAuth();
-    
+    const navigate = useNavigate();
+
+    // 로그인 성공시 홈으로 가는 Navi
+    const handleLoginSuccess = () => {
+        navigate('/MyPage');
+    };
+
     const {
         register,
         handleSubmit,
@@ -35,7 +43,7 @@ export default function SignIn() {
         }
     });
 
-    const onSubmit = (data) => {
+    const  onSubmit = (data) => {
         login(() => {
             Toast.fire({
                     icon: "error",
@@ -44,6 +52,8 @@ export default function SignIn() {
                 });
         }, data)
         reset();
+        // 성공시 호출
+        handleLoginSuccess();
     };
 
     const handleLogout = () => {
@@ -80,7 +90,7 @@ export default function SignIn() {
                     id="id"
                     label="아이디"
                     name="id"
-                    {...register("id", 
+                    {...register("id",
                         {
                             required: '아이디는 필수 입력입니다.'
                         }
@@ -96,9 +106,9 @@ export default function SignIn() {
                     label="비밀번호"
                     type="password"
                     id="password"
-                    {...register("password", 
-                        { 
-                            required: '비밀번호는 필수 입력입니다.' 
+                    {...register("password",
+                        {
+                            required: '비밀번호는 필수 입력입니다.'
                         }
                     )}
                     error={errors.password ? true : false}
@@ -109,6 +119,7 @@ export default function SignIn() {
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
+                    // onClick={handleNavi}
                 >
                     로그인
                 </Button>
