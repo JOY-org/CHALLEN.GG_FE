@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
-import styleHome from "./css_module/Home.module.css"
+import  styleHome  from "../../../components/css_module/Home.module.css";
 import { RiStarSmileFill } from "react-icons/ri"
 import { useState } from "react";
 import { Height } from '@mui/icons-material';
