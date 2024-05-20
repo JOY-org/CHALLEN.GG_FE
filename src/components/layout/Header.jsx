@@ -15,6 +15,7 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';//로그인아이콘
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import { useAuth } from "../../hooks/useAuth";
 import { Nightlife } from "@mui/icons-material";
+import Swal from "sweetalert2";
 //styleHeader.HeaderClass:헤더 전체
 //logo:challen.gg 로고
 
@@ -67,6 +68,28 @@ const Header = () => {
         setOpenDrawer(!openDrawer); // 알람 창 열기/닫기 토글
     };
 
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
+
+    const handleLogout = () => {
+        logout(() => {
+            Toast.fire({
+                icon: "success",
+                title: "안녕히가세요."
+            })
+            goToMenu('/')
+        });
+    }
+
     return (
         <>
         {/* 최상단 광고배너 */}
@@ -92,7 +115,7 @@ const Header = () => {
                             icon={m.icon?<m.icon />: null}
                             onClick={
                                 m.path === '/logout'?
-                                    ()=>logout(()=>{goToMenu('/')})
+                                    ()=>handleLogout()
                                     :
                                     m.label === '마이메세지' ? toggleDrawer :()=>goToMenu(m.path)
                             }

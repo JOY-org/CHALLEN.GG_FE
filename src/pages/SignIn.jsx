@@ -19,11 +19,6 @@ export default function SignIn() {
     const {loginUser, login, logout} = useAuth();
     const navigate = useNavigate();
 
-    // 로그인 성공시 홈으로 가는 Navi
-    const handleLoginSuccess = () => {
-        navigate('/MyPage');
-    };
-
     const {
         register,
         handleSubmit,
@@ -35,7 +30,7 @@ export default function SignIn() {
         toast: true,
         position: "top-end",
         showConfirmButton: false,
-        timer: 3000,
+        timer: 1500,
         timerProgressBar: true,
         didOpen: (toast) => {
             toast.onmouseenter = Swal.stopTimer;
@@ -43,26 +38,23 @@ export default function SignIn() {
         }
     });
 
-    const  onSubmit = (data) => {
+    const onSubmit = (data) => {
         login(() => {
             Toast.fire({
                     icon: "error",
                     title: "틀렸습니다.",
                     text: '아이디나 비밀번호가 틀렸어요.'
                 });
-        }, data)
+        }, () => handleLogin(), data)
         reset();
-        // 성공시 호출
-        handleLoginSuccess();
     };
 
-    const handleLogout = () => {
-        logout(() => {
-            Toast.fire({
-                icon: "success",
-                title: "안녕히가세요."
-            });
-        });
+    const handleLogin = () => {
+        Toast.fire({
+            icon: "success",
+            title: "어서오세요."
+        })
+        navigate('/')
     }
 
     return (

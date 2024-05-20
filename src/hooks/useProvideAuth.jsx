@@ -7,7 +7,7 @@ export const useProvideAuth = () => {
         token : localStorage.getItem("token")
     });
 
-    const login = async (callback, data) => {
+    const login = async (callback1, callback2, data) => {
         try {
             const response = await axios.post(
                 `${process.env.REACT_APP_API_URL}/auth/login`,
@@ -20,11 +20,11 @@ export const useProvideAuth = () => {
                 localStorage.setItem('token', token); 
                 setLoginUser({
                     id, token
-                });
+                })
+                callback2()
             }
-            // callback();
         } catch (error) {
-            callback();
+            callback1();
         }
     }
 
