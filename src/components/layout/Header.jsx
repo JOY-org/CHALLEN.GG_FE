@@ -18,7 +18,9 @@ import { Nightlife } from "@mui/icons-material";
 //styleHeader.HeaderClass:헤더 전체
 //logo:challen.gg 로고
 
-
+//문제점!!!!!!!!!!!!
+//로그인을 하지않아도 첫페이지는 로그인된 상태
+//로그인이 틀려도 로그인버튼을 누르면 마이페이지로 이동
 const Header = () => {
     const {loginUser, login, logout} = useAuth();
     const [value, setValue] = React.useState('recents');
@@ -37,7 +39,7 @@ const Header = () => {
     ]);
     //로그인되어잇을시
     useEffect(()=>{
-        if(loginUser && loginUser.id){
+        if(loginUser?.id){
             setMenus([
                 {path: "/", label:"마이메세지",icon:NotificationsIcon},
                 {path: "/community", label:"커뮤니티",icon:PeopleIcon},

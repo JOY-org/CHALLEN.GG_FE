@@ -1,12 +1,18 @@
-import { Height } from "@mui/icons-material";
+import ChallengeManage from "./mypages/component/ChallengeManag";
+import MyInfo from './mypages/component/MyInfo'
+import Kcal from "./mypages/component/Kcal";
+import MyButton from "./mypages/component/MyButton";
+
+
 
 const MyPage = () => {
     return (
-    <div>
-        마이페이지입니다
-        
-
-    </div>
+    <>
+        <MyInfo/>
+        <ChallengeManage/>
+        <Kcal/>
+        <MyButton/>
+    </>
     );
 }
 
