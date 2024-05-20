@@ -1,7 +1,8 @@
-.imageContainer{
-    -ms-overflow-style: none;
+.container{
+    margin-top: 50px;
 }
 
-.imageContainer::-webkit-scrollbar{
-    display:none;
+.title{
+    background-color: #4483FD;
+    color: white;
 }
