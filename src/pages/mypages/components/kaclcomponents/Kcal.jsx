@@ -1,4 +1,4 @@
-import MyStyle from "../../../components/css_module/MyPage.module.css"
+import MyStyle from "../../../../components/css_module/MyPage.module.css"
 
 const Kcal = () => {
     return (
