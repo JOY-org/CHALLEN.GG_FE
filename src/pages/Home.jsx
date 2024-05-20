@@ -1,9 +1,10 @@
 import styleHome from "../components/css_module/Home.module.css"
-import Challenge from "../components/Challenge";
-import Ranker from "../components/Ranker";
+import Challenge from "../pages/homes/components/Challenge";
+import Ranker from "../pages/homes/components/Ranker";
 import { Children, useEffect, useState } from "react";
-import ChallengeModal from "../components/ChallengeModal";
+import ChallengeModal from "../pages/homes/components/ChallengeModal";
 import Btn from "../components/Btn";
+import AdMain from "../pages/homes/components/AdMain";
 
 
 
@@ -48,6 +49,7 @@ const Home = () => {
                     ></input>
                     <Btn>검색</Btn>
                 </div>
+                <AdMain/>
                 <div className={styleHome.challengeContainer}>
                     <Challenge handleOpen={handleOpen} />
                     <Challenge handleOpen={handleOpen} />

@@ -4,7 +4,7 @@ import { useDemoData } from '@mui/x-data-grid-generator';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import { jsx } from '@emotion/react';
-import styleHome from "../components/css_module/Home.module.css"
+import styleHome from "../../../components/css_module/Home.module.css"
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 
 export default function Ranker() {

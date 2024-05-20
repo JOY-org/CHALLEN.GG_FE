@@ -11,3 +11,6 @@ const Message = ({ children, style  }) => {
 }
 
 export default Message;
+
+
+//제이슨으로 리스트 빼기 
