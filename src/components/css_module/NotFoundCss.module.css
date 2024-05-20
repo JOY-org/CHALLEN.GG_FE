@@ -5,8 +5,9 @@
     font-style: normal;
 }
 
-.div{
+.container{
     font-family: 'WavvePADO-Regular';
     font-size: 32px;
     text-align: center;
+    padding: auto;
 }

@@ -22,7 +22,7 @@ function App() {
         <Routes>
         <Route path='/' element={<Home />} />
           <Route path='/community' element={<Community/>} />
-          <Route path='/communitypost/:id' element={<CommunityPost/>} />
+          <Route path='/communitypost/:title' element={<CommunityPost/>} />
           <Route path='/mypage' element={<MyPage/>} />
           <Route path='/shopping' element={<Shopping/>} />
           <Route path='/signin' element={<SignIn/>} />

@@ -1,3 +1,15 @@
+@font-face {
+    font-family: 'WavvePADO-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/WavvePADO-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.title{
+    font-family: 'WavvePADO-Regular';
+    font-size: 36px;
+}
+
 table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -193,4 +205,24 @@ section.notice {
 
 .page{
     text-align: center;
+}
+
+.postTitle{
+    cursor: pointer;
+}
+.postTitle:hover{
+    background-color: #f3f2f2;
+}
+
+.searchInput{
+    width: 300px;
+    background-color: white;
+    margin-right: 10px;
+}
+
+.searchBtn{
+    height: 56px;
+    width: 64px;
+    margin-right: 30px;
+    
 }
