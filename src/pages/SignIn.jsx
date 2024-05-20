@@ -30,7 +30,7 @@ export default function SignIn() {
         toast: true,
         position: "top-end",
         showConfirmButton: false,
-        timer: 3000,
+        timer: 1500,
         timerProgressBar: true,
         didOpen: (toast) => {
             toast.onmouseenter = Swal.stopTimer;
@@ -50,13 +50,11 @@ export default function SignIn() {
     };
 
     const handleLogin = () => {
-        logout(() => {
-            Toast.fire({
-                icon: "success",
-                title: "어서오세요."
-            })
-            navigate('/')
-        });
+        Toast.fire({
+            icon: "success",
+            title: "어서오세요."
+        })
+        navigate('/')
     }
 
     return (
