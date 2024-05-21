@@ -19,7 +19,7 @@ function App() {
     <LoginContext.Provider value={auth}>
       <Layout>
         <Routes>
-        <Route path='/' element={<Home />} />
+          <Route path='/' element={<Home />} />
           <Route path='/community' element={<Community/>} />
           <Route path='/mypage' element={<MyPage/>} />
           <Route path='/shopping' element={<Shopping/>} />

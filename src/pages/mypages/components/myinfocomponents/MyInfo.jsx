@@ -3,11 +3,35 @@ import MyStyle from "../../../../components/css_module/MyPage.module.css"
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../../hooks/useAuth";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { atom, useRecoilState, useSetRecoilState } from "recoil";
+
+
 const MyInfo = () => {
 
     const [userProfile, setUserProfile] = useState();
+
     //레벨 조건 exp의 범위에 따라 5가지 레벨로 나눔 (feat.피보나치수열)
-    const [levle, setLevle] = useState();
+    const [level, setLevel] = useState(1);
+
+    const getExp = (exp) =>{
+        let level;
+        if (exp >= 21) {
+            level = 'Lv.5';
+        }else if (exp >= 13) {
+            level = 'Lv.4';
+        }else if (exp >= 8) {
+            level = 'Lv.3';
+        }else if (exp >= 5) {
+            level = 'Lv.2';
+        }
+        return level;
+    }
+    // userProfile?.exp;
+    useEffect(() => {
+        const exp = 7
+        console.log( exp );
+        setLevel(level);
+    }, [userProfile]);
 
     //로그인된 사용자의 개인정보를 불러옴
     const GetUserInfo = async()=>{
@@ -42,7 +66,7 @@ const MyInfo = () => {
 
                 {userProfile ? <p>프로필이미지:{userProfile.img}</p> : <p>Loading...</p>}
                 {userProfile ? <p>닉네임{userProfile.nickname}</p> : <p>Loading...</p>}
-                {userProfile ? <p>레벨:{userProfile.exp}</p> : <p>Loading...</p>}
+                {userProfile ? <p>레벨:{level}</p> : <p>Loading...</p>}
                 {/* {userProfile &&
                 <ProfileInfo user={userProfile} />
             } */}

@@ -99,12 +99,6 @@ const Header = () => {
             >CHALLEN.GG</h1>
         {/* 상단바  */}
         <BottomNavigation sx={{ width: 700 , backgroundColor:'#4483FD' }} value={value} onChange={handleChange}>
-            {/* <BottomNavigationAction
-                label="alarm"
-                value="alarm"
-                icon={<NotificationsIcon/>}
-                onClick={toggleDrawer}
-            /> */}
                 {
                     menus.map((m, idx) => (
                         <BottomNavigationAction
