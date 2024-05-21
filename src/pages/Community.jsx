@@ -1,6 +1,4 @@
-import { Box, Container, Grid } from "@mui/material";
 import CommunityList from "../components/CommunityList";
-import CommunityPost from './../components/CommunityPost';
 import styles from '../components/css_module/Community.module.css'
 
 const Community = () => {
@@ -8,9 +6,6 @@ const Community = () => {
         <div className={styles.container}>
             <div className={styles.CommunityContainer}>
                 <CommunityList/>
-            </div>
-            <div className={styles.RecommendCommunity}>
-
             </div>
         </div>
     );

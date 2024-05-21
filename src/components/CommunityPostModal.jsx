@@ -15,7 +15,7 @@ import { Button } from "@mui/material";
 
 
 
-export default function CommunityPost() {
+export default function CommunityPostModal() {
 
   const [handleLikeColor, setHandleLikeColor] = useState(true);
   const [handleFollow, setHandleFollow] = useState(true);

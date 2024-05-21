@@ -9,6 +9,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import { LoginContext } from "./contexts/LoginContext";
 import { useProvideAuth } from "./hooks/useProvideAuth";
+import CommunityPost from './pages/CommunityPost';
 
 
 
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/community' element={<Community/>} />
+          <Route path='/communitypost/:title' element={<CommunityPost/>} />
           <Route path='/mypage' element={<MyPage/>} />
           <Route path='/shopping' element={<Shopping/>} />
           <Route path='/signin' element={<SignIn/>} />
