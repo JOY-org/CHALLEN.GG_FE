@@ -8,16 +8,30 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import Swal from 'sweetalert2';
+import { useForm } from 'react-hook-form';
+import axios from 'axios';
 
 export default function PostCreate() {
+    const{
+        register,
+        reset,
+        handleSubmit,
+        formState: {isSubmitting, errors},
+    } = useForm()
+
     const {loginUser} = useAuth();
 
     const [open, setOpen] = useState(false);
 
+    // loginUser = null
+    // loginUser = {id: 1, token: 1hnlksdafnlka}
+    // loginUser = {id: null, token: null}
     const handleClickOpen = () => {
         try {
             if(loginUser.id){
                 setOpen(true)
+            } else {
+                throw new Error();
             }
         } catch (error) {
             Swal.fire({
@@ -25,17 +39,36 @@ export default function PostCreate() {
                 icon: "error"
             });
         }
-        // if(loginUser.id){
-        //     setOpen(true)
-        // }else{
-        //     Swal.fire({
-        //         text: '로그인 이후에 가능해요',
-        //         icon: "error"
-        //     });
-        // }
     };
 
+    const onRegist = (async (data)=>{
+        const { title, content, img } = data
+        try {
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/post`, {
+                title,
+                content,
+                img
+            })
+            if (res.data.code === 200) {
+                Swal.fire({
+                    title: "게시글 등록!",
+                    icon: "success"
+                });
+                handleClose();
+            }else {
+                throw new Error('알 수 없는 에러');
+            }
+        }catch (err) {
+            Swal.fire({
+                title: "에러 발생",
+                icon: "error"
+            });
+            handleClose();
+        }
+    })
+
     const handleClose = () => {
+        reset()
         setOpen(false);
     };
 
@@ -49,47 +82,65 @@ export default function PostCreate() {
             onClose={handleClose}
             PaperProps={{
                 component: 'form',
-                onSubmit: (event) => {
-                event.preventDefault();
-                const formData = new FormData(event.currentTarget);
-                const formJson = Object.fromEntries(formData.entries());
-                const email = formJson.email;
-                console.log(email);
-                handleClose();
-                },
+                onSubmit: handleSubmit(onRegist),
             }}
             >
             <DialogTitle>게시글 등록</DialogTitle>
-            <DialogContent>
-                <TextField
-                autoFocus
-                required
-                margin="dense"
-                id="name"
-                name="name"
-                label="글 제목"
-                type="text"
-                fullWidth
-                autoComplete="off"
+                <DialogContent>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        label="글 제목"
+                        type="text"
+                        fullWidth
+                        autoComplete="off"
+                        {...register('title',
+                            {
+                                required: '글제목은 필수 입력입니다.',
+                                maxLength: {
+                                    value: 30,
+                                    message: '글제목은 최대 30자까지 입력가능합니다.'
+                                }
+                            }
+                        )}
+                        error={errors.title ? true : false}
+                        helperText={errors.title && errors.title.message}
                     />
-                <TextField
-                    label="글 내용"
-                    multiline
-                    rows={5}
-                    required
-                    fullWidth
-                    style={{marginTop:5}}
-                    autoComplete="off"
-                />
-                <TextField
-                    type='file'
-                    style={{marginTop:5}}
-                />
-            </DialogContent>
-            <DialogActions>
-                <Button type="submit">등록</Button>
-                <Button onClick={handleClose}>취소</Button>
-            </DialogActions>
+                    <TextField
+                        label="글 내용"
+                        spellCheck={false}
+                        multiline
+                        rows={5}
+                        fullWidth
+                        style={{marginTop:5}}
+                        autoComplete="off"
+                        {...register('content',
+                            {
+                                required: '글내용은 필수 입력입니다.',
+                                maxLength: {
+                                    value: 150,
+                                    message: '글내용은 최대 150자까지 입력가능합니다.'
+                                }
+                            }
+                        )}
+                        error={errors.content ? true : false}
+                        helperText={errors.content && errors.content.message}
+                    />
+                    <TextField
+                        type='file'
+                        style={{marginTop:5}}
+                        {...register('img', {required: '이미지는 필수 입력입니다.',})}
+                        error={errors.img ? true : false}
+                        helperText={errors.img && errors.img.message}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button 
+                        type="submit"
+                        disabled={isSubmitting}
+                    >등록</Button>
+                    <Button onClick={handleClose}>취소</Button>
+                </DialogActions>
             </Dialog>
         </React.Fragment>
     );

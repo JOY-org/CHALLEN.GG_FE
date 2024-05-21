@@ -85,9 +85,10 @@ export default function SignUp() {
                     margin="normal"
                     required
                     fullWidth
-                    id="id"
+                    // 필요 없는듯?
+                    // id="id"
+                    // name="id"
                     label="아이디"
-                    name="id"
                     {...register("id",
                             {
                                 required: '아이디는 필수 입력입니다.',

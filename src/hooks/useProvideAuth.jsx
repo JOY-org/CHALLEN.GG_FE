@@ -31,7 +31,7 @@ export const useProvideAuth = () => {
     const logout = (callback) => {
         localStorage.removeItem("userId");
         localStorage.removeItem("token");
-        setLoginUser(null);
+        setLoginUser({id: null, token: null});
         callback();
     }
 

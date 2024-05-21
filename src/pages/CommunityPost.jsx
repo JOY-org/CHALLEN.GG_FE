@@ -1,9 +1,10 @@
-import { Button, Stack, TextField } from '@mui/material';
+import { Button, Stack, TextField} from '@mui/material';
 import styles from '../components/css_module/CommunityPost.module.css'
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Pagination } from '@mui/material';
 import PostCreate from '../components/PostCreate';
+import PostModal from '../components/PostModal';
 
 const CommunityPost = () => {
     const params = useParams();
@@ -14,13 +15,14 @@ const CommunityPost = () => {
 
     useEffect(() => {
         const obj = {
-            "자유": 1,
-            "유머": 2,
-            "운동": 3,
-            "질문": 4,
-            "지역": 5,
-            "정보": 6
+            "전체": 1,
+            "자유": 2,
+            "유머": 3,
+            "운동": 4,
+            "질문": 5,
+            "지역": 6,
         }
+        
         const comm_id = obj[params.title];
         getPostsByCommId(comm_id);
     }, []);
@@ -44,9 +46,15 @@ const CommunityPost = () => {
         }
     }
 
-    const [searchWord, setSearchWord] = useState();
+    const [open, setOpen] = useState(false);
 
-    const [showPost, setShowPost] = useState(false);
+    const handleClickOpenPost = () => {
+        setOpen(true);
+    };
+
+    const handleClosePost = () => {
+        setOpen(false);
+    };
 
     return ( 
         <section className={styles.notice}>
@@ -60,7 +68,7 @@ const CommunityPost = () => {
                 <div className={styles.container}>
                     <div className={styles.searchWindow}>
                         <TextField id="standard-basic" label="검색어를 입력하세요" className={styles.searchInput}/>
-                        <Button variant="contained" className={styles.searchBtn}>검색</Button>
+                        <Button variant="contained" className={styles.searchBtn} sx={{mr:'30px'}}>검색</Button>
                         <PostCreate/>
                     </div>
                 </div>
@@ -82,12 +90,9 @@ const CommunityPost = () => {
                                 .slice( SHOW_POST_NUM * (curPage-1), SHOW_POST_NUM * curPage )
                                 .map((p)=>{
                                     return(
-                                        <tr>
+                                        <tr className={styles.postTitle} onClick={handleClickOpenPost}>
                                             <td>{p.postNum}</td>
-                                            <th 
-                                                className={styles.postTitle}
-                                                onClick={()=>setShowPost(!showPost)}
-                                            >{p.title}</th>
+                                            <th>{p.title}</th>
                                             <td>{p.writer}</td>
                                             <td>{p.date}</td>
                                         </tr>
@@ -100,6 +105,13 @@ const CommunityPost = () => {
                     </Stack>
                 </div>
             </div>
+
+            {open &&
+                <PostModal 
+                    open={open} 
+                    handleClosePost={handleClosePost}
+                />
+            }
 
         </section>
     );

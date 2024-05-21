@@ -36,6 +36,10 @@ export default function CommunityList() {
 
 const itemData = [
     {
+    img:  'https://images.unsplash.com/photo-1585909694668-0a6e0ddbfe8b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTA4fHxpbmZvcm1hdGlvbnxlbnwwfHwwfHx8MA%3D%3D',
+    title: '전체',
+    },
+    {
     img: 'https://images.unsplash.com/photo-1716018517051-7076e372319b?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     title: '자유',
     },
@@ -52,11 +56,7 @@ const itemData = [
     title: '질문',
     },
     {
-    img: 'https://plus.unsplash.com/premium_photo-1693060074991-e5cc84dad92d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NzN8fHJlZ2lvbnxlbnwwfHwwfHx8MA%3D%3D',
+    img:  'https://plus.unsplash.com/premium_photo-1693060074991-e5cc84dad92d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NzN8fHJlZ2lvbnxlbnwwfHwwfHx8MA%3D%3D',
     title: '지역',
-    },
-    {
-    img: 'https://images.unsplash.com/photo-1585909694668-0a6e0ddbfe8b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTA4fHxpbmZvcm1hdGlvbnxlbnwwfHwwfHx8MA%3D%3D',
-    title: '정보',
     },
 ];

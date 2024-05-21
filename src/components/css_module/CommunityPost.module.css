@@ -217,12 +217,9 @@ section.notice {
 .searchInput{
     width: 300px;
     background-color: white;
-    margin-right: 10px;
 }
 
 .searchBtn{
     height: 56px;
     width: 64px;
-    margin-right: 30px;
-    
 }
