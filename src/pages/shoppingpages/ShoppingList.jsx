@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // ShoppingDetail로 정보 전달
-import styled from './css_module/ShoppingListCss.module.css';
+import styled from "../../../../CHALLEN.GG_FE/src/components/css_module/ShoppingListCss.module.css";
 
 const ProductCard = () => {
   const [products, setProducts] = useState([]);

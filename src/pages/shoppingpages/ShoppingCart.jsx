@@ -1,5 +1,5 @@
 
-import styled from "CHALLEN.GG_FE\src\components\css_module\ShoppingCartCss.module.css";
+import styled from "../../../../CHALLEN.GG_FE/src/components/css_module/ShoppingCartCss.module.css";
 import { Link, useLocation } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
