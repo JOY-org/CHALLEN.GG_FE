@@ -1,0 +1,112 @@
+/* 전체 div, footer와 거리 띄움 */
+.container {
+  margin-bottom: 100px;
+}
+
+
+.main_box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: #F4F4F4; */
+  /* height: 420px; */
+  /* width: 820px; */
+  margin-bottom: 40px;
+
+}
+
+.main_img_box {
+  background-color: white;
+  width: 410px;
+  height: 410px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgb(224, 224, 224);
+}
+
+/* 상품, 가격, 수량, smallImage, 장바구니 담기, 구매하기 div */
+.info_box {
+  width: 412px;
+  height: 412px;
+  background-color: white;
+  padding-left: 10px;
+}  
+
+/* 상품명, 가격,수량  간격 조정 */
+.info {
+  margin-bottom: 40px;
+  padding-left: 30px;
+}
+
+/* 경로 */
+.path {
+  width: 810px;
+  margin: auto;
+}
+
+/* 왼쪽 메인 이미지 */
+.main_img {
+  justify-content: center;
+  width: 400px;
+  height: 400px;
+}
+
+/* 오른쪽 작은 이미지 div*/
+.small_img_box {
+  margin-bottom: 40px;
+  text-align: center;
+  
+}
+
+
+.small_img {
+  margin:0 5px;
+  cursor: pointer;
+}
+
+/* 큰 이미지, 상세 이미지 */
+.large_img {
+  text-align: center;
+}
+
+/* 장바구니 담기, 구매하기 버튼 */
+.buttons {
+  text-align: center;
+}
+
+/* 메인 박스와 아래 큰 이미지 구분선 */
+.line {
+  border-bottom: 1px solid rgb(218, 218, 218);
+  margin-bottom: 40px;
+}
+
+
+.modal_box {
+  width: 400px;
+  height: 100px;
+  background-color:white;
+  margin: auto;
+  /* align-items: center; */
+  display: flex;
+  justify-content: center;
+}
+
+
+.modal_close_btn {
+  align-items: end;
+  font-weight: 600;
+  display: flex;
+  justify-content: end;
+}
+
+/* 모달창 메시지 */
+.modal_msg {
+  display: flex;
+  align-items: center;
+}
+
+/* 모달 컴포넌트 */
+.modal {
+  display: flex;
+}
