@@ -13,10 +13,12 @@
 }
 
 .MyInfo{
-    background-color: aqua;
+    background-color: #4483FD;
     width: calc(100% / 3);
     height:calc(90vh - 180px);
     margin-top: 10px;
+    padding: 10px;
+
 }
 
 .ChallengeManag{
@@ -38,7 +40,56 @@
 }
 
 /* .MyInfo나의 정보관리 CSS */
+.BgInfo{
+    background-color: #ffffff;
 
+    width: 300px;
+    height: 450px;
+    box-shadow: 1px 1px 5px 1px #1b3364;
+    padding: 20px;
+}
+.profileImg{
+    width:200px;
+    height:185px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 20px auto;
+}
+
+
+p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &.Nick{
+        font-size: 25px;
+    }
+    &.Lv{
+        font-size: 15px;
+        color:#888181;
+    }
+}
+
+/* myinfo팔로우 */
+
+.followImg{
+    width: 25px;
+    height: 25px;
+    margin-top: 6px;
+}
+
+.flexContainer {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(184, 182, 182);
+    }
+.followNick{
+
+}
+.followDel{
+    margin: 3px;
+
+}
 /* Kcal css */
 .Calendar{
     margin: 40px;
