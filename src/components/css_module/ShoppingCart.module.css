@@ -1,0 +1,141 @@
+/* 장바구니 문자 */
+.cart_title {
+  width: 900px;
+  margin: auto;
+  margin-bottom: 20px
+}
+
+/* table form  */
+.cart_form {
+  background-color: #F4F4F4;
+  width: 900px;
+  margin: auto;
+  border-collapse: collapse;
+}
+
+/* table 제목 색상 */
+.t_title {
+  background-color: #4483FD;
+  height: 40px
+}
+
+/* 체크박스, 이름, 가격, 수량, 포인트, 합계 */
+.product_check {
+  width: 55px;
+}
+
+.product_name {
+  width: 350px;
+  color: white;
+}
+
+.product_price {
+  width: 105px;
+  color: white;
+}
+
+.product_quantity {
+  width: 105px;
+  color: white;
+}
+
+.product_point {
+  width: 105px;
+  color: white;
+}
+
+.product_total {
+  width: 150px;
+  color: white;
+}
+
+
+/* 삭제 버튼 div */
+.del_button_box {
+  width: 900px;
+  margin: auto;
+}
+
+/* 삭제버튼 */
+.del_button {
+  border: none;
+  background-color: #4483FD;
+  color: white;
+  height: 25px;
+  width: 70px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.del_button:active {
+  box-shadow: 1px 1px 4px #174194 inset;
+  background-color: #326de4;
+}
+
+/* 뒤로가기, 주문하기 div */
+.buttons {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+/* 뒤로가기 버튼 */
+.back_button {
+  width: 100px;
+  height: 40px;
+  font-weight: 600;
+  border: none;
+  box-shadow: 1px 1px 4px rgb(90, 90, 90);
+  margin-right:20px;
+  cursor: pointer;
+}
+
+.back_button:active {
+  box-shadow: 1px 1px 4px #8b8b8d inset;
+  background-color: #dadada;
+}
+
+/* 주문하기 버튼 */
+.order_button {
+  width: 100px;
+  height: 40px;
+  font-weight: 600;
+  background-color: #4483FD;
+  border: none;
+  color: white;
+  box-shadow: 1px 1px 4px rgb(0, 55, 173);
+  cursor: pointer;
+}
+
+.order_button:active {
+  box-shadow: 1px 1px 4px #174194 inset;
+  background-color: #326de4;
+}
+
+.tr_body {
+  text-align: center;
+  border-bottom: 1px solid rgb(201, 201, 201);
+  height: 50px;
+}
+
+/* 최종 결제금액, 원 div */
+.payment {
+  width: 900px;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgb(201, 201, 201);
+}
+
+/* 최종 결제금액 */
+.final_pay {
+  font-weight: 600;
+  font-size: large;
+}
+
+/* 원 */
+.won {
+  font-weight: 600;
+  font-size: large;
+}
