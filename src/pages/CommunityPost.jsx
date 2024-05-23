@@ -61,7 +61,6 @@ const CommunityPost = () => {
 
     const handleClickOpenPost = (p) => {
         setPostDetail(p)
-        console.log(postDetail);
         setOpen(true);
     };
 
@@ -87,7 +86,7 @@ const CommunityPost = () => {
                             onChange={(e)=>setSearchWord(e.target.value)}
                         />
                         <Button variant="contained" className={styles.searchBtn} sx={{mr:'30px'}} onClick={search}>검색</Button>
-                        <PostCreate commId={commId}/>
+                        <PostCreate commId={commId} setPosts={setPosts} posts={posts}/>
                     </div>
                 </div>
             </div>

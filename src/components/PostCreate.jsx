@@ -8,12 +8,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import Swal from 'sweetalert2';
-import { useForm } from 'react-hook-form';
-import axios from 'axios';
+import { set, useForm } from 'react-hook-form';
 import { postApi } from '../api/services/post';
-import { InputBase } from '@mui/material';
 
-export default function PostCreate({commId}) {
+export default function PostCreate({commId, setPosts, posts}) {
     const{
         register,
         reset,
@@ -57,6 +55,9 @@ export default function PostCreate({commId}) {
                     title: "게시글 등록!",
                     icon: "success"
                 });
+                console.log(res.payload);
+                setPosts([...posts, res.payload]);
+                console.log(posts);
                 handleClose();
             }else {
                 throw new Error('알 수 없는 에러');

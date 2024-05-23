@@ -20,6 +20,8 @@ export default function CommunityPostModal({postDetail}) {
   const [handleLikeColor, setHandleLikeColor] = useState(true);
   const [handleFollow, setHandleFollow] = useState(true);
 
+  
+
   return (
       <Card sx={{ boxShadow: 'none'}}>
         <CardHeader
@@ -39,7 +41,7 @@ export default function CommunityPostModal({postDetail}) {
         <CardMedia
           component="img"
           height="250"
-          image={postDetail.img}
+          image={`http://localhost:8000/${postDetail.img}`}
           alt="본문 이미지"
         />
         <CardContent>
