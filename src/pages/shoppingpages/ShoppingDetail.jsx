@@ -21,6 +21,10 @@ const ProductDetail = () => {
     setModalOpen(false); 
   }
 
+  const reviews = [
+
+  ]
+
   return (
     <div className={styled.container}>
       <div style={{
@@ -81,11 +85,15 @@ const ProductDetail = () => {
         </div>
       </div>
       <div className={styled.line}></div>
+
+      {/* -------------- 상세 이미지 -------------- */}
       <div className={styled.large_img}>
         <div><img src="http://via.placeholder.com/820" alt="large_img" /></div>
         <div><img src="http://via.placeholder.com/820" alt="large_img" /></div>
       </div>
       <div className={styled.line}></div>
+
+      {/* --------------  후기글 --------------  */}
       <div className={styled.review_container}>
         <h3 className={styled.review_text}>구매후기</h3>
         <div className={styled.review_box}> 
