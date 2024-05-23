@@ -1,12 +1,7 @@
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
-import { useState } from 'react';
 import CommunityPostModal from './CommunityPostModal';
+import styles from './css_module/PostModal.module.css'
 
 export default function PostModal({open, handleClosePost}) {
     return (
@@ -15,15 +10,16 @@ export default function PostModal({open, handleClosePost}) {
                 open={open}
                 onClose={handleClosePost}
                 aria-labelledby="responsive-dialog-title"
+                
             >   
-                <DialogContent>
+                <DialogContent className={styles.dialog}>
                     <CommunityPostModal/>
                 </DialogContent>
-                <DialogActions>
+                {/* <DialogActions>
                     <Button Button autoFocus onClick={handleClosePost}>
                         닫기
                     </Button>
-                </DialogActions>
+                </DialogActions> */}
             </Dialog>
         </>
     );

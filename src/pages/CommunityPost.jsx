@@ -1,49 +1,56 @@
 import { Button, Stack, TextField} from '@mui/material';
 import styles from '../components/css_module/CommunityPost.module.css'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Pagination } from '@mui/material';
 import PostCreate from '../components/PostCreate';
 import PostModal from '../components/PostModal';
+import { postApi } from "../api/services/post";
 
 const CommunityPost = () => {
+    const navigate = useNavigate()
     const params = useParams();
     const [posts, setPosts] = useState();
+    const [commId, setCommId] = useState();
     const [curPage, setCurPage] = useState(1);
     const [totalPage, setTotalPage] = useState();
-    const SHOW_POST_NUM = 5;
+    const SHOW_POST_NUM = 10;
+
+    const obj = {
+        "자유": 1,
+        "유머": 2,
+        "운동": 3,
+        "질문": 4,
+        "지역": 5,
+        "홍보": 6
+    }
 
     useEffect(() => {
-        const obj = {
-            "전체": 1,
-            "자유": 2,
-            "유머": 3,
-            "운동": 4,
-            "질문": 5,
-            "지역": 6,
+        setCommId(obj[params.title])
+        getPostsByCommId(obj[params.title]);
+
+        if(!Object.keys(obj).includes(params.title)){
+            navigate('*')
         }
-        
-        const comm_id = obj[params.title];
-        getPostsByCommId(comm_id);
+
     }, []);
 
+    const getPostsByCommId = async(commId) => {
+        try {
+            const res = await postApi.getPostsByCommId(commId);
+            setPosts(res.payload);
+            
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    
     useEffect(()=> {
         setTotalPage(Math.floor(posts?.length/SHOW_POST_NUM) + 1);
     }, [posts])
 
     const handlePage = (e, v) => {
         setCurPage(v);
-    }
-
-    const getPostsByCommId = async(comm_id) => {
-        try {
-            // 데이터 받아와서 뿌려주기만 하면 됨
-            // await axios
-            // setPosts;
-            setPosts(post);
-        } catch (error) {
-            console.error(error);
-        }
     }
 
     const [open, setOpen] = useState(false);
@@ -69,7 +76,7 @@ const CommunityPost = () => {
                     <div className={styles.searchWindow}>
                         <TextField id="standard-basic" label="검색어를 입력하세요" className={styles.searchInput}/>
                         <Button variant="contained" className={styles.searchBtn} sx={{mr:'30px'}}>검색</Button>
-                        <PostCreate/>
+                        <PostCreate commId={commId}/>
                     </div>
                 </div>
             </div>
@@ -91,10 +98,10 @@ const CommunityPost = () => {
                                 .map((p)=>{
                                     return(
                                         <tr className={styles.postTitle} onClick={handleClickOpenPost}>
-                                            <td>{p.postNum}</td>
+                                            <td>{p.id}</td>
                                             <th>{p.title}</th>
-                                            <td>{p.writer}</td>
-                                            <td>{p.date}</td>
+                                            <td></td>
+                                            <td>{p.createdAt.slice(0,10)}</td>
                                         </tr>
                                     )
                                 })}
@@ -116,193 +123,5 @@ const CommunityPost = () => {
         </section>
     );
 }
-
-const post = [{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-{
-    postNum : 1,
-    writer : '김진영',
-    title : '예시 제목1',
-    date : '2024.05.20'
-},
-]
 
 export default CommunityPost;

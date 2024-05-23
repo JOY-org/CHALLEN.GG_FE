@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from 'axios';
+import { Cookies } from "react-cookie";
 
 export const useProvideAuth = () => {
     const [loginUser, setLoginUser] = useState({
@@ -35,10 +36,25 @@ export const useProvideAuth = () => {
         callback();
     }
 
+    const kakaoLogin = () => {
+        const cookies = new Cookies();
+        if (cookies.get('accessToken') && cookies.get('userId')) {
+            localStorage.setItem('userId', cookies.get('userId'));
+            localStorage.setItem('token', cookies.get('accessToken'));
+            setLoginUser({
+                id: cookies.get('userId'),
+                token: cookies.get('accessToken')
+            });  
+        } 
+        cookies.remove("userId");
+        cookies.remove("accessToken");
+    }
+
     return {
         loginUser,
         login,
         logout,
+        kakaoLogin
     }
 }
 

@@ -13,10 +13,11 @@ import Swal from 'sweetalert2';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import kakaoLoginImg from '../assets/kakao_login_medium_wide.png'
 
 export default function SignIn() {
-    const {loginUser, login, logout} = useAuth();
+    const {login, kakaoLogin} = useAuth();
+    kakaoLogin()
     const navigate = useNavigate();
 
     const {
@@ -110,11 +111,12 @@ export default function SignIn() {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
+                    sx={{ mt: 2, mb: 1, height: '40px'}}
                     // onClick={handleNavi}
                 >
                     로그인
                 </Button>
+
                 <Grid container>
                     <Grid item xs>
                         <Link href="#" variant="body2">
@@ -123,10 +125,14 @@ export default function SignIn() {
                     </Grid>
                     <Grid item>
                         <Link href="/signup" variant="body2">
-                            {"아직 회원가입을 안하셨나요?"}
+                            아직 회원가입을 안하셨나요?
                         </Link>
                     </Grid>
                 </Grid>
+
+                <Link href={`${process.env.REACT_APP_API_URL}/auth/kakao`}>
+                    <img src={kakaoLoginImg} alt='카카오 로그인' style={{width: '100%', height:'40px', marginTop: '40px'}}/>
+                </Link>
             </Box>
         </Box>
         </Container>
