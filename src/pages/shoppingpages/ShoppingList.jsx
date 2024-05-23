@@ -1,7 +1,9 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // ShoppingDetail로 정보 전달
-import styled from "../../../../CHALLEN.GG_FE/src/components/css_module/ShoppingListCss.module.css";
+import styled from "../../../../CHALLEN.GG_FE/src/components/css_module/ShoppingList.module.css";
+import likeIcon from "../../images/likeIcon.png";
+
 
 const ProductCard = () => {
   const [products, setProducts] = useState([]);
@@ -19,7 +21,7 @@ const ProductCard = () => {
         name: `상품명 ${index + 1}`,
         discountPrice: `${(index + 1) * 1000}원`,
         price: `${(index + 1) * 2000}원`,
-        rating: `좋아요 ${index + 1}`,
+        rating: ` ${index + 1}`,
         category: index % 2 === 0 ? '남성' : '여성',
         isNew: index < 6,
         isRecommended: index % 3 === 0,
@@ -117,9 +119,11 @@ const ProductCard = () => {
               <img className={styled.product_img} src={product.imageUrl} alt="Product" />
               <div className={styled.product_details}>
                 <h3 className={styled.product_name}>{product.name}</h3>
-                <p className={styled.product_info}>{product.discountPrice}</p>
-                <p className={styled.product_info}>{product.price}</p>
-                <p className={styled.product_info}>{product.rating}</p>
+                <p className={styled.product_price}>{product.price}</p>
+                <p className={styled.product_disc_price} >{product.discountPrice}</p>
+                <p className={styled.product_rating}>
+                  <img src={likeIcon} alt='like_icon' className={styled.like_icon}></img>
+                  {product.rating}</p>
               </div>
             </div>
           ))}

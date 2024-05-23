@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from "../../../../CHALLEN.GG_FE/src/components/css_module/ShoppingPurchaseCss.module.css";
+import styled from "../../../../CHALLEN.GG_FE/src/components/css_module/ShoppingPurchase.module.css";
 
 const Purchase = () => {
 

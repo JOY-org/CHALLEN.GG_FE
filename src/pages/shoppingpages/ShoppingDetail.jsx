@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Modal } from "@mui/material";
-import styled from "../../../../CHALLEN.GG_FE/src/components/css_module/ShoppingDetailCss.module.css";
+import styled from "../../../../CHALLEN.GG_FE/src/components/css_module/ShoppingDetail.module.css";
 import { Link, useLocation } from 'react-router-dom'; // ShoppingList에서 가져옴.
 
 const ProductDetail = () => {
@@ -44,10 +44,11 @@ const ProductDetail = () => {
           <div className={styled.info}>
             {/* product 객체의 속성 접근 시 product? 형식을 이용해 안전하게 접근한다. Cart컴포넌트에서 뒤로가기 누르면 오류가 난거 해결됨. */}
             <h2 style={{ marginBottom: "20px" }}>{product?.name}</h2>
-            <p style={{ marginBottom: "20px" }}>{product?.discountPrice}</p>
             <p style={{ marginBottom: "20px" }}>{product?.price}</p>
-            <span>수량</span>
+            <p style={{ marginBottom: "20px" }}>{product?.discountPrice}</p>
+            <span className={styled.quantity_text}>수량</span>
             <select 
+              className={styled.select_box}
               style={{ width: "50px" }} 
               onChange={(e) => setQuantity(Number(e.target.value))} 
               value={quantity}>
@@ -81,9 +82,39 @@ const ProductDetail = () => {
       </div>
       <div className={styled.line}></div>
       <div className={styled.large_img}>
-        <div><img src="http://via.placeholder.com/834" alt="large_img" /></div>
-        <div><img src="http://via.placeholder.com/834" alt="large_img" /></div>
+        <div><img src="http://via.placeholder.com/820" alt="large_img" /></div>
+        <div><img src="http://via.placeholder.com/820" alt="large_img" /></div>
       </div>
+      <div className={styled.line}></div>
+      <div className={styled.review_container}>
+        <h3 className={styled.review_text}>구매후기</h3>
+        <div className={styled.review_box}> 
+          <div className={styled.review_profile}>
+            <p className={styled.review_name}>name</p>
+            <p className={styled.review_date}>2024.05.23</p>
+          </div>
+          <div className={styled.prod_infomation}>
+            <img className={styled.prod_img} src="http://via.placeholder.com/50"></img>
+            <div className={styled.brief_info_wrap}>
+              <a className={styled.brief_info}>상품 정보</a>
+            </div>
+          </div>
+          <div className={styled.rating_wrap}>
+            <span className={styled.rating}>⭐⭐⭐⭐⭐</span>
+          </div>
+          <div className={styled.contents_test}>
+            <text>원단좋아요.가격저렴해요.배송이빨라요.친절해요</text>
+          </div>
+          <div className={styled.photo_review}>
+            <ul className={styled.photo_box}>
+              <li><img className={styled.photo} src="http://via.placeholder.com/150" alt="photo"/></li>
+              <li><img className={styled.photo} src="http://via.placeholder.com/150" alt="photo"/></li>
+              <li><img className={styled.photo} src="http://via.placeholder.com/150" alt="photo"/></li>
+              <li><img className={styled.photo} src="http://via.placeholder.com/150" alt="photo"/></li>
+            </ul>
+          </div>
+        </div>
+      </div> 
       
       <Modal
         className={styled.modal}
