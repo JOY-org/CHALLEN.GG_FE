@@ -51,7 +51,7 @@ export default function PostCreate({commId}) {
             formData.append('content', data.content);
             formData.append('img', data.img[0]);
             formData.append('category', commId)
-            const res = await postApi.addPost(formData);
+            const res = await postApi.addPost(formData, loginUser);
             if (res.code === 200) {
                 Swal.fire({
                     title: "게시글 등록!",

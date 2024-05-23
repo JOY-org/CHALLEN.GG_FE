@@ -15,7 +15,7 @@ import { Button } from "@mui/material";
 
 
 
-export default function CommunityPostModal() {
+export default function CommunityPostModal({postDetail}) {
 
   const [handleLikeColor, setHandleLikeColor] = useState(true);
   const [handleFollow, setHandleFollow] = useState(true);
@@ -33,19 +33,18 @@ export default function CommunityPostModal() {
               팔로우 {handleFollow ? '취소' : ''}
             </Button>
           }
-          title="김진영"
-          subheader="2024.05.20"
+          title="닉네임"
+          subheader={postDetail.createdAt.slice(0,10)}
         />
         <CardMedia
           component="img"
           height="250"
-          image="https://images.unsplash.com/photo-1585909694668-0a6e0ddbfe8b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTA4fHxpbmZvcm1hdGlvbnxlbnwwfHwwfHx8MA%3D%3D"
+          image={postDetail.img}
           alt="본문 이미지"
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse cupiditate voluptatem facilis necessitatibus, 
-            nam quod sed illo ullam aspernatur! Nihil ullam dicta natus, doloribus sunt atque laboriosam magni rerum modi?
+            {postDetail.content}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>

@@ -3,7 +3,7 @@ import DialogContent from '@mui/material/DialogContent';
 import CommunityPostModal from './CommunityPostModal';
 import styles from './css_module/PostModal.module.css'
 
-export default function PostModal({open, handleClosePost}) {
+export default function PostModal({open, handleClosePost, postDetail}) {
     return (
         <>
             <Dialog
@@ -13,7 +13,7 @@ export default function PostModal({open, handleClosePost}) {
                 
             >   
                 <DialogContent className={styles.dialog}>
-                    <CommunityPostModal/>
+                    <CommunityPostModal postDetail={postDetail}/>
                 </DialogContent>
                 {/* <DialogActions>
                     <Button Button autoFocus onClick={handleClosePost}>

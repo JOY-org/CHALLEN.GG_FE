@@ -14,7 +14,12 @@ const CommunityPost = () => {
     const [commId, setCommId] = useState();
     const [curPage, setCurPage] = useState(1);
     const [totalPage, setTotalPage] = useState();
+    const [searchWord, setSearchWord] = useState();
     const SHOW_POST_NUM = 10;
+
+    const search = () => {
+        setPosts(posts.filter( (v) => v.title.includes(searchWord.trim()) ))
+    }
 
     const obj = {
         "자유": 1,
@@ -32,19 +37,17 @@ const CommunityPost = () => {
         if(!Object.keys(obj).includes(params.title)){
             navigate('*')
         }
-
     }, []);
 
     const getPostsByCommId = async(commId) => {
         try {
             const res = await postApi.getPostsByCommId(commId);
             setPosts(res.payload);
-            
         } catch (error) {
             console.error(error);
         }
     }
-    
+    // pagination 관련
     useEffect(()=> {
         setTotalPage(Math.floor(posts?.length/SHOW_POST_NUM) + 1);
     }, [posts])
@@ -52,10 +55,13 @@ const CommunityPost = () => {
     const handlePage = (e, v) => {
         setCurPage(v);
     }
-
+    // post modal 관련
     const [open, setOpen] = useState(false);
+    const [postDetail, setPostDetail] = useState(null);
 
-    const handleClickOpenPost = () => {
+    const handleClickOpenPost = (p) => {
+        setPostDetail(p)
+        console.log(postDetail);
         setOpen(true);
     };
 
@@ -74,8 +80,13 @@ const CommunityPost = () => {
             <div id={styles.boardSearch}>
                 <div className={styles.container}>
                     <div className={styles.searchWindow}>
-                        <TextField id="standard-basic" label="검색어를 입력하세요" className={styles.searchInput}/>
-                        <Button variant="contained" className={styles.searchBtn} sx={{mr:'30px'}}>검색</Button>
+                        <TextField 
+                            id="standard-basic" 
+                            label="검색어를 입력하세요" 
+                            className={styles.searchInput} 
+                            onChange={(e)=>setSearchWord(e.target.value)}
+                        />
+                        <Button variant="contained" className={styles.searchBtn} sx={{mr:'30px'}} onClick={search}>검색</Button>
                         <PostCreate commId={commId}/>
                     </div>
                 </div>
@@ -88,6 +99,7 @@ const CommunityPost = () => {
                         <tr>
                             <th scope="col" className={styles.thNum}>번호</th>
                             <th scope="col">제목</th>
+                            <th scope="col">추천수</th>
                             <th scope="col">작성자</th>
                             <th scope="col" className={styles.thDate}>등록일</th>
                         </tr>
@@ -97,9 +109,10 @@ const CommunityPost = () => {
                                 .slice( SHOW_POST_NUM * (curPage-1), SHOW_POST_NUM * curPage )
                                 .map((p)=>{
                                     return(
-                                        <tr className={styles.postTitle} onClick={handleClickOpenPost}>
+                                        <tr className={styles.postTitle} onClick={()=>handleClickOpenPost(p)}>
                                             <td>{p.id}</td>
-                                            <th>{p.title}</th>
+                                            <th>{p.title} <span className={styles.commentColor}>[6]</span> </th>
+                                            <td className={styles.postLike}>8</td>
                                             <td></td>
                                             <td>{p.createdAt.slice(0,10)}</td>
                                         </tr>
@@ -115,6 +128,7 @@ const CommunityPost = () => {
 
             {open &&
                 <PostModal 
+                    postDetail={postDetail}
                     open={open} 
                     handleClosePost={handleClosePost}
                 />
