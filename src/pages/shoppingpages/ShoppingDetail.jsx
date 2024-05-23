@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Modal } from "@mui/material";
-import styled from "../../../../CHALLEN.GG_FE/src/components/css_module/ShoppingDetail.module.css";
+import styled from "../../components/css_module/ShoppingDetail.module.css";
 import { Link, useLocation } from 'react-router-dom'; // ShoppingList에서 가져옴.
 
 const ProductDetail = () => {
