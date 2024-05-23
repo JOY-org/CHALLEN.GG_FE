@@ -22,27 +22,27 @@
 }
 
 .ChallengeManag{
-    background-color: red;
+
     width: calc(100% / 3);
     height:calc(90vh - 180px);
     margin-top: 10px;
 }
-.MyButton{
-    background-color:yellow;
-    width: 100%;
+.MyButtons{
+    width: 90%;
     height:60px;
+    display: flex;
+    justify-content:flex-end;
 }
 .Kcal{
     background-color:#4483FD;
     width: calc(100% / 3);
-    height:calc(90vh - 180px);
-    margin-top: 10px;
+    height:calc(90vh - 250px);
+    margin-top: 10px
 }
 
 /* .MyInfo나의 정보관리 CSS */
 .BgInfo{
     background-color: #ffffff;
-
     width: 300px;
     height: 450px;
     box-shadow: 1px 1px 5px 1px #1b3364;
@@ -83,17 +83,33 @@ p{
     justify-content: space-between;
     border-bottom: 1px solid rgb(184, 182, 182);
     }
-.followNick{
 
-}
 .followDel{
     margin: 3px;
-
 }
+
 /* Kcal css */
 .Calendar{
-    margin: 40px;
-    height: 400px;
+    margin-top: 20PX;
+    height: 350px;
     border: none;
     padding: 20px;
+}
+
+/* mybuttons */
+.MadeChallenge{
+    margin-left: 70PX;
+    padding: 20px 40px;
+    border-radius: 15px;
+    border: none;
+    background-color: #F8C514;
+    cursor: pointer;
+}
+
+.PurchaseList{
+    padding: 20px 40px;
+    border-radius: 15px;
+    border: none;
+    background-color: #F8C514;
+    cursor: pointer;
 }

@@ -14,7 +14,8 @@ const MyInfo = () => {
     //이미지 받는
     const [profileImg, setProfileImg] = useState("");
     const { id } = useParams();
-
+    //포인트
+    const [myPoint, setMyPoint] = useState();
 
 
     //로그인된 사용자의 개인정보를 불러옴
@@ -26,7 +27,7 @@ const MyInfo = () => {
                 }
             })
             setUserProfile(res.data.payload); //개인정보는 들어있다
-            //console.log(res.data.payload); //개인정보 배열번호를 이곳에서 확인
+            console.log(res.data.payload); //개인정보 배열번호를 이곳에서 확인
         } catch (error){
             console.error(error);
         }
@@ -34,6 +35,7 @@ const MyInfo = () => {
     useEffect(()=>{
         GetUserInfo();
     }, []);
+
 
     //사용자의 exp를통해 레벨을 계산해주는 코드
     const getExp = (exp) =>{
@@ -62,7 +64,25 @@ const MyInfo = () => {
 
 
     //포인트가져오는 코드
-    //빽의 미완
+    const point = async()=>{
+        try{
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/point`,{
+                headers:{
+                    "Authorization": localStorage.getItem('token')
+                }, data: {
+                    id: id
+                }
+            })
+            setMyPoint(res.data.payload)
+            console.log(res.data.payload);
+        }catch(error){
+            console.error(error)
+        }
+    }
+
+    useEffect(()=>{
+        point();
+    },[])
 
     //개인정보수정 코드
     //일단 보류
@@ -83,8 +103,10 @@ const MyInfo = () => {
                 "Authorization": localStorage.getItem("token"),
             }
     }
-)}
-    //로컬에 저장한 프로필 이미지를 불러오는 코드
+);
+    localStorage.setItem(`profileImg_${loginUser.id}`, response.data.img);}
+
+    // 저장한 프로필 이미지를 불러오는 코드
     useEffect(() => {
         const key =`profileImg_${loginUser.id}`;
         setProfileImg(key);
@@ -99,13 +121,14 @@ const MyInfo = () => {
                     {/* 프로필 이미지들어갈곳 */}
                     <div className={MyStyle.profileImg}>
                             <img
-                                src={`http://localhost:8000/uploads/${profileImg}.png`}
+                                src={`http://localhost:8000/uploads/user/${profileImg}.png`}
                                 onError={(e) => e.target.src = `http://localhost:8000/uploads/default.png`}
                             />
                     </div>
 
                     {userProfile ? <p className={MyStyle.Nick}>{userProfile.nickname}</p> : <p>Loading...</p>}
                     {userProfile ? <p className={MyStyle.Lv}>{level}</p> : <p>Loading...</p>}
+                    {myPoint ? <p className={MyStyle.Lv}>{myPoint.point}Point</p> : <p>Loading...</p>}
 
                     {userProfile &&
                         <Follow user={userProfile}/>}

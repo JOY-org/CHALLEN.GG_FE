@@ -8,17 +8,61 @@ import { useAuth } from "../../hooks/useAuth";
 //팔로잉팔로우 모달창
 
 const Follow = ({user}) => {
+    //팔로잉모달창
+    const [modalOpen, setModalOpen] = useState(null);
+
+    const followingOpen =()=>{
+        setModalOpen('following')
+    }
+
+    const followerOpen = () => {
+        setModalOpen('follower')
+    }
+
+    const modalClose = () => {
+        setModalOpen(null);
+    }
+
+    return (
+    <>
+        <Button onClick={followerOpen}>팔로워</Button>
+        <FollowList
+            isOpen={modalOpen}
+            onRequestClose={modalClose}
+            user={user}
+        />
+        <Button onClick={followingOpen}>팔로잉</Button>
+        <FollowList
+            isOpen={modalOpen}
+            onRequestClose={modalClose}
+            user={user}
+        />
+    </>
+    );
+}
+
+export default Follow;
+
+// --------------------------팔로우 모달창---------------
+Modal.setAppElement("#root");
+
+//팔로워리스트 모달창
+export const FollowList = ({isOpen, onRequestClose ,user,followingOpen}) => {
+
     const { loginUser } = useAuth();
-    //팔로워
-    const [followerList, setFollowerList] = useState();
-    //팔로워모달창
-    const [followerOpen, setFollowerOpen] = useState(false);
+
     //이미지를 가져오는
     const [profileImg, setProfileImg] = useState("");
-    //팔로우삭제
-    const [delFollower, setdelFollower] = useState();
 
+    //팔로워리스트
+    const [followerList, setFollowerList] = useState([]);
+    //팔로잉리스트
+    const [followingList, setFollowingList] = useState([]);
 
+    //팔로우하기
+    const [followYou, setfollowYou] = useState([]);
+
+    //팔로워리스트
     const getFollowerList = async () =>{
         try {
             const id = user.id
@@ -34,11 +78,21 @@ const Follow = ({user}) => {
         }
     }
 
-    useEffect(()=>{
-        getFollowerList();
-    },[])
-    const followerToggle =()=>{
-        setFollowerOpen(!followerOpen)
+
+    //팔로잉리스트
+    const getFollowingList = async () =>{
+        try {
+            const id = user.id
+            // console.log(id); 아이디 제대로 찍힘
+            const url = `${process.env.REACT_APP_API_URL}/users/followings/${id}`;
+            const res = await axios.get(url);
+            if(res.data.code===200){
+                setFollowingList(res.data.payload)
+                //console.log(res.data.payload); //제대로 가져옴
+            }
+        }catch (error) {
+            console.error(error);
+        }
     }
 
     //로컬에 저장한 프로필 이미지를 불러오는 코드
@@ -47,10 +101,8 @@ const Follow = ({user}) => {
         setProfileImg(key);
     }, [loginUser.id]);
 
-
-
     //(언팔로워) 삭제버튼
-    const deleteFollow = async (id) => {
+    const unFollow = async (id) => {
         try{
             const res = await axios.delete(`${process.env.REACT_APP_API_URL}/users/follow`,{
                 headers:{
@@ -60,8 +112,7 @@ const Follow = ({user}) => {
                 }
             });
             if(res.data.code === 200) {
-                console.log(res.data);
-                setFollowerList(prevList => prevList.filter(follower => follower.id !== id));
+                setFollowingList(prevList => prevList.filter(following => following.id !== id));
             }else{
                 console.log('API 호출 실패: 상태 코드', res.data.code);
             }
@@ -71,29 +122,31 @@ const Follow = ({user}) => {
         }
     }
 
-
-    return (
-    <>
-        <Button onClick={followerToggle}>팔로잉</Button>
-            {followerOpen &&
-                <FollowList
-                    user={user}
-                    followerList={followerList}
-                    isOpen={followerOpen}
-                    onRequestClose={followerToggle}
-                    deleteFollow={deleteFollow}
-
-                />
+    //팔로우하기 버튼(팔로워모달창에 존재)
+    const handleFollowYou = async(id)=>{
+        try{
+            const res = await axios.post(
+                `${process.env.REACT_APP_API_URL}/users/follow`,
+                { id: id },
+                { headers:{ "Authorization": localStorage.getItem('token') }}
+            );
+            if(res.data.code === 200) {
+                setfollowYou(res.data.payload)
+                // 팔로잉 리스트를 갱신
+                getFollowingList();
+            }else{
+                console.log('API 호출 실패: 상태 코드', res.data.code);
             }
-    </>
-    );
-}
+        } catch (error) {
+            // API 호출 중에 발생한 오류를 처리
+            console.error('API 호출 중 에러:', error);
+        }
+    }
+    useEffect(()=>{
+        getFollowerList();
+        getFollowingList();
+    },[])
 
-export default Follow;
-Modal.setAppElement("#root");
-
-//팔로워리스트 모달창
-export const FollowList = ({ followerList, isOpen, onRequestClose, profileImg,deleteFollow}) => {
 
     const customStyles = {
         content: {
@@ -107,38 +160,67 @@ export const FollowList = ({ followerList, isOpen, onRequestClose, profileImg,de
         },
         };
 
-    return (
-        <div>
-            <Modal
-        isOpen={isOpen}
-        onRequestClose={onRequestClose}
-        style={customStyles}
-        contentLabel="Followers List"
+    if (isOpen === 'follower')
+        return (<Modal
+            isOpen={isOpen}
+            onRequestClose={onRequestClose}
+            style={customStyles}
+            contentLabel="Followers List"
         >
-        <h2>Followers</h2>
-        <ul>
-        {followerList.map((follower) => (
-            <li key={follower.id}>
-                <div>
-                    <img className={MyStyle.followImg}
-                        src={`http://localhost:8000/uploads/${profileImg}.png`}
-                        onError={(e) => e.target.src = `http://localhost:8000/uploads/default.png`}
-                    />
-                </div>
-                <div className={MyStyle.flexContainer}>
-                    <div className={MyStyle.followNick}>
-                        {follower.nickname}
-                    </div>
-                    <div className={MyStyle.followDel}>
-                        <button onClick={()=>{deleteFollow(follower.id)}}>삭제</button>
-                    </div>
-                </div>
+            <h2>Followers</h2>
+            <ul>
+                {followerList.map((follower) => (
+                    <li key={follower.id}>
+                        <div>
+                            <img className={MyStyle.followImg}
+                                src={`http://localhost:8000/uploads/user/${profileImg}.png`}
+                                onError={(e) => e.target.src = `http://localhost:8000/uploads/default.png`}
+                            />
+                        </div>
+                        <div className={MyStyle.flexContainer}>
+                            <div className={MyStyle.followNick}>
+                                {follower.nickname}
+                            </div>
+                            <div className={MyStyle.followYou}>
+                                <button
+                                    onClick={()=>{handleFollowYou(follower.id)}}
+                                >
+                                        {follower.id === followYou ? "팔로우":"팔로잉"}</button>
+                            </div>
 
-            </li>
-        ))}
-        </ul>
-        </Modal>
-        </div>
-        );
-    };
-
+                        </div>
+                    </li>
+                ))}
+            </ul>
+        </Modal>)
+    else if (isOpen === 'following')
+        return (<Modal
+            isOpen={isOpen}
+            onRequestClose={onRequestClose}
+            style={customStyles}
+            contentLabel="Followings List"
+        >
+            <h2>Followings</h2>
+            <ul>
+                {followingList.map((following) => (
+                    <li key={following.id}>
+                        <div>
+                            <img className={MyStyle.followImg}
+                                src={`http://localhost:8000/uploads/user/${profileImg}.png`}
+                                onError={(e) => e.target.src = `http://localhost:8000/uploads/default.png`}
+                            />
+                        </div>
+                        <div className={MyStyle.flexContainer}>
+                            <div className={MyStyle.followNick}>
+                                {following.nickname}
+                            </div>
+                            <div className={MyStyle.followDel}>
+                                <button onClick={()=>{unFollow(following.id)}}>삭제</button>
+                            </div>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+        </Modal>)
+    else return(<></>)
+}
