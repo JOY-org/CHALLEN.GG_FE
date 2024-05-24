@@ -3,6 +3,26 @@ import { Button, Modal } from "@mui/material";
 import styled from "../../../../CHALLEN.GG_FE/src/components/css_module/ShoppingDetail.module.css";
 import { Link, useLocation } from 'react-router-dom'; // ShoppingList에서 가져옴.
 
+// 페이지네이션 임시 데이터
+const reviews = [
+  { name: 'User1', date: '2024.5.23', rating: "⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User1', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User1', date: '2024.5.23', rating: "⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User1', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User1', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User1', date: '2024.5.23', rating: "⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User1', date: '2024.5.23', rating: "⭐⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User1', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User1', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User1', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User1', date: '2024.5.23', rating: "⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User1', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User1', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+]
+
+// 페이지 네이션 페이지당 게시물 수
+const REVIEWS_PER_PAGE = 3;
+
 const ProductDetail = () => {
   const location = useLocation(); // ShoppingList에서 카드의 정보를 가져옴.
   const { product } = location.state || {}; 
@@ -21,9 +41,32 @@ const ProductDetail = () => {
     setModalOpen(false); 
   }
 
-  const reviews = [
+  // 페이지 네이션 
+  const [currentPage, setCurrentPage] = useState(1);
+  const indexOfLastReview = currentPage * REVIEWS_PER_PAGE;
+  const indexOfFirstReview = indexOfLastReview - REVIEWS_PER_PAGE;
+  const currentReviews = reviews.slice(indexOfFirstReview, indexOfLastReview);
+  const totalPages = Math.ceil(reviews.length / REVIEWS_PER_PAGE);
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
-  ]
+    // 페이지네이션
+    const renderPageNumbers = () => {
+      const pageNumbers = [];
+      let startPage = Math.max(currentPage - 2, 1);
+      let endPage = Math.min(startPage + 4, totalPages);
+  
+      if (endPage - startPage < 4) {
+        startPage = Math.max(endPage - 4, 1);
+      }
+  
+      for (let i = startPage; i <= endPage; i++) {
+        pageNumbers.push(i);
+      }
+  
+      return pageNumbers;
+    };
 
   return (
     <div className={styled.container}>
@@ -96,34 +139,54 @@ const ProductDetail = () => {
       {/* --------------  후기글 --------------  */}
       <div className={styled.review_container}>
         <h3 className={styled.review_text}>구매후기</h3>
+        {currentReviews.map((review, index) =>(
         <div className={styled.review_box}> 
           <div className={styled.review_profile}>
             <p className={styled.review_name}>name</p>
             <p className={styled.review_date}>2024.05.23</p>
           </div>
+          {/* 이미지 , 상품정보 */}
           <div className={styled.prod_infomation}>
             <img className={styled.prod_img} src="http://via.placeholder.com/50"></img>
             <div className={styled.brief_info_wrap}>
-              <a className={styled.brief_info}>상품 정보</a>
+              <a className={styled.brief_info} href="">상품 정보</a>
             </div>
           </div>
+          {/* 상품평 */}
           <div className={styled.rating_wrap}>
-            <span className={styled.rating}>⭐⭐⭐⭐⭐</span>
+            <span className={styled.rating}>{review.rating}</span>
           </div>
-          <div className={styled.contents_test}>
-            <text>원단좋아요.가격저렴해요.배송이빨라요.친절해요</text>
+          {/* 원단 좋아요 */}
+          <div className={styled.contents_text}> 
+            <p>{review.content}</p>
           </div>
           <div className={styled.photo_review}>
             <ul className={styled.photo_box}>
-              <li><img className={styled.photo} src="http://via.placeholder.com/150" alt="photo"/></li>
-              <li><img className={styled.photo} src="http://via.placeholder.com/150" alt="photo"/></li>
-              <li><img className={styled.photo} src="http://via.placeholder.com/150" alt="photo"/></li>
-              <li><img className={styled.photo} src="http://via.placeholder.com/150" alt="photo"/></li>
+              {review.images.map((img, idx) => (
+              <li key={idx}><img className={styled.user_photo} src={img} alt="user_photo"/></li>
+              ))}
             </ul>
           </div>
         </div>
+        ))}
+        {/* 페이지네이션 버튼 */}
+        <div className={styled.pagination}>
+        <Button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>{"<"}</Button>
+          {renderPageNumbers().map((number) => (
+            <Button
+              key={number}
+              onClick={() => handlePageChange(number)}
+              style={{ fontWeight: currentPage === number ? 'bold' : 'normal' }}
+            >
+              {number}
+            </Button>
+          ))}
+          <Button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>{">"}</Button>
+        </div>
       </div> 
       
+      
+      {/* 모달창 */}
       <Modal
         className={styled.modal}
         open={modalOpen}

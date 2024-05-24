@@ -117,32 +117,42 @@
   margin: auto;
   margin-top: 20px;
   width: 820px;
-  background-color: blue;
+  /* background-color: blue; */
+  border: 1px solid rgb(209, 209, 209);
+  padding: 5px;
 }
 
 .review_box {
-  background-color: aquamarine;
-  width: 820px;
+  /* background-color: aquamarine; */
+  border-top: 1px solid rgb(209, 209, 209);
+  padding: 10px;
 }
 
+/* 구매후기 제목 */
 .review_text {
-  margin-bottom: 10px;
-  background-color: gray;
+  margin-bottom: 20px;
+  /* background-color: gray; */
+  
 }
 
+/* 사용자 이름, 날짜 박스 */
 .review_profile {
-  background-color: brown;
+  /* background-color: brown; */
   display: flex;
   justify-content: space-between;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
+/* 사용자 이름 */
 .review_name {
-  background-color: blueviolet;
+  font-weight: 600;
 }
 
+/* 날짜 */
 .review_date {
-  background-color: blanchedalmond;
+  font-weight: 600;
+  font-size: 12px;
+  color: rgb(189, 185, 185);
 }
 
 .prod_infomation {
@@ -163,10 +173,18 @@
   align-items: center;
 }
 
+/* 인증사진 묶음 */
 .photo_box {
   display: flex;
 }
 
-.photo {
+/* 인증 사진 */
+.user_photo {
   margin: 5px 5px;
+}
+
+/* 페이지네이션 버튼 박스 */
+.pagination {
+  display: flex;
+  justify-content: center;
 }
