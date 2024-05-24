@@ -87,6 +87,20 @@ p{
 .followDel{
     margin: 3px;
 }
+.followBtn{
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 23px;
+    margin-top: 10px;
+    /* border-bottom: 1px solid black; */
+}
+/* .ImgBtn{
+    & input[type="file"]{
+        display:none
+    }
+} */
+
 
 /* Kcal css */
 .Calendar{
@@ -94,6 +108,24 @@ p{
     height: 350px;
     border: none;
     padding: 20px;
+}
+.name{
+    background:#4483FD;
+    padding: 5px;
+    text-align: center;
+    color: white;
+}
+.image{
+    & p{
+        background-color: red;
+        display: flex;
+        justify-content: flex-start;
+    }
+    & img{
+        background-color: #1b3364;
+        display: flex;
+        justify-items: end;
+    }
 }
 
 /* mybuttons */

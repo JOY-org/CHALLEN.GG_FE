@@ -19,7 +19,7 @@ const MyInfo = () => {
 
 
     //로그인된 사용자의 개인정보를 불러옴
-    const GetUserInfo = async()=>{
+    const getUserInfo = async()=>{
         try {
             const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/myinfo`,{
                 headers: {
@@ -28,12 +28,13 @@ const MyInfo = () => {
             })
             setUserProfile(res.data.payload); //개인정보는 들어있다
             console.log(res.data.payload); //개인정보 배열번호를 이곳에서 확인
+            setProfileImg(res.data.payload.img);
         } catch (error){
             console.error(error);
         }
     }
     useEffect(()=>{
-        GetUserInfo();
+        getUserInfo();
     }, []);
 
 
@@ -74,7 +75,6 @@ const MyInfo = () => {
                 }
             })
             setMyPoint(res.data.payload)
-            console.log(res.data.payload);
         }catch(error){
             console.error(error)
         }
@@ -89,28 +89,26 @@ const MyInfo = () => {
 
 
 
-    // 프로필 이미지 업로드하는곳(빽의 미완)
-    //주소바꿔야함
+    // 프로필 이미지 업로드하는곳
     const uploadProfileImg = async (e) => {
+        console.log(e);
+        e.preventDefault();
         // e.target.files[0] 업로드할 파일
         const formData = new FormData();
-        formData.append('img', e.target.files[0])
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/profileimg`,
+        formData.append('img', e.target[0].files[0])
+        //formData.append('nickname', e.target[1].value)
+        const response = await axios.patch(`${process.env.REACT_APP_API_URL}/users`,
         formData,
         {
             headers: {
                 "Content-Type": "multipart/form-data", //내가 보낼 데이터는 이미지이다
                 "Authorization": localStorage.getItem("token"),
             }
+        }
+    );
+        console.log(response.data);
+        setProfileImg(response.data.img);
     }
-);
-    localStorage.setItem(`profileImg_${loginUser.id}`, response.data.img);}
-
-    // 저장한 프로필 이미지를 불러오는 코드
-    useEffect(() => {
-        const key =`profileImg_${loginUser.id}`;
-        setProfileImg(key);
-    }, [loginUser.id]);
 
 
     return (
@@ -119,12 +117,21 @@ const MyInfo = () => {
                 <div className={MyStyle.BgInfo}>
 
                     {/* 프로필 이미지들어갈곳 */}
+
+                    {/* <form onSubmit={}>
+                        <input type="text" name='nickname' />
+                        <button type='submit'>save</button>
+                    </form> */}
                     <div className={MyStyle.profileImg}>
-                            <img
-                                src={`http://localhost:8000/uploads/user/${profileImg}.png`}
-                                onError={(e) => e.target.src = `http://localhost:8000/uploads/default.png`}
-                            />
+                        <img
+                            src={`http://localhost:8000/${profileImg}`}
+                        />
                     </div>
+                    <form onSubmit={uploadProfileImg} className={MyStyle.ImgBtn}>
+                        <button htmlFor="fileInput">프로필선택</button>
+                        <input type="file" id="fileInput" />
+                        <button type='submit'>change</button>
+                    </form>
 
                     {userProfile ? <p className={MyStyle.Nick}>{userProfile.nickname}</p> : <p>Loading...</p>}
                     {userProfile ? <p className={MyStyle.Lv}>{level}</p> : <p>Loading...</p>}
