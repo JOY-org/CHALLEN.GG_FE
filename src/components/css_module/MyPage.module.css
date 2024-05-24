@@ -95,11 +95,29 @@ p{
     margin-top: 10px;
     /* border-bottom: 1px solid black; */
 }
-/* .ImgBtn{
+.ImgBtn{
+    display: flex;
+    justify-content: center;
+    font-size: 10px;
+    color: #4483FD;
+    margin-bottom: 10px;
     & input[type="file"]{
         display:none
     }
-} */
+    & button{
+        margin-left: 5px;
+        font-size: 10px;
+        background-color: #4483FD;
+        color: white;
+        border: none;
+        padding: 0px 3px;
+        border-radius: 5px;
+        &:hover{
+            background-color: white;
+            color: #4483FD;
+        }
+    }
+}
 
 
 /* Kcal css */

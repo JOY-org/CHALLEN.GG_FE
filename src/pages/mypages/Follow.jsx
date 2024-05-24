@@ -47,21 +47,16 @@ export default Follow;
 Modal.setAppElement("#root");
 
 //팔로워리스트 모달창
-export const FollowList = ({isOpen, onRequestClose ,user,followingOpen}) => {
-
+export const FollowList = ({isOpen, onRequestClose ,user}) => {
     const { loginUser } = useAuth();
-
     //이미지를 가져오는
     const [profileImg, setProfileImg] = useState("");
-
     //팔로워리스트
     const [followerList, setFollowerList] = useState([]);
     //팔로잉리스트
     const [followingList, setFollowingList] = useState([]);
-
     //팔로우하기
     const [followYou, setfollowYou] = useState([]);
-
     //팔로워리스트
     const getFollowerList = async () =>{
         try {
@@ -95,11 +90,24 @@ export const FollowList = ({isOpen, onRequestClose ,user,followingOpen}) => {
         }
     }
 
-    //로컬에 저장한 프로필 이미지를 불러오는 코드
-    useEffect(() => {
-        const key =`profileImg_${loginUser.id}`;
-        setProfileImg(key);
-    }, [loginUser.id]);
+    //디비 저장한 프로필 이미지를 불러오는 코드
+    const getProfileImg = async()=>{
+        try{
+            const id =  user.id
+            const res =await axios.post(`${process.env.REACT_APP_API_URL}/users/image`,{
+                headers:{
+                    "Authorization": localStorage.getItem('token')
+                },data:{
+                    id:id
+                }
+            });
+            if(res.data.code === 2000){
+                setProfileImg(res.data.payload)
+            }
+    } catch(err){
+        console.error(err);
+    }
+}
 
     //(언팔로워) 삭제버튼
     const unFollow = async (id) => {
@@ -145,6 +153,7 @@ export const FollowList = ({isOpen, onRequestClose ,user,followingOpen}) => {
     useEffect(()=>{
         getFollowerList();
         getFollowingList();
+        getProfileImg ();
     },[])
 
 
@@ -174,8 +183,8 @@ export const FollowList = ({isOpen, onRequestClose ,user,followingOpen}) => {
                     <li key={follower.id}>
                         <div>
                             <img className={MyStyle.followImg}
-                                src={`http://localhost:8000/uploads/user/${profileImg}.png`}
-                                onError={(e) => e.target.src =  `http://localhost:8000/uploads/user/default.png`}
+                                src={`http://localhost:8000/${profileImg}`}
+                                //onError={(e) => e.target.src =  `http://localhost:8000/uploads/user/default.png`}
                             />
                         </div>
                         <div className={MyStyle.flexContainer}>
