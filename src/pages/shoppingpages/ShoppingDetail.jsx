@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Modal } from "@mui/material";
 import styled from "../../../../CHALLEN.GG_FE/src/components/css_module/ShoppingDetail.module.css";
 import { Link, useLocation } from 'react-router-dom'; // ShoppingList에서 가져옴.
+import Pagination from './components/ReviewPagination';
 
 // 페이지네이션 임시 데이터
 const reviews = [
@@ -50,23 +51,6 @@ const ProductDetail = () => {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
-    // 페이지네이션
-    const renderPageNumbers = () => {
-      const pageNumbers = [];
-      let startPage = Math.max(currentPage - 2, 1);
-      let endPage = Math.min(startPage + 4, totalPages);
-  
-      if (endPage - startPage < 4) {
-        startPage = Math.max(endPage - 4, 1);
-      }
-  
-      for (let i = startPage; i <= endPage; i++) {
-        pageNumbers.push(i);
-      }
-  
-      return pageNumbers;
-    };
 
   return (
     <div className={styled.container}>
@@ -169,22 +153,14 @@ const ProductDetail = () => {
           </div>
         </div>
         ))}
-        {/* 페이지네이션 버튼 */}
-        <div className={styled.pagination}>
-        <Button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>{"<"}</Button>
-          {renderPageNumbers().map((number) => (
-            <Button
-              key={number}
-              onClick={() => handlePageChange(number)}
-              style={{ fontWeight: currentPage === number ? 'bold' : 'normal' }}
-            >
-              {number}
-            </Button>
-          ))}
-          <Button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>{">"}</Button>
-        </div>
+        <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        handlePageChange={handlePageChange}
+        styled={styled}
+        />
       </div> 
-      
+
       
       {/* 모달창 */}
       <Modal
