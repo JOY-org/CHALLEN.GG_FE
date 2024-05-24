@@ -27,7 +27,7 @@ const MyInfo = () => {
                 }
             })
             setUserProfile(res.data.payload); //개인정보는 들어있다
-            console.log(res.data.payload); //개인정보 배열번호를 이곳에서 확인
+            //console.log(res.data.payload); //개인정보 배열번호를 이곳에서 확인
             setProfileImg(res.data.payload.img);
         } catch (error){
             console.error(error);
@@ -110,27 +110,47 @@ const MyInfo = () => {
         setProfileImg(response.data.img);
     }
 
+    const uploadPnickname= async (e) => {
+        console.log(e);
+        e.preventDefault();
+        // e.target.files[0] 업로드할 파일
+        const formData = new FormData();
+        formData.append('img', e.target[0].files[0])
+        //formData.append('nickname', e.target[1].value)
+        const response = await axios.patch(`${process.env.REACT_APP_API_URL}/users`,
+        formData,
+        {
+            headers: {
+                "Content-Type": "multipart/form-data", //내가 보낼 데이터는 이미지이다
+                "Authorization": localStorage.getItem("token"),
+            }
+        }
+    );
+        console.log(response.data);
+        setProfileImg(response.data.img);
+    }
+
 
     return (
 
             <div className={MyStyle.MyInfo} >
                 <div className={MyStyle.BgInfo}>
 
-                    {/* 프로필 이미지들어갈곳 */}
-
                     {/* <form onSubmit={}>
                         <input type="text" name='nickname' />
                         <button type='submit'>save</button>
                     </form> */}
+
                     <div className={MyStyle.profileImg}>
                         <img
                             src={`http://localhost:8000/${profileImg}`}
                         />
                     </div>
+
                     <form onSubmit={uploadProfileImg} className={MyStyle.ImgBtn}>
-                        <button htmlFor="fileInput">프로필선택</button>
                         <input type="file" id="fileInput" />
-                        <button type='submit'>change</button>
+                        <label htmlFor="fileInput">프로필선택</label>
+                        <button type='submit' >change</button>
                     </form>
 
                     {userProfile ? <p className={MyStyle.Nick}>{userProfile.nickname}</p> : <p>Loading...</p>}
