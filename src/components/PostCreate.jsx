@@ -55,8 +55,7 @@ export default function PostCreate({commId, setPosts, posts}) {
                     title: "게시글 등록!",
                     icon: "success"
                 });
-                console.log(res.payload);
-                setPosts([...posts, res.payload]);
+                setPosts([res.payload, ...posts]);
                 console.log(posts);
                 handleClose();
             }else {

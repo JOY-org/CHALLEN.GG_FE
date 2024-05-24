@@ -12,13 +12,35 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useState } from "react";
 import { Button } from "@mui/material";
+import { postApi } from "../api/services/post";
+import { useAuth } from "../hooks/useAuth";
+import axios from "axios";
+import { useCallback } from "react";
+import Swal from "sweetalert2";
 
 
 
-export default function CommunityPostModal({postDetail}) {
+export default function CommunityPostModal({postDetail, setPosts, posts, handleClosePost}) {
+  const {loginUser} = useAuth()
 
-  const [handleLikeColor, setHandleLikeColor] = useState(true);
-  const [handleFollow, setHandleFollow] = useState(true);
+  const [myFollowing, setMyFollowing] = useState();
+
+    const deletePost = async (id) => {
+      const res = await axios.delete(`${process.env.REACT_APP_API_URL}/post/${id}`, {
+          headers: {
+              "Authorization": localStorage.getItem("token"),
+          },
+      });
+      if (res.data.code === 200) {
+          setPosts(posts.filter(p => p.id !== id));
+          Swal.fire({
+              text: res.data.message,
+              icon: "success"
+          })
+          handleClosePost()
+      }
+  }
+
 
   
 
@@ -30,12 +52,8 @@ export default function CommunityPostModal({postDetail}) {
               src='https://images.unsplash.com/photo-1551884831-bbf3cdc6469e?q=80&w=1948&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
             />
           }
-          action={
-            <Button variant="text" onClick={()=>{setHandleFollow(!handleFollow)}}>
-              팔로우 {handleFollow ? '취소' : ''}
-            </Button>
-          }
-          title="닉네임"
+
+          title={postDetail.User.nickname}
           subheader={postDetail.createdAt.slice(0,10)}
         />
         <CardMedia
@@ -49,18 +67,20 @@ export default function CommunityPostModal({postDetail}) {
             {postDetail.content}
           </Typography>
         </CardContent>
-        <CardActions disableSpacing>
-          <IconButton onClick={()=>{setHandleLikeColor(!handleLikeColor)}}>
-            {handleLikeColor ? 
-              <FavoriteBorderIcon style={{color:'red'}}/> 
-              : 
-              <FavoriteIcon style={{color:'red'}}/>}
-          </IconButton>
-
-          <IconButton>
-            <ModeCommentIcon />
-          </IconButton>
-
+        <CardActions style={{display:'flex', justifyContent:'space-between'}}>
+          <div>
+            <IconButton>
+                <FavoriteBorderIcon style={{color:'red'}}/> 
+                {/* <FavoriteIcon style={{color:'red'}}/> */}
+            </IconButton>
+            <IconButton>
+              <ModeCommentIcon />
+            </IconButton>
+          </div>
+          {loginUser.id === postDetail.UserId &&
+            <Button onClick={()=>deletePost(postDetail.id)}>삭제</Button>
+          }
+          
         </CardActions>
       </Card>
   );

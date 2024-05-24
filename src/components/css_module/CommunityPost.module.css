@@ -96,6 +96,14 @@ section.notice {
     text-align: center;
 }
 
+.thtitle{
+    width: 500px;
+}
+
+.thwriter{
+    width: 150px;
+}
+
 .boardTable .thDate {
     width: 200px;
 }
@@ -190,7 +198,7 @@ section.notice {
 }
 
 .container {
-    width: 900px;
+    width: 1000px;
     margin: 0 auto;
 }
 

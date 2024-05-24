@@ -6,6 +6,7 @@ import { Pagination } from '@mui/material';
 import PostCreate from '../components/PostCreate';
 import PostModal from '../components/PostModal';
 import { postApi } from "../api/services/post";
+import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
 
 const CommunityPost = () => {
     const navigate = useNavigate()
@@ -43,6 +44,7 @@ const CommunityPost = () => {
         try {
             const res = await postApi.getPostsByCommId(commId);
             setPosts(res.payload);
+            console.log(posts);
         } catch (error) {
             console.error(error);
         }
@@ -96,10 +98,9 @@ const CommunityPost = () => {
                     <table className={styles.boardTable}>
                         <thead>
                         <tr>
-                            <th scope="col" className={styles.thNum}>번호</th>
-                            <th scope="col">제목</th>
-                            <th scope="col">추천수</th>
-                            <th scope="col">작성자</th>
+                            <th scope="col" className={styles.thNum}>추천수</th>
+                            <th scope="col" className={styles.thtitle}>제목</th>
+                            <th scope="col" className={styles.thwriter}>작성자</th>
                             <th scope="col" className={styles.thDate}>등록일</th>
                         </tr>
                         </thead>
@@ -109,10 +110,11 @@ const CommunityPost = () => {
                                 .map((p)=>{
                                     return(
                                         <tr className={styles.postTitle} onClick={()=>handleClickOpenPost(p)}>
-                                            <td>{p.id}</td>
-                                            <th>{p.title} <span className={styles.commentColor}>[6]</span> </th>
-                                            <td className={styles.postLike}>8</td>
-                                            <td></td>
+                                            <td className={styles.postLike}>0</td>
+                                            <th>{p.title} 
+                                                <span className={styles.commentColor}>[0]</span> 
+                                            </th>
+                                            <td>{p.User.nickname}</td>
                                             <td>{p.createdAt.slice(0,10)}</td>
                                         </tr>
                                     )
@@ -130,6 +132,8 @@ const CommunityPost = () => {
                     postDetail={postDetail}
                     open={open} 
                     handleClosePost={handleClosePost}
+                    setPosts={setPosts}
+                    posts={posts}
                 />
             }
 
