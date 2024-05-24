@@ -70,12 +70,12 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
             style={customStyles}
             contentLabel="Followers List"
         >
-            <h3>챌린지 기획서</h3>
-            <div>
+            <h3 className={MyStyle.name}>챌린지 기획서</h3>
+            <div className={MyStyle.image}>
                 <p>대표이미지</p>
                 <img
                     src={`http://localhost:8000/uploads/challenge/${challengeImg}.png`}
-                    onError={(e) => e.target.src = `http://localhost:8000/uploads/default.png`}
+                    onError={(e) => e.target.src = `http://localhost:8000/uploads/challenge/default.png`}
                 />
                 <input type='file' onChange={UploadchallengeImg}></input>
                 <div>

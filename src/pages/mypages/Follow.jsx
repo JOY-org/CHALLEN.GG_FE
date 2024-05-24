@@ -24,7 +24,7 @@ const Follow = ({user}) => {
     }
 
     return (
-    <>
+    <div className={MyStyle.followBtn}>
         <Button onClick={followerOpen}>팔로워</Button>
         <FollowList
             isOpen={modalOpen}
@@ -37,7 +37,7 @@ const Follow = ({user}) => {
             onRequestClose={modalClose}
             user={user}
         />
-    </>
+    </div>
     );
 }
 
@@ -148,6 +148,7 @@ export const FollowList = ({isOpen, onRequestClose ,user,followingOpen}) => {
     },[])
 
 
+
     const customStyles = {
         content: {
             top: "50%",
@@ -174,7 +175,7 @@ export const FollowList = ({isOpen, onRequestClose ,user,followingOpen}) => {
                         <div>
                             <img className={MyStyle.followImg}
                                 src={`http://localhost:8000/uploads/user/${profileImg}.png`}
-                                onError={(e) => e.target.src = `http://localhost:8000/uploads/default.png`}
+                                onError={(e) => e.target.src =  `http://localhost:8000/uploads/user/default.png`}
                             />
                         </div>
                         <div className={MyStyle.flexContainer}>
@@ -184,9 +185,26 @@ export const FollowList = ({isOpen, onRequestClose ,user,followingOpen}) => {
                             <div className={MyStyle.followYou}>
                                 <button
                                     onClick={()=>{handleFollowYou(follower.id)}}
-                                >
-                                        {follower.id === followYou ? "팔로우":"팔로잉"}</button>
-                            </div>
+                                    style={{
+                                        border:'none',
+                                        padding:'3px' ,
+                                        borderRadius:"5px",
+                                        margin:'5px',
+                                        cursor:'pointer',
+                                        backgroundColor: followerList.some(f => f.id === follower.id)
+                                            && followingList.some(f => f.id === follower.id)
+                                            ? "#b5ccfa"  // "팔로잉"일 때의 배경색
+                                            : "#4483FD",  // "팔로워"일 때의 배경색 (기본값)
+                                    }}>
+                                        {followerList.some(f => f.id === follower.id)
+                                        && //.some함수가 하나라도 만족해야되지만 &&때문에 동시에 실행되어 조건을 두개다 만족해야 true
+                                        followingList.some(f => f.id === follower.id)
+                                        ?
+                                        "팔로잉"
+                                        :
+                                        "팔로워"}
+                                        </button>
+                                    </div>
 
                         </div>
                     </li>
@@ -207,7 +225,7 @@ export const FollowList = ({isOpen, onRequestClose ,user,followingOpen}) => {
                         <div>
                             <img className={MyStyle.followImg}
                                 src={`http://localhost:8000/uploads/user/${profileImg}.png`}
-                                onError={(e) => e.target.src = `http://localhost:8000/uploads/default.png`}
+                                onError={(e) => e.target.src = `http://localhost:8000/uploads/user/default.png`}
                             />
                         </div>
                         <div className={MyStyle.flexContainer}>
@@ -215,7 +233,16 @@ export const FollowList = ({isOpen, onRequestClose ,user,followingOpen}) => {
                                 {following.nickname}
                             </div>
                             <div className={MyStyle.followDel}>
-                                <button onClick={()=>{unFollow(following.id)}}>삭제</button>
+                                <button
+                                    onClick={()=>{unFollow(following.id)}}
+                                    style={{
+                                        border:'none',
+                                        padding:'3px' ,
+                                        borderRadius:"5px",
+                                        margin:'5px',
+                                        cursor:'pointer',
+                                    }}
+                                    >언팔로우</button>
                             </div>
                         </div>
                     </li>
