@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Follow from "./Follow";
+import { LabelSharp } from "@mui/icons-material";
 
 const MyInfo = () => {
     const { loginUser } = useAuth();
@@ -16,8 +17,11 @@ const MyInfo = () => {
     const { id } = useParams();
     //포인트
     const [myPoint, setMyPoint] = useState();
-
-
+    //이미지 변경시
+    const [change, setChange] = useState(false);
+    const handleChange=()=>{setChange(true)}
+    //닉네임변경시
+    const [ninkname, setNinkname] = useState("");
     //로그인된 사용자의 개인정보를 불러옴
     const getUserInfo = async()=>{
         try {
@@ -93,10 +97,8 @@ const MyInfo = () => {
     const uploadProfileImg = async (e) => {
         console.log(e);
         e.preventDefault();
-        // e.target.files[0] 업로드할 파일
         const formData = new FormData();
         formData.append('img', e.target[0].files[0])
-        //formData.append('nickname', e.target[1].value)
         const response = await axios.patch(`${process.env.REACT_APP_API_URL}/users`,
         formData,
         {
@@ -107,27 +109,26 @@ const MyInfo = () => {
         }
     );
         console.log(response.data);
-        setProfileImg(response.data.img);
+        setProfileImg(response.data.img + `?timestamp=${new Date().getTime()}`); //이미지 바뀔때마다 url이 바로알수잇도록
+        setChange(false);//클릭에서 다시 프로필 변경 버튼으로
     }
 
     const uploadPnickname= async (e) => {
         console.log(e);
         e.preventDefault();
-        // e.target.files[0] 업로드할 파일
         const formData = new FormData();
-        formData.append('img', e.target[0].files[0])
-        //formData.append('nickname', e.target[1].value)
+        formData.append('nickname', e.target[0].value)
         const response = await axios.patch(`${process.env.REACT_APP_API_URL}/users`,
         formData,
         {
             headers: {
-                "Content-Type": "multipart/form-data", //내가 보낼 데이터는 이미지이다
+                "Content-Type": "application/json",
                 "Authorization": localStorage.getItem("token"),
             }
         }
     );
         console.log(response.data);
-        setProfileImg(response.data.img);
+        //setNinkname(response.data.img);
     }
 
 
@@ -135,28 +136,34 @@ const MyInfo = () => {
 
             <div className={MyStyle.MyInfo} >
                 <div className={MyStyle.BgInfo}>
-
-                    {/* <form onSubmit={}>
-                        <input type="text" name='nickname' />
-                        <button type='submit'>save</button>
-                    </form> */}
-
+                    {/* 프로필이미지 */}
                     <div className={MyStyle.profileImg}>
                         <img
                             src={`http://localhost:8000/${profileImg}`}
                         />
                     </div>
-
-                    <form onSubmit={uploadProfileImg} className={MyStyle.ImgBtn}>
-                        <input type="file" id="fileInput" />
-                        <label htmlFor="fileInput">프로필선택</label>
-                        <button type='submit' >change</button>
+                    {/* 프로필이미지변경버튼 */}
+                    <form onSubmit={uploadProfileImg}  className={MyStyle.ImgBtn}>
+                        <input type="file" id="fileInput" onChange={handleChange} />
+                        {change ?
+                        <button type='submit' >click !</button>
+                        :
+                        <label htmlFor="fileInput" className={MyStyle.profile} >프로필을 변경할까요?</label>
+                        }
                     </form>
-
+                    {/* 닉네임 */}
                     {userProfile ? <p className={MyStyle.Nick}>{userProfile.nickname}</p> : <p>Loading...</p>}
+                    {/* 닉네임변경버튼 */}
+                    {/* <form onSubmit={uploadPnickname}>
+                        <input type="text" name='nickname' id="nickname"/>
+                        <button type='submit'>save</button>
+                        <label htmlFor="nickname">닉네임을 변경할까요</label>
+                    </form> */}
+                    {/* 유저레벨 */}
                     {userProfile ? <p className={MyStyle.Lv}>{level}</p> : <p>Loading...</p>}
+                    {/* 유저포인트 */}
                     {myPoint ? <p className={MyStyle.Lv}>{myPoint.point}Point</p> : <p>Loading...</p>}
-
+                    {/* 팔로우팔로잉버튼 */}
                     {userProfile &&
                         <Follow user={userProfile}/>}
 
