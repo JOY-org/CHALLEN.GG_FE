@@ -3,6 +3,7 @@ import { Button, Modal } from "@mui/material";
 import styled from "../../../../CHALLEN.GG_FE/src/components/css_module/ShoppingDetail.module.css";
 import { Link, useLocation } from 'react-router-dom'; // ShoppingList에서 가져옴.
 import ReviewPagination from './components/ReviewPagination';
+import InquiryPagination from "./components/InquiryPagination";
 
 // 페이지네이션 임시 데이터
 const reviews = [
@@ -42,7 +43,7 @@ const ProductDetail = () => {
     setModalOpen(false); 
   }
 
-  // 페이지 네이션 
+  // 후기글 페이지 네이션 
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastReview = currentPage * REVIEWS_PER_PAGE;
   const indexOfFirstReview = indexOfLastReview - REVIEWS_PER_PAGE;
@@ -51,6 +52,15 @@ const ProductDetail = () => {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
+  // 문의글 페이지 네이션
+  const [currentInquiryPage, setCurrentInquiryPage] = useState(1);
+  const INQUIRIES_PER_PAGE = 5; // 문의글 페이지당 게시물 수
+  const totalInquiryPages = 2; // 예시로 문의글 페이지 수 2로 설정, 실제 데이터로 변경 필요
+  const handleInquiryPageChange = (pageNumber)  => {
+    setCurrentInquiryPage(pageNumber);
+  };
+
 
   return (
     <div className={styled.container}>
@@ -99,11 +109,11 @@ const ProductDetail = () => {
             ))}
           </div>
           <div className={styled.buttons}>
-            <Button onClick={handleAddToCart} style={{ fontWeight: '600', width: '350px', backgroundColor: '#F4F4F4', marginBottom: '10px' }}>장바구니 담기</Button>
+            <button className={styled.cart_button} onClick={handleAddToCart}>장바구니 담기</button>
             <Link to={{
               pathname: '/ShoppingCart',
             }}>
-            <Button style={{ fontWeight: '600', width: '350px', backgroundColor: '#F4F4F4' }}>구매하기</Button>
+            <button className={styled.cart_button} >구매하기</button>
             </Link>
             <Link to='/ShoppingPurchase'>
               <img src="http://via.placeholder.com/30" alt="cart_icon" />
@@ -153,30 +163,34 @@ const ProductDetail = () => {
           </div>
         </div>
         ))}
-        {/* 페이지네이션 컴포넌트 */}
+        {/* 후기 페이지네이션 컴포넌트 */}
         <ReviewPagination
         currentPage={currentPage}
         totalPages={totalPages}
         handlePageChange={handlePageChange}
         styled={styled}
         />
-
       </div> 
-        <div className={styled.QnA_container}>
-          <h3>Q&A 상품문의</h3>
-          <table style={{ width: '100%'}}>
-            <thead classNaem={styled.QnA_title} >
+      {/* -------------- Q&A 상품 문의 -------------- */}
+        <div className={styled.inquiry_container}>
+          <h3 style={{marginBottom: '10px'}}>Q&A 상품문의</h3>
+          <div className={styled.inquiry_write_wrap}>
+          <button className={styled.inquiry_write_btn}>작성하기</button>
+          </div>
+          <table className={styled.inquiry_table}>
+            <thead className={styled.inquiry_title} >
               <tr>
-                <th classNaem={styled.QnA_number} >번호</th>
-                <th classNaem={styled.QnA_state} >답변상태</th>
-                <th classNaem={styled.QnA_} >구분</th>
-                <th classNaem={styled.QnA_} >내용</th>
-                <th classNaem={styled.QnA_} >작성자</th>
-                <th classNaem={styled.QnA_} >등록일자</th>
+                <th className={styled.inquiry_number} >번호</th>
+                <th className={styled.inquiry_state} >답변상태</th>
+                <th className={styled.inquiry_sortation} >구분</th>
+                <th className={styled.inquiry_content} >내용</th>
+                <th className={styled.inquiry_writer} >작성자</th>
+                <th className={styled.inquiry_date} >등록일자</th>
               </tr>
             </thead>
             <tbody>
               <tr>
+                {/* 문의글 임시 데이터 */}
                 <td>1</td>
                 <td>답변완료</td>
                 <td>구분</td>
@@ -186,10 +200,17 @@ const ProductDetail = () => {
               </tr>
             </tbody>
           </table>
+          {/* 문의 페이지네이션 컴포넌트 */}
+          <InquiryPagination
+            currentPage={currentInquiryPage}
+            totalPages={totalInquiryPages}
+            handlePageChange={handleInquiryPageChange}
+            styled={styled}
+          />
         </div>
 
       
-      {/* 모달창 */}
+      {/* -------------- 모달창 -------------- */}
       <Modal
         className={styled.modal}
         open={modalOpen}
@@ -199,7 +220,9 @@ const ProductDetail = () => {
       >
         <div className={styled.modal_box}>
           <h3 className={styled.modal_msg}>장바구니에 추가되었습니다.</h3>
-          <Button className={styled.modal_close_btn} onClick={handleCloseModal}>닫기</Button>
+          <div className={styled.modal_button_wrap}>
+          <button className={styled.modal_close_button} onClick={handleCloseModal}>닫기</button>
+          </div>
         </div>
       </Modal>
     </div>
