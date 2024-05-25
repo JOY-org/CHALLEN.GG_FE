@@ -187,4 +187,12 @@
 .pagination {
   display: flex;
   justify-content: center;
+  border: 1px solid rgb(189, 185, 185);
+}
+
+.QnA_container {
+  width: 820px;
+  background-color: antiquewhite;
+  margin: auto;
+  padding: 5px;
 }

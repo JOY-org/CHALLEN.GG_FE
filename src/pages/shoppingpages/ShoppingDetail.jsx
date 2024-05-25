@@ -2,23 +2,23 @@ import React, { useState } from "react";
 import { Button, Modal } from "@mui/material";
 import styled from "../../../../CHALLEN.GG_FE/src/components/css_module/ShoppingDetail.module.css";
 import { Link, useLocation } from 'react-router-dom'; // ShoppingList에서 가져옴.
-import Pagination from './components/ReviewPagination';
+import ReviewPagination from './components/ReviewPagination';
 
 // 페이지네이션 임시 데이터
 const reviews = [
   { name: 'User1', date: '2024.5.23', rating: "⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User1', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User1', date: '2024.5.23', rating: "⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User1', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User1', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User1', date: '2024.5.23', rating: "⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User1', date: '2024.5.23', rating: "⭐⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User1', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User1', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User1', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User1', date: '2024.5.23', rating: "⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User1', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User1', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User2', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User3', date: '2024.5.23', rating: "⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User4', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User5', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User6', date: '2024.5.23', rating: "⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User7', date: '2024.5.23', rating: "⭐⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User8', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User9', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User10', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User11', date: '2024.5.23', rating: "⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User12', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User13', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
 ]
 
 // 페이지 네이션 페이지당 게시물 수
@@ -126,14 +126,14 @@ const ProductDetail = () => {
         {currentReviews.map((review, index) =>(
         <div className={styled.review_box}> 
           <div className={styled.review_profile}>
-            <p className={styled.review_name}>name</p>
-            <p className={styled.review_date}>2024.05.23</p>
+            <p className={styled.review_name}>{review.name}</p>
+            <p className={styled.review_date}>{review.date}</p>
           </div>
           {/* 이미지 , 상품정보 */}
           <div className={styled.prod_infomation}>
             <img className={styled.prod_img} src="http://via.placeholder.com/50"></img>
             <div className={styled.brief_info_wrap}>
-              <a className={styled.brief_info} href="">상품 정보</a>
+              <a className={styled.brief_info} href='ShoppingDetail'>상품 정보</a>
             </div>
           </div>
           {/* 상품평 */}
@@ -153,13 +153,40 @@ const ProductDetail = () => {
           </div>
         </div>
         ))}
-        <Pagination
+        {/* 페이지네이션 컴포넌트 */}
+        <ReviewPagination
         currentPage={currentPage}
         totalPages={totalPages}
         handlePageChange={handlePageChange}
         styled={styled}
         />
+
       </div> 
+        <div className={styled.QnA_container}>
+          <h3>Q&A 상품문의</h3>
+          <table style={{ width: '100%'}}>
+            <thead classNaem={styled.QnA_title} >
+              <tr>
+                <th classNaem={styled.QnA_number} >번호</th>
+                <th classNaem={styled.QnA_state} >답변상태</th>
+                <th classNaem={styled.QnA_} >구분</th>
+                <th classNaem={styled.QnA_} >내용</th>
+                <th classNaem={styled.QnA_} >작성자</th>
+                <th classNaem={styled.QnA_} >등록일자</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>답변완료</td>
+                <td>구분</td>
+                <td>내용</td>
+                <td>작성자</td>
+                <td>등록일자</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
       
       {/* 모달창 */}
