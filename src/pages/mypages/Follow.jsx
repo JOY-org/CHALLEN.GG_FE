@@ -49,7 +49,7 @@ Modal.setAppElement("#root");
 //팔로워리스트 모달창
 export const FollowList = ({isOpen, onRequestClose ,user}) => {
     const { loginUser } = useAuth();
-    //이미지를 가져오는
+    //이미지를 가져오는(팔로워)
     const [profileImg, setProfileImg] = useState("");
     //팔로워리스트
     const [followerList, setFollowerList] = useState([]);
@@ -94,14 +94,16 @@ export const FollowList = ({isOpen, onRequestClose ,user}) => {
     const getProfileImg = async()=>{
         try{
             const id =  user.id
-            const res =await axios.get(`${process.env.REACT_APP_API_URL}/users`,{
+            await axios.get(`${process.env.REACT_APP_API_URL}/users/followers/${id}`,{
                 headers:{
                     "Authorization": localStorage.getItem('token')
                 }
             });
-            if(res.data.code === 2000){
-                setProfileImg(res.data.payload)
-            }
+            await axios.get(`${process.env.REACT_APP_API_URL}/users/followings/${id}`,{
+                headers:{
+                    "Authorization": localStorage.getItem('token')
+                }
+            });
     } catch(err){
         console.error(err);
     }
@@ -181,7 +183,7 @@ export const FollowList = ({isOpen, onRequestClose ,user}) => {
                     <li key={follower.id}>
                         <div>
                             <img className={MyStyle.followImg}
-                                src={`http://localhost:8000/${profileImg}`}
+                                src={`http://localhost:8000/${follower.img}`}
                             />
                         </div>
                         <div className={MyStyle.flexContainer}>
@@ -230,8 +232,7 @@ export const FollowList = ({isOpen, onRequestClose ,user}) => {
                     <li key={following.id}>
                         <div>
                             <img className={MyStyle.followImg}
-                                src={`http://localhost:8000/uploads/user/${profileImg}.png`}
-                                onError={(e) => e.target.src = `http://localhost:8000/uploads/user/default.png`}
+                                src={`http://localhost:8000/${following.img}`}
                             />
                         </div>
                         <div className={MyStyle.flexContainer}>
