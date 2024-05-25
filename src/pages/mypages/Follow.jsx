@@ -94,11 +94,9 @@ export const FollowList = ({isOpen, onRequestClose ,user}) => {
     const getProfileImg = async()=>{
         try{
             const id =  user.id
-            const res =await axios.post(`${process.env.REACT_APP_API_URL}/users/image`,{
+            const res =await axios.get(`${process.env.REACT_APP_API_URL}/users`,{
                 headers:{
                     "Authorization": localStorage.getItem('token')
-                },data:{
-                    id:id
                 }
             });
             if(res.data.code === 2000){
@@ -184,7 +182,6 @@ export const FollowList = ({isOpen, onRequestClose ,user}) => {
                         <div>
                             <img className={MyStyle.followImg}
                                 src={`http://localhost:8000/${profileImg}`}
-                                //onError={(e) => e.target.src =  `http://localhost:8000/uploads/user/default.png`}
                             />
                         </div>
                         <div className={MyStyle.flexContainer}>
