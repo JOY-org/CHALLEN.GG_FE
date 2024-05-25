@@ -5,9 +5,16 @@ import React, { useState, useEffect } from 'react';
 
 
 const Cart = () => {
-  const location = useLocation(); // 현재 위치의 상태를 가져옴
-  const initialProducts = location.state?.cartItems || []; // 초기 제품목록을 위치 상태에서 가져옴, 없으면 빈 배열 사용. location.state에 있는 cartItems를 초기 목록으로 설정
-  const [products, setProducts] = useState(initialProducts); // 제품목록을 상태로 관리
+  // const location = useLocation(); // 현재 위치의 상태를 가져옴
+  // const initialProducts = location.state?.cartItems || []; // 초기 제품목록을 위치 상태에서 가져옴, 없으면 빈 배열 사용. location.state에 있는 cartItems를 초기 목록으로 설정
+
+  // 임시데이터
+  const initialProcuts = [
+    {name: '상품1', price: 10000, quantity: 1, point: 100, total: 10000, checked: false},
+    {name: '상품2', price: 20000, quantity: 2, point: 200, total: 20000, checked: false},
+    {name: '상품3', price: 30000, quantity: 3, point: 300, total: 30000, checked: false},
+  ]
+  const [products, setProducts] = useState(initialProcuts); // 제품목록을 상태로 관리
   const [allChecked, setAllChecked] = useState(false); // 전체 선택 체크박스 상태 관리
 
   // 전체선택 체크박스
@@ -36,7 +43,7 @@ const Cart = () => {
 
   // 전체선택 상태 업데이트
   useEffect(() => {
-    const allProductsChecked = products.every(product => product.checked);
+    const allProductsChecked = products.length > 0 && products.every(product => product.checked);
     setAllChecked(allProductsChecked); // 모든제품의 checked 상태가 true 인지 확인
   }, [products]); // product 상태가 변경될 때마다 전테 선택 체크박스 상태를 업데이트
   

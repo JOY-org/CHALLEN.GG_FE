@@ -1,7 +1,10 @@
 /* 전체 div, footer와 거리 띄움 */
+
+
 .container {
   margin-bottom: 100px;
 }
+
 
 .main_box{
   display: flex;
@@ -25,13 +28,13 @@
   width: 412px;
   height: 412px;
   background-color: white;
-  padding-left: 10px;
+  padding: 10px;
 }  
 
 /* 상품명, 가격,수량  간격 조정 */
 .info {
   margin-bottom: 40px;
-  padding-left: 30px;
+  padding-left: 20px;
 }
 
 /* 경로 */
@@ -49,9 +52,12 @@
 
 /* 오른쪽 작은 이미지 div*/
 .small_img_box {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
+  height: 70px;
+  display: flex;
   text-align: center;
-  
+  align-items: center;
+  justify-content: center;
 }
 
 .small_img {
@@ -75,6 +81,23 @@
   text-align: center;
 }
 
+.cart_button {
+  background-color: #4483FD;
+  box-shadow: 1px 1px 2px #174194;
+  color: white;
+  border: none;
+  font-weight: 600;
+  width: 350px;
+  height: 38px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.cart_button:active {
+  box-shadow: 1px 1px 4px #174194 inset;
+  background-color: #326de4;
+}
+
 /* 메인 박스와 아래 큰 이미지 구분선 */
 .line {
   border-bottom: 1px solid rgb(218, 218, 218);
@@ -86,20 +109,30 @@
 
 .modal_box {
   width: 400px;
-  height: 100px;
+  height: 150px;
   background-color:white;
   margin: auto;
+  padding: 10px;
   /* align-items: center; */
-  display: flex;
+  /* display: flex; */
   justify-content: center;
 }
 
-
-.modal_close_btn {
-  align-items: end;
-  font-weight: 600;
+.modal_button_wrap {
   display: flex;
   justify-content: end;
+  align-items: center;
+}
+
+.modal_close_button {
+  width: 60px;
+  height: 35px;
+  text-align: center;
+  align-items: end;
+  border: none;
+  font-weight: 600;
+  background-color: #4483FD;
+  color: white;
 }
 
 /* 모달창 메시지 */
@@ -116,33 +149,40 @@
 .review_container {
   margin: auto;
   margin-top: 20px;
+  margin-bottom: 20px;
   width: 820px;
-  background-color: blue;
+  border: 1px solid rgb(209, 209, 209);
+  padding: 5px;
 }
 
 .review_box {
-  background-color: aquamarine;
-  width: 820px;
+  border-top: 1px solid rgb(209, 209, 209);
+  padding: 10px;
 }
 
+/* 구매후기 제목 */
 .review_text {
-  margin-bottom: 10px;
-  background-color: gray;
+  margin-bottom: 20px;
+  
 }
 
+/* 사용자 이름, 날짜 박스 */
 .review_profile {
-  background-color: brown;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
+/* 사용자 이름 */
 .review_name {
-  background-color: blueviolet;
+  font-weight: 600;
 }
 
+/* 날짜 */
 .review_date {
-  background-color: blanchedalmond;
+  font-weight: 600;
+  font-size: 12px;
+  color: rgb(189, 185, 185);
 }
 
 .prod_infomation {
@@ -163,10 +203,80 @@
   align-items: center;
 }
 
+/* 인증사진 묶음 */
 .photo_box {
   display: flex;
 }
 
-.photo {
+/* 인증 사진 */
+.user_photo {
   margin: 5px 5px;
+}
+
+/* 페이지네이션 버튼 박스 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  border: 1px solid rgb(189, 185, 185);
+}
+
+/* 문의글 박스 */
+.inquiry_container {
+  width: 820px;
+  margin: auto;
+  margin-top: 40px;
+  padding: 5px;
+  border: 1px solid rgb(189, 185, 185);
+}
+
+/* 문의글 테이블 */
+.inquiry_table {
+  width: 100%;
+  text-align: center;
+}
+
+/* 문의글 테이블 제목 */
+.inquiry_title {
+  background-color: #4483FD;
+  color: white;
+  height: 30px;
+}
+
+/* 문의글 번호 */
+.inquiry_number {
+  width: 60px;
+}
+
+/* 문의글 답변 상태 */
+.inquiry_state {
+  width: 80px
+}
+
+/* 문의글 구분 */
+.inquiry_sortation {
+  width: 100px;
+}
+
+/* 문의글 작성자 */
+.inquiry_writer {
+  width: 100px;
+}
+
+/* 문의글 등록일 */
+.inquiry_date {
+  width: 100px;
+}
+
+/* 문의글 작성하기 버튼 wrap */
+.inquiry_write_wrap {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 5px;
+}
+
+/* 문의글 작성하기 버튼 */
+.inquiry_write_btn {
+  width: 70px;
+  height: 25px;
+  cursor: pointer;
 }
