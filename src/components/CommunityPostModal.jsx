@@ -48,7 +48,7 @@ export default function CommunityPostModal({
       const res = await axios.post(
         `${process.env.REACT_APP_API_URL}/post/postlike`,
         {
-          id: id,
+          id
         },
         {
           headers: {
@@ -105,7 +105,7 @@ export default function CommunityPostModal({
       },
       {
         headers: {
-          Authorization: localStorage.getItem("token"),
+          Authorization: loginUser.token
         },
       }
     );
@@ -124,7 +124,7 @@ export default function CommunityPostModal({
       `${process.env.REACT_APP_API_URL}/users/follow`,
       {
         headers: {
-          Authorization: localStorage.getItem("token"),
+          Authorization: loginUser.token
         },
         data: {
           id,

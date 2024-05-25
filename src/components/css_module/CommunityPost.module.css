@@ -231,6 +231,10 @@ section.notice {
     height: 56px;
     width: 64px;
 }
+.searchReset{
+    height: 56px;
+    width: 120px;
+}
 
 .commentColor{
     color: green;

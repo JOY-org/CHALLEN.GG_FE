@@ -6,7 +6,7 @@ import { Pagination } from '@mui/material';
 import PostCreate from '../components/PostCreate';
 import PostModal from '../components/PostModal';
 import { postApi } from "../api/services/post";
-import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
+import Swal from 'sweetalert2';
 
 const CommunityPost = () => {
     const navigate = useNavigate()
@@ -16,10 +16,24 @@ const CommunityPost = () => {
     const [curPage, setCurPage] = useState(1);
     const [totalPage, setTotalPage] = useState();
     const [searchWord, setSearchWord] = useState();
+    const [originalPosts, setOriginalPosts] = useState([]);
     const SHOW_POST_NUM = 10;
 
     const search = () => {
-        setPosts(posts.filter( (v) => v.title.includes(searchWord.trim()) ))
+        const trimmedSearchWord = searchWord.trim()
+        if(!trimmedSearchWord){
+            Swal.fire({
+                text: "검색어를 입력해주세요",
+                icon: "error",
+            });
+        }else{
+            setPosts(originalPosts.filter((v) => v.title.includes(trimmedSearchWord)));
+            setSearchWord('');
+        }
+    }
+
+    const searchReset = () => {
+        setPosts(originalPosts);
     }
 
     const obj = {
@@ -44,7 +58,7 @@ const CommunityPost = () => {
         try {
             const res = await postApi.getPostsByCommId(commId);
             setPosts(res.payload);
-            console.log(posts);
+            setOriginalPosts(res.payload)
         } catch (error) {
             console.error(error);
         }
@@ -83,11 +97,12 @@ const CommunityPost = () => {
                     <div className={styles.searchWindow}>
                         <TextField 
                             id="standard-basic" 
-                            label="검색어를 입력하세요" 
+                            label="검색어(제목)를 입력하세요" 
                             className={styles.searchInput} 
                             onChange={(e)=>setSearchWord(e.target.value)}
                         />
-                        <Button variant="contained" className={styles.searchBtn} sx={{mr:'30px'}} onClick={search}>검색</Button>
+                        <Button variant="contained" className={styles.searchBtn} onClick={search}>검색</Button>
+                        <Button variant="contained" className={styles.searchReset} onClick={searchReset}>검색 초기화</Button>
                         <PostCreate commId={commId} setPosts={setPosts} posts={posts}/>
                     </div>
                 </div>
