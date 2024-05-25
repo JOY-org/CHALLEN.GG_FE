@@ -21,7 +21,11 @@ const MyInfo = () => {
     const [change, setChange] = useState(false);
     const handleChange=()=>{setChange(true)}
     //닉네임변경시
-    const [ninkname, setNinkname] = useState("");
+    const [ninkname, setNinkname] = useState(false);
+    //닉네임변경시
+    const openName = () =>{setNinkname(true)}
+    const closeName = () =>{setNinkname(false)}
+
     //로그인된 사용자의 개인정보를 불러옴
     const getUserInfo = async()=>{
         try {
@@ -112,7 +116,7 @@ const MyInfo = () => {
         setProfileImg(response.data.img + `?timestamp=${new Date().getTime()}`); //이미지 바뀔때마다 url이 바로알수잇도록
         setChange(false);//클릭에서 다시 프로필 변경 버튼으로
     }
-
+    //닉네임 바꾸는 코드
     const uploadPnickname= async (e) => {
         console.log(e);
         e.preventDefault();
@@ -128,7 +132,8 @@ const MyInfo = () => {
         }
     );
         console.log(response.data);
-        //setNinkname(response.data.img);
+        setNinkname(response.data.img + `?timestamp=${new Date().getTime()}`);
+        closeName();
     }
 
 
@@ -154,12 +159,29 @@ const MyInfo = () => {
                     {/* 닉네임 */}
                     {userProfile ? <p className={MyStyle.Nick}>{userProfile.nickname}</p> : <p>Loading...</p>}
                     {/* 닉네임변경버튼 */}
-                    {/* <form onSubmit={uploadPnickname}>
-                        <input type="text" name='nickname' id="nickname"/>
-                        <button type='submit'>save</button>
-                        <label htmlFor="nickname">닉네임을 변경할까요</label>
-                    </form> */}
-                    {/* 유저레벨 */}
+                    <form onSubmit={uploadPnickname}>
+                        <label htmlFor="changename" className={MyStyle.changname} onClick={openName}>닉네임을 변경할까요?</label>
+                        {ninkname?
+                            <div className={MyStyle.changBtn}>
+                                <input
+                                    type="text"
+                                    name='nickname'
+                                    id="changename"
+                                    placeholder="닉네임을 입력해주세요"/>
+                                <button type='submit'>save</button>
+                            </div>
+                            :
+                            <div className={MyStyle.changBtn} style={{display:'none' }}>
+                                <input
+                                    type="text"
+                                    name='nickname'
+                                    id="changename"
+                                    placeholder="닉네임을 입력해주세요"/>
+                                <button type='submit' >save</button>
+                            </div>}
+                    </form>
+
+                    {/* 유저레벨 레벨을 강조해주세요 각 레벨별로 색으로 표시하는등*/}
                     {userProfile ? <p className={MyStyle.Lv}>{level}</p> : <p>Loading...</p>}
                     {/* 유저포인트 */}
                     {myPoint ? <p className={MyStyle.Lv}>{myPoint.point}Point</p> : <p>Loading...</p>}

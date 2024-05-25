@@ -98,6 +98,21 @@ p{
         color:#888181;
     }
 }
+/* 닉네임을 변경할까요? */
+.changname{
+    display: flex;
+    justify-content: center;
+    font-size: 10px;
+    color: #aecbfd;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+/* 닉네임을 입력해주세요 input */
+.changBtn{
+    display: flex;
+    justify-content: center;
+    border: none;
+}
 
 /* myinfo팔로우 */
 
@@ -105,6 +120,7 @@ p{
     width: 25px;
     height: 25px;
     margin-top: 6px;
+    border-radius: 50%;
 }
 
 .flexContainer {
