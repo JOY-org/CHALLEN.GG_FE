@@ -1,4 +1,4 @@
-import { Button, Stack, TextField} from '@mui/material';
+import { Button, IconButton, InputAdornment, Stack, TextField} from '@mui/material';
 import styles from '../components/css_module/CommunityPost.module.css'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -7,6 +7,8 @@ import PostCreate from '../components/PostCreate';
 import PostModal from '../components/PostModal';
 import { postApi } from "../api/services/post";
 import Swal from 'sweetalert2';
+import SearchIcon from '@mui/icons-material/Search';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
 const CommunityPost = () => {
     const navigate = useNavigate()
@@ -20,7 +22,8 @@ const CommunityPost = () => {
     const SHOW_POST_NUM = 10;
 
     const search = () => {
-        const trimmedSearchWord = searchWord.trim()
+        // searchWord가 null이나 undefined일 수 있는 상황에서 안전하게 문자열의 공백을 제거한 값을 처리하기 위해 사용
+        const trimmedSearchWord = searchWord?.trim()
         if(!trimmedSearchWord){
             Swal.fire({
                 text: "검색어를 입력해주세요",
@@ -34,6 +37,7 @@ const CommunityPost = () => {
 
     const searchReset = () => {
         setPosts(originalPosts);
+        setSearchWord('');
     }
 
     const obj = {
@@ -99,10 +103,21 @@ const CommunityPost = () => {
                             id="standard-basic" 
                             label="검색어(제목)를 입력하세요" 
                             className={styles.searchInput} 
+                            value={searchWord}
                             onChange={(e)=>setSearchWord(e.target.value)}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton onClick={search}>
+                                            <SearchIcon className={styles.searchIcon}/>
+                                        </IconButton>
+                                        <IconButton onClick={searchReset}>
+                                            <RestartAltIcon className={styles.resetIcon}/>
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
                         />
-                        <Button variant="contained" className={styles.searchBtn} onClick={search}>검색</Button>
-                        <Button variant="contained" className={styles.searchReset} onClick={searchReset}>검색 초기화</Button>
                         <PostCreate commId={commId} setPosts={setPosts} posts={posts}/>
                     </div>
                 </div>
@@ -124,9 +139,9 @@ const CommunityPost = () => {
                                 .slice( SHOW_POST_NUM * (curPage-1), SHOW_POST_NUM * curPage )
                                 .map((p)=>{
                                     return(
-                                        <tr className={styles.postTitle} onClick={()=>handleClickOpenPost(p)}>
+                                        <tr className={styles.post} onClick={()=>handleClickOpenPost(p)}>
                                             <td className={styles.postLike}>0</td>
-                                            <th>{p.title} 
+                                            <th className={styles.postTitle}>{p.title}  
                                                 <span className={styles.commentColor}>[0]</span> 
                                             </th>
                                             <td>{p.User.nickname}</td>

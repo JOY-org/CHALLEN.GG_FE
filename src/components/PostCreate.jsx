@@ -8,8 +8,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import Swal from 'sweetalert2';
-import { set, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { postApi } from '../api/services/post';
+import UploadIcon from '@mui/icons-material/Upload';
+
 
 export default function PostCreate({commId, setPosts, posts}) {
     const{
@@ -77,9 +79,10 @@ export default function PostCreate({commId, setPosts, posts}) {
 
     return (
         <React.Fragment>
-            <Button variant="outlined" onClick={handleClickOpen} style={{height:'56px'}}>
+            <Button variant="contained" endIcon={<UploadIcon />} onClick={handleClickOpen} style={{height:'56px'}}>
                 게시글 등록
-            </Button>
+            </Button>   
+            
             <Dialog
             open={open}
             onClose={handleClose}

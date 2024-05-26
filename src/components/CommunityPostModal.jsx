@@ -9,12 +9,12 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ModeCommentIcon from "@mui/icons-material/ModeComment";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Button } from "@mui/material";
 import { useAuth } from "../hooks/useAuth";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useState } from "react";
-import { useCallback } from "react";
 import { useEffect } from "react";
 
 export default function CommunityPostModal({
@@ -43,40 +43,6 @@ export default function CommunityPostModal({
     }
   };
 
-  const likePost = async (id) => {
-    try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_API_URL}/post/postlike`,
-        {
-          id
-        },
-        {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        }
-      );
-      if (res.data.code === 200) {
-        Swal.fire({
-          text: res.data.message,
-          icon: "success",
-        });
-      } else {
-        Swal.fire({
-          text: res.data.message,
-          icon: "error",
-        });
-      }
-    } catch (error) {
-      Swal.fire({
-        text: "게시물에 좋아요를 누르는 중 오류가 발생했습니다.",
-        icon: "error",
-      });
-    } finally {
-      handleClosePost();
-    }
-  };
-
   // 게시글 작성자 팔로우 관련
   const [myFollowing, setMyFollowing] = useState();
 
@@ -95,6 +61,7 @@ export default function CommunityPostModal({
   }
   useEffect(()=>{
     getFollowings();
+    getLikedPostsByUserId()
   }, []);
 
   const followUser = async (id) => {
@@ -140,6 +107,72 @@ export default function CommunityPostModal({
       handleClosePost();
     }
   };
+  // 게시글 좋아요
+  const [pressedLike, setPressedLike] = useState();
+  const getLikedPostsByUserId = async()=>{
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/post/postlike/likePosts/${loginUser.id}`,{
+            headers: {
+                Authorization: loginUser.token
+            }
+        })
+        setPressedLike(res.data.payload)
+    } catch (error){
+        console.error(error);
+    }
+  }
+
+  const likePost = async (id) => {
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/post/postlike`, {id},
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      );
+      if (res.data.code === 200) {
+        Swal.fire({
+          text: res.data.message,
+          icon: "success",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        text: "게시물에 좋아요를 누르는 중 오류가 발생했습니다.",
+        icon: "error",
+      });
+    } finally {
+      handleClosePost();
+    }
+  };
+
+  const unlikePost = async (id) => {
+    try {
+      const res = await axios.delete(
+        `${process.env.REACT_APP_API_URL}/post/postlike`, {id},
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      );
+      if (res.data.code === 200) {
+        Swal.fire({
+          text: res.data.message,
+          icon: "success",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        text: "게시물에 좋아요 취소를 하는 중 오류가 발생했습니다.",
+        icon: "error",
+      });
+    } finally {
+      handleClosePost();
+    }
+  };
 
   return (
     <Card sx={{ boxShadow: "none" }}>
@@ -172,13 +205,22 @@ export default function CommunityPostModal({
       <CardActions style={{ display: "flex", justifyContent: "space-between" }}>
         <div>
           <IconButton>
-            <FavoriteBorderIcon
-              style={{ color: "red" }}
-              onClick={() => {
+            {pressedLike?.findIndex(f => f.id === postDetail.id) == -1 ?
+              <FavoriteBorderIcon
+                style={{ color: "red" }}
+                onClick={() => {
                 likePost(postDetail.id);
               }}
+              />
+              :
+              <FavoriteIcon 
+                style={{color:'red'}}
+                onClick={()=>{
+                unlikePost(postDetail.id)
+              }}
             />
-            {/* <FavoriteIcon style={{color:'red'}}/> */}
+            }
+            
           </IconButton>
           <IconButton>
             <ModeCommentIcon />
