@@ -26,12 +26,9 @@ export default function PostCreate({commId, setPosts, posts}) {
     const [open, setOpen] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
 
-    // loginUser = null
-    // loginUser = {id: 1, token: 1hnlksdafnlka}
-    // loginUser = {id: null, token: null}
     const handleClickOpen = () => {
         try {
-            if(loginUser.id){
+            if(loginUser){
                 setOpen(true)
             } else {
                 throw new Error();
@@ -51,14 +48,14 @@ export default function PostCreate({commId, setPosts, posts}) {
             formData.append('content', data.content);
             formData.append('img', data.img[0]);
             formData.append('category', commId)
-            const res = await postApi.addPost(formData, loginUser);
-            if (res.code === 200) {
+            const res = await postApi.addPost(formData, localStorage.getItem("token"));
+            if (res.data.code === 200) {
                 Swal.fire({
                     title: "게시글 등록!",
                     icon: "success"
                 });
-                setPosts([res.payload, ...posts]);
-                console.log(posts);
+                // console.log(res.data.payload);
+                setPosts([res.data.payload, ...posts]);
                 handleClose();
             }else {
                 throw new Error('알 수 없는 에러');

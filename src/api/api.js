@@ -15,12 +15,12 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
     (response) => {
-        const res = response.data;
-        if (res) return res;
+        // const res = response.data;
+        // if (res) return res;
         return response;
     },
     (err) => {
-        useRefreshHandler(err);
+        return useRefreshHandler(err);
     }
 );
 
@@ -38,7 +38,7 @@ const useRefreshHandler = async (error) => {
         if (res.status === 200) {
             localStorage.setItem('token', res.data.accessToken);
             originalReq.headers.Authorization = res.data.accessToken;
-            return api.request(originalReq);
+            return await api.request(originalReq);
         }
     }
 }

@@ -2,6 +2,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import CommunityPostModal from './CommunityPostModal';
 import styles from './css_module/PostModal.module.css'
+import { Button, DialogActions } from '@mui/material';
 
 export default function PostModal({open, handleClosePost, postDetail, setPosts, posts}) {
     return (
@@ -22,7 +23,7 @@ export default function PostModal({open, handleClosePost, postDetail, setPosts, 
                     />
                 </DialogContent>
                 {/* <DialogActions>
-                    <Button Button autoFocus onClick={handleClosePost}>
+                    <Button autoFocus onClick={handleClosePost}>
                         닫기
                     </Button>
                 </DialogActions> */}

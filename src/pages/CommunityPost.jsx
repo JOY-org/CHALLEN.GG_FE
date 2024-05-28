@@ -9,8 +9,10 @@ import { postApi } from "../api/services/post";
 import Swal from 'sweetalert2';
 import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import { useAuth } from '../hooks/useAuth';
 
 const CommunityPost = () => {
+    const { logout } = useAuth();
     const navigate = useNavigate()
     const params = useParams();
     const [posts, setPosts] = useState();
@@ -19,7 +21,8 @@ const CommunityPost = () => {
     const [totalPage, setTotalPage] = useState();
     const [searchWord, setSearchWord] = useState();
     const [originalPosts, setOriginalPosts] = useState([]);
-    const SHOW_POST_NUM = 10;
+    
+    const SHOW_POST_NUM = 7;
 
     const search = () => {
         // searchWord가 null이나 undefined일 수 있는 상황에서 안전하게 문자열의 공백을 제거한 값을 처리하기 위해 사용
@@ -61,9 +64,10 @@ const CommunityPost = () => {
     const getPostsByCommId = async(commId) => {
         try {
             const res = await postApi.getPostsByCommId(commId);
-            setPosts(res.payload);
-            setOriginalPosts(res.payload)
+            setPosts(res.data.payload);
+            setOriginalPosts(res.data.payload)
         } catch (error) {
+            // logout();
             console.error(error);
         }
     }
@@ -88,6 +92,12 @@ const CommunityPost = () => {
         setOpen(false);
     };
 
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            search();
+        }
+    };
+
     return ( 
         <section className={styles.notice}>
             <div className={styles.pageTitle}>
@@ -105,6 +115,8 @@ const CommunityPost = () => {
                             className={styles.searchInput} 
                             value={searchWord}
                             onChange={(e)=>setSearchWord(e.target.value)}
+                            autoComplete="off"
+                            onKeyDown={handleKeyDown}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -145,7 +157,8 @@ const CommunityPost = () => {
                                                 <span className={styles.commentColor}>[0]</span> 
                                             </th>
                                             <td>{p.User.nickname}</td>
-                                            <td>{p.createdAt.slice(0,10)}</td>
+                                            <td>{p.createdAt}</td>
+                                            {/* {p.createdAt.slice(0,10)} */}
                                         </tr>
                                     )
                                 })}
