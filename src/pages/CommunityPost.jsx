@@ -1,4 +1,4 @@
-import { Button, IconButton, InputAdornment, Stack, TextField} from '@mui/material';
+import {IconButton, InputAdornment, Stack, TextField} from '@mui/material';
 import styles from '../components/css_module/CommunityPost.module.css'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { useAuth } from '../hooks/useAuth';
+import { getRelativeTime } from '../utils/date';
 
 const CommunityPost = () => {
     const { logout } = useAuth();
@@ -21,7 +22,6 @@ const CommunityPost = () => {
     const [totalPage, setTotalPage] = useState();
     const [searchWord, setSearchWord] = useState();
     const [originalPosts, setOriginalPosts] = useState([]);
-    // post modal 관련
     const [open, setOpen] = useState(false);
     const [postDetail, setPostDetail] = useState(null);
     
@@ -98,14 +98,6 @@ const CommunityPost = () => {
         }
     };
 
-    // const getLikersByPostId = async(id)=>{
-    //     try {
-    //         const res = await postApi.getLikersByPostId(id, localStorage.getItem("token"))
-    //     } catch (error){
-    //         console.error(error);
-    //     }
-    // }
-
     return ( 
         <section className={styles.notice}>
             <div className={styles.pageTitle}>
@@ -162,11 +154,9 @@ const CommunityPost = () => {
                                         <tr className={styles.post} onClick={()=>handleClickOpenPost(p)}>
                                             <td className={styles.postLike}>{p.Likers? p.Likers.length : 0}</td>
                                             <th className={styles.postTitle}>{p.title}  
-                                                {/* <span className={styles.commentColor}>[0]</span>  */}
                                             </th>
                                             <td>{p.User.nickname}</td>
-                                            <td>{p.createdAt}</td>
-                                            {/* {p.createdAt.slice(0,10)} */}
+                                            <td>{getRelativeTime(p.createdAt)}</td>
                                         </tr>
                                     )
                                 })}

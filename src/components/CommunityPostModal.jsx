@@ -12,12 +12,12 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Button } from "@mui/material";
 import { useAuth } from "../hooks/useAuth";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import { useEffect } from "react";
 import { postApi } from './../api/services/post';
 import { userApi } from "../api/services/user";
+import { getRelativeTime } from '../utils/date';
 
 export default function CommunityPostModal({
   postDetail,
@@ -124,7 +124,7 @@ export default function CommunityPostModal({
       <CardHeader
         avatar={<Avatar src={`http://localhost:8000/${postDetail.User.img}`} />}
         title={postDetail.User.nickname}
-        subheader={postDetail.createdAt.slice(0, 10)}
+        subheader={getRelativeTime(postDetail.createdAt)}
         action={ (loginUser && loginUser !== postDetail.UserId) ?
             (myFollowing?.findIndex(f => f.id === postDetail.UserId) !== -1 ?
               <Button onClick={() => unfollowUser(postDetail.UserId)}>팔로우 취소</Button>

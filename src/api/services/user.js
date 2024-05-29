@@ -14,7 +14,7 @@ export const userApi = {
         },
         data: {id}
     }),
-  
+
     getFollowings: (id, token) => api.get(`/users/followings/${id}`, {
         headers: {
             "Authorization": token
