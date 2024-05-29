@@ -22,6 +22,12 @@ export const postApi = {
         }
     }),
 
+    getLikersByPostId: (id, token) => api.get(`post/postlike/likers/${id}`, {
+        headers: {
+            "Authorization": token
+        }
+    }),
+
     likePost: (id, token) => api.post('post/postlike', {id}, {
         headers: {
             "Authorization": token
