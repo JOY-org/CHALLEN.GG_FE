@@ -1,73 +1,49 @@
 import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import { useDemoData } from '@mui/x-data-grid-generator';
-import Popover from '@mui/material/Popover';
-import Typography from '@mui/material/Typography';
-import { jsx } from '@emotion/react';
 import styleHome from "../../../components/css_module/Home.module.css"
-import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
+import axios from 'axios';
+import { useEffect, useState } from "react";
+import { userApi } from "../../../api/services/user";
+
 
 export default function Ranker() {
-    //데이터를 받아오는 코드
-    const { data } = useDemoData({
-    dataSet: 'userid',
-    rowLength: 30,
-    maxColumns: 4,
-    });
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [value, setValue] = React.useState('');
+    //유저의 닉네임,exp,이미지,레벨
+    const [ranker, setRanker ] = useState([]);
+    const [level, setLevel] = useState();
+    //유저정보 가져오기
+    const getUserInfo = async()=>{
+        try {
+            const res = await userApi.getUser()
+            setRanker(res.data.payload);
+        } catch (error){
+            console.error(error);
+        }
+    }
+    useEffect(()=>{
+        getUserInfo();
+    }, []);
 
-    const handlePopoverOpen = (event) => {
-    const field = event.currentTarget.dataset.field;
-    const id = event.currentTarget.parentElement.dataset.id;
-    const row = data.rows.find((r) => r.id === id);
-    setValue(row[field]);
-    setAnchorEl(event.currentTarget);
-    };
+    //랭킹을 exp높은 순서로 내림차순정렬
+    const newRanker =  [...ranker].sort((a,b) => b.exp - a.exp);
 
-    const handlePopoverClose = () => {
-    setAnchorEl(null);
-    };
-
-    const open = Boolean(anchorEl);
 
     return (
-    <div style={{ height: 400, width: '35%' }}>
-    <h1
-        className={styleHome.Ranker}>
-            <MilitaryTechIcon
-                sx={{fontSize: 48}}/>Today best challanger
-    </h1>
-        <DataGrid
-            className={styleHome.RankerList}
-            {...data}
-            slotProps={{
-                cell: {
-                onMouseEnter: handlePopoverOpen,
-                onMouseLeave: handlePopoverClose,
-                },
-            }}
-        />
-        <Popover
-            sx={{
-                pointerEvents: 'none',
-            }}
-            open={open}
-            anchorEl={anchorEl}
-            anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-            }}
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-            }}
-            onClose={handlePopoverClose}
-            disableRestoreFocus
-        >
-        <Typography sx={{ p: 1 }}>{`${value.length} characters.`}</Typography>
-        </Popover>
-    </div>
-
+        <div  className={styleHome.RankerName}>
+            <h1>ToDay ranker</h1>
+            <div>
+                </div>
+            {newRanker.map((r)=>(
+                    <div key={r.id} className={styleHome.Ranker} >
+                    <img
+                        src={`http://localhost:8000/${r.img}`}
+                        alt={`${r.nickname}'s profile`}
+                    />
+                    <div>
+                        <span>{r.nickname}</span>
+                        <span>{r.exp}</span>
+                    </div>
+                </div>
+                )
+            )}
+        </div>
     );
 }

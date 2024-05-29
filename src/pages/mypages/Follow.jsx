@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import MyStyle from "../../components/css_module/MyPage.module.css"
 import { Height, Margin } from "@mui/icons-material";
 import { useAuth } from "../../hooks/useAuth";
+import { userApi } from "../../api/services/user";
 //팔로잉팔로우 모달창
 
 const Follow = ({user}) => {
@@ -48,21 +49,20 @@ Modal.setAppElement("#root");
 
 //팔로워리스트 모달창
 export const FollowList = ({isOpen, onRequestClose ,user}) => {
-    //이미지를 가져오는(팔로워)
-    const [profileImg, setProfileImg] = useState("");
+    //user.js가 아닌 이곳에 토큰을 사용한이유는 새로 토큰을 가져올때 오류 방지
+    const token = localStorage.getItem('token');
     //팔로워리스트
     const [followerList, setFollowerList] = useState([]);
     //팔로잉리스트
     const [followingList, setFollowingList] = useState([]);
     //팔로우하기
     const [followYou, setfollowYou] = useState([]);
+
     //팔로워리스트
     const getFollowerList = async () =>{
         try {
             const id = user.id
-            // console.log(id); 아이디 제대로 찍힘
-            const url = `${process.env.REACT_APP_API_URL}/users/followers/${id}`;
-            const res = await axios.get(url);
+            const res = await userApi.getFollowers(id, token)
             if(res.data.code===200){
                 setFollowerList(res.data.payload)
                 //console.log(res.data.payload); //제대로 가져옴
@@ -72,14 +72,11 @@ export const FollowList = ({isOpen, onRequestClose ,user}) => {
         }
     }
 
-
     //팔로잉리스트
     const getFollowingList = async () =>{
         try {
             const id = user.id
-            // console.log(id); 아이디 제대로 찍힘
-            const url = `${process.env.REACT_APP_API_URL}/users/followings/${id}`;
-            const res = await axios.get(url);
+            const res = await userApi.getFollowings(id, token)
             if(res.data.code===200){
                 setFollowingList(res.data.payload)
                 //console.log(res.data.payload); //제대로 가져옴
@@ -89,42 +86,15 @@ export const FollowList = ({isOpen, onRequestClose ,user}) => {
         }
     }
 
-    //디비 저장한 프로필 이미지를 불러오는 코드
-    const getProfileImg = async()=>{
-        try{
-            const id =  user.id
-            await axios.get(`${process.env.REACT_APP_API_URL}/users/followers/${id}`,{
-                headers:{
-                    "Authorization": localStorage.getItem('token')
-                }
-            });
-            await axios.get(`${process.env.REACT_APP_API_URL}/users/followings/${id}`,{
-                headers:{
-                    "Authorization": localStorage.getItem('token')
-                }
-            });
-    } catch(err){
-        console.error(err);
-    }
-}
 
     //(언팔로워) 삭제버튼
     const unFollow = async (id) => {
         try{
-            const res = await axios.delete(`${process.env.REACT_APP_API_URL}/users/follow`,{
-                headers:{
-                    "Authorization": localStorage.getItem('token')
-                }, data: {
-                    id: id // 삭제하려는 사용자의 ID를 data로 전달
-                }
-            });
+            const res = await userApi.followUser(id, token)
             if(res.data.code === 200) {
                 setFollowingList(prevList => prevList.filter(following => following.id !== id));
-            }else{
-                console.log('API 호출 실패: 상태 코드', res.data.code);
             }
         } catch (error) {
-            // API 호출 중에 발생한 오류를 처리
             console.error('API 호출 중 에러:', error);
         }
     }
@@ -132,29 +102,20 @@ export const FollowList = ({isOpen, onRequestClose ,user}) => {
     //팔로우하기 버튼(팔로워모달창에 존재)
     const handleFollowYou = async(id)=>{
         try{
-            const res = await axios.post(
-                `${process.env.REACT_APP_API_URL}/users/follow`,
-                { id: id },
-                { headers:{ "Authorization": localStorage.getItem('token') }}
-            );
+            const res = await userApi.followUser(id, token)
             if(res.data.code === 200) {
                 setfollowYou(res.data.payload)
-                // 팔로잉 리스트를 갱신
                 getFollowingList();
-            }else{
-                console.log('API 호출 실패: 상태 코드', res.data.code);
             }
         } catch (error) {
-            // API 호출 중에 발생한 오류를 처리
             console.error('API 호출 중 에러:', error);
         }
     }
     useEffect(()=>{
         getFollowerList();
         getFollowingList();
-        getProfileImg ();
-    },[])
 
+    },[])
 
 
     const customStyles = {
