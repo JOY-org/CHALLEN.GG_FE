@@ -21,6 +21,9 @@ const CommunityPost = () => {
     const [totalPage, setTotalPage] = useState();
     const [searchWord, setSearchWord] = useState();
     const [originalPosts, setOriginalPosts] = useState([]);
+    // post modal 관련
+    const [open, setOpen] = useState(false);
+    const [postDetail, setPostDetail] = useState(null);
     
     const SHOW_POST_NUM = 7;
 
@@ -59,7 +62,7 @@ const CommunityPost = () => {
         if(!Object.keys(obj).includes(params.title)){
             navigate('*')
         }
-    }, []);
+    }, [open]);
 
     const getPostsByCommId = async(commId) => {
         try {
@@ -79,9 +82,6 @@ const CommunityPost = () => {
     const handlePage = (e, v) => {
         setCurPage(v);
     }
-    // post modal 관련
-    const [open, setOpen] = useState(false);
-    const [postDetail, setPostDetail] = useState(null);
 
     const handleClickOpenPost = (p) => {
         setPostDetail(p)
@@ -97,6 +97,14 @@ const CommunityPost = () => {
             search();
         }
     };
+
+    // const getLikersByPostId = async(id)=>{
+    //     try {
+    //         const res = await postApi.getLikersByPostId(id, localStorage.getItem("token"))
+    //     } catch (error){
+    //         console.error(error);
+    //     }
+    // }
 
     return ( 
         <section className={styles.notice}>
@@ -130,7 +138,7 @@ const CommunityPost = () => {
                                 ),
                             }}
                         />
-                        <PostCreate commId={commId} setPosts={setPosts} posts={posts}/>
+                        <PostCreate commId={commId} setPosts={setPosts} posts={posts} setOriginalPosts={setOriginalPosts}/>
                     </div>
                 </div>
             </div>
@@ -152,9 +160,9 @@ const CommunityPost = () => {
                                 .map((p)=>{
                                     return(
                                         <tr className={styles.post} onClick={()=>handleClickOpenPost(p)}>
-                                            <td className={styles.postLike}>0</td>
+                                            <td className={styles.postLike}>{p.Likers? p.Likers.length : 0}</td>
                                             <th className={styles.postTitle}>{p.title}  
-                                                <span className={styles.commentColor}>[0]</span> 
+                                                {/* <span className={styles.commentColor}>[0]</span>  */}
                                             </th>
                                             <td>{p.User.nickname}</td>
                                             <td>{p.createdAt}</td>
