@@ -51,7 +51,6 @@ export default function CommunityPostModal({
     }
   }
   useEffect(()=>{
-    console.log(myFollowing);
     getFollowings(loginUser);
     getLikedPostsByUserId(loginUser)
   }, []);

@@ -13,7 +13,7 @@ import { postApi } from '../api/services/post';
 import UploadIcon from '@mui/icons-material/Upload';
 
 
-export default function PostCreate({commId, setPosts, posts}) {
+export default function PostCreate({commId, setPosts, posts, setOriginalPosts}) {
     const{
         register,
         reset,
@@ -24,7 +24,6 @@ export default function PostCreate({commId, setPosts, posts}) {
     const {loginUser} = useAuth();
 
     const [open, setOpen] = useState(false);
-    const [selectedFile, setSelectedFile] = useState(null);
 
     const handleClickOpen = () => {
         try {
@@ -56,6 +55,7 @@ export default function PostCreate({commId, setPosts, posts}) {
                 });
                 // console.log(res.data.payload);
                 setPosts([res.data.payload, ...posts]);
+                setOriginalPosts([res.data.payload, ...posts]);
                 handleClose();
             }else {
                 throw new Error('알 수 없는 에러');
