@@ -1,12 +1,37 @@
 import api from "../api"
 
 export const postApi = {
-    getPostsByCommId: (commId) => api.get(`post/${commId}`),
-    addPost: (data, loginUser) => api.post('post', data, {
+    getPostsByCommId: (id) => api.get(`post/${id}`),
+
+    addPost: (data, token) => api.post('post', data, {
         headers: {
             "Content-Type": "multipart/form-data",
-            "Authorization": loginUser.token,
+            "Authorization": token
         }
     }),
-    // addPostImg: (data) => api.post('posts/image', data, option[1]),
+
+    deletePost : (id, token) => api.delete(`post/${id}`, {
+        headers: {
+            "Authorization": token
+        }
+    }),
+
+    getLikedPostsByUserId : (id, token) => api.get(`post/postlike/likePosts/${id}`, {
+        headers: {
+            "Authorization": token
+        }
+    }),
+
+    likePost: (id, token) => api.post('post/postlike', {id}, {
+        headers: {
+            "Authorization": token
+        }
+    }),
+
+    unlikePost : (id, token) => api.delete(`post/postlike`, {
+        headers: {
+            "Authorization": token
+        },
+        data: {id}
+    }),
 }

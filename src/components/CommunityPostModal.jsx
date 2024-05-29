@@ -16,6 +16,8 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import { useEffect } from "react";
+import { postApi } from './../api/services/post';
+import { userApi } from "../api/services/user";
 
 export default function CommunityPostModal({
   postDetail,
@@ -24,15 +26,9 @@ export default function CommunityPostModal({
   handleClosePost,
 }) {
   const { loginUser } = useAuth();
+
   const deletePost = async (id) => {
-    const res = await axios.delete(
-      `${process.env.REACT_APP_API_URL}/post/${id}`,
-      {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      }
-    );
+    const res = await postApi.deletePost(id, localStorage.getItem("token"))
     if (res.data.code === 200) {
       setPosts(posts.filter((p) => p.id !== id));
       Swal.fire({
@@ -46,76 +42,46 @@ export default function CommunityPostModal({
   // 게시글 작성자 팔로우 관련
   const [myFollowing, setMyFollowing] = useState();
 
-  const getFollowings = async()=>{
+  const getFollowings = async(id)=>{
     try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/followings/${loginUser?.id}`,{
-            headers: {
-                Authorization: loginUser.token
-            }
-        })
+        const res = await userApi.getFollowings(id, localStorage.getItem("token"))
         setMyFollowing(res.data.payload);
-        // console.log(res.data.payload);
     } catch (error){
         console.error(error);
     }
   }
   useEffect(()=>{
-    getFollowings();
-    getLikedPostsByUserId()
+    console.log(myFollowing);
+    getFollowings(loginUser);
+    getLikedPostsByUserId(loginUser)
   }, []);
 
   const followUser = async (id) => {
-    const res = await axios.post(
-      `${process.env.REACT_APP_API_URL}/users/follow`,
-      {
-        id,
-      },
-      {
-        headers: {
-          Authorization: loginUser.token
-        },
-      }
-    );
+    const res = await userApi.followUser(id, localStorage.getItem("token"));
     if (res.data.code === 200) {
       Swal.fire({
         text: res.data.message,
         icon: "success",
       });
-      getFollowings()
-      handleClosePost();
+      getFollowings(loginUser)
     }
   };
 
   const unfollowUser = async (id) => {
-    const res = await axios.delete(
-      `${process.env.REACT_APP_API_URL}/users/follow`,
-      {
-        headers: {
-          Authorization: loginUser.token
-        },
-        data: {
-          id,
-        },
-      }
-    );
+    const res = await userApi.unFollowUser(id, localStorage.getItem("token"));
     if (res.data.code === 200) {
       Swal.fire({
         text: res.data.message,
         icon: "success",
       });
-      getFollowings()
-      handleClosePost();
+      getFollowings(loginUser)
     }
   };
   // 게시글 좋아요
   const [pressedLike, setPressedLike] = useState();
-  const getLikedPostsByUserId = async()=>{
+  const getLikedPostsByUserId = async(id)=>{
     try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/post/postlike/likePosts/${loginUser.id}`,{
-            headers: {
-                Authorization: loginUser.token
-            }
-        })
+        const res = await postApi.getLikedPostsByUserId(id, localStorage.getItem("token"))
         setPressedLike(res.data.payload)
     } catch (error){
         console.error(error);
@@ -124,54 +90,34 @@ export default function CommunityPostModal({
 
   const likePost = async (id) => {
     try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_API_URL}/post/postlike`, {id},
-        {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        }
-      );
+      const res = await postApi.likePost(id, localStorage.getItem("token"));
       if (res.data.code === 200) {
-        Swal.fire({
-          text: res.data.message,
-          icon: "success",
-        });
+        getLikedPostsByUserId(loginUser)
       }
     } catch (error) {
       Swal.fire({
         text: "게시물에 좋아요를 누르는 중 오류가 발생했습니다.",
         icon: "error",
       });
-    } finally {
-      handleClosePost();
     }
   };
 
   const unlikePost = async (id) => {
     try {
-      const res = await axios.delete(
-        `${process.env.REACT_APP_API_URL}/post/postlike`, {id},
-        {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        }
-      );
+      const res = await postApi.unlikePost(id, localStorage.getItem("token"));
       if (res.data.code === 200) {
-        Swal.fire({
-          text: res.data.message,
-          icon: "success",
-        });
+        getLikedPostsByUserId(loginUser)
       }
     } catch (error) {
       Swal.fire({
         text: "게시물에 좋아요 취소를 하는 중 오류가 발생했습니다.",
         icon: "error",
       });
-    } finally {
-      handleClosePost();
-    }
+    } 
+  };
+
+  const handleClick = () => {
+    window.open(`http://localhost:8000/${postDetail.img}`, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -180,7 +126,7 @@ export default function CommunityPostModal({
         avatar={<Avatar src={`http://localhost:8000/${postDetail.User.img}`} />}
         title={postDetail.User.nickname}
         subheader={postDetail.createdAt.slice(0, 10)}
-        action={ (loginUser.id && loginUser.id !== postDetail.UserId) ?
+        action={ (loginUser && loginUser !== postDetail.UserId) ?
             (myFollowing?.findIndex(f => f.id === postDetail.UserId) !== -1 ?
               <Button onClick={() => unfollowUser(postDetail.UserId)}>팔로우 취소</Button>
               :
@@ -193,40 +139,48 @@ export default function CommunityPostModal({
 
       <CardMedia
         component="img"
-        height="200"
+        // height="200"
+        style={{ width: '100%', cursor: 'pointer' }}
         image={`http://localhost:8000/${postDetail.img}`}
+        onClick={handleClick}
         alt="본문 이미지"
       />
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body1" color="text.secondary" style={{textAlign: 'left'}}>
           {postDetail.content}
         </Typography>
       </CardContent>
       <CardActions style={{ display: "flex", justifyContent: "space-between" }}>
         <div>
-          <IconButton>
-            {pressedLike?.findIndex(f => f.id === postDetail.id) == -1 ?
-              <FavoriteBorderIcon
-                style={{ color: "red" }}
-                onClick={() => {
-                likePost(postDetail.id);
-              }}
-              />
-              :
-              <FavoriteIcon 
-                style={{color:'red'}}
-                onClick={()=>{
-                unlikePost(postDetail.id)
-              }}
-            />
-            }
+            {loginUser ? 
+              (pressedLike?.findIndex(f => f.id === postDetail.id) == -1 ?
+                <IconButton>
+                  <FavoriteBorderIcon
+                      style={{ color: "red" }}
+                      onClick={() => {
+                        likePost(postDetail.id);
+                    }}
+                  />
+                </IconButton>
+                :
+                <IconButton>
+                  <FavoriteIcon 
+                    style={{color:'red'}}
+                    onClick={()=>{
+                      unlikePost(postDetail.id)
+                    }}
+                  />
+                </IconButton>
+              )
+            :
+              null
+          }
             
-          </IconButton>
           <IconButton>
             <ModeCommentIcon />
           </IconButton>
         </div>
-        {loginUser.id === postDetail.UserId && (
+        {loginUser === postDetail.UserId && (
           <Button onClick={() => deletePost(postDetail.id)}>삭제</Button>
         )}
       </CardActions>

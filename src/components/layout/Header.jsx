@@ -37,7 +37,7 @@ const Header = () => {
     ]);
     //로그인되어잇을시
     useEffect(()=>{
-        if(loginUser?.id){
+        if(loginUser){
             setMenus([
                 {path: "/", label:"마이메세지",icon:NotificationsIcon},
                 {path: "/community", label:"커뮤니티",icon:PeopleIcon},

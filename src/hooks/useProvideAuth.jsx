@@ -1,12 +1,10 @@
 import { useState } from "react";
 import axios from 'axios';
 import { Cookies } from "react-cookie";
+import { userApi } from "../api/services/user";
 
 export const useProvideAuth = () => {
-    const [loginUser, setLoginUser] = useState({
-        id: localStorage.getItem('userId'), // 아이디가 그대로 노출된다
-        token : localStorage.getItem("token")
-    });
+    const [loginUser, setLoginUser] = useState(localStorage.getItem('userId'));
 
     const login = async (callback1, callback2, data) => {
         try {
@@ -19,9 +17,7 @@ export const useProvideAuth = () => {
                 const token = response.data.accessToken;
                 localStorage.setItem('userId', id); // userId라는 키로 id 값을 저장하는 역할
                 localStorage.setItem('token', token); 
-                setLoginUser({
-                    id, token
-                })
+                setLoginUser(id)
                 callback2()
             }
         } catch (error) {
@@ -29,10 +25,17 @@ export const useProvideAuth = () => {
         }
     }
 
-    const logout = (callback) => {
+    const logout = async (callback) => {
         localStorage.removeItem("userId");
         localStorage.removeItem("token");
-        setLoginUser({id: null, token: null});
+        // try {
+        //     await userApi.delRefreshToken(loginUser);
+        //     setLoginUser();
+        //     window.location.replace('/');
+        // } catch (err) {
+        //     console.error(err);
+        // }
+        setLoginUser();
         callback();
     }
 
@@ -41,10 +44,7 @@ export const useProvideAuth = () => {
         if (cookies.get('accessToken') && cookies.get('userId')) {
             localStorage.setItem('userId', cookies.get('userId'));
             localStorage.setItem('token', cookies.get('accessToken'));
-            setLoginUser({
-                id: cookies.get('userId'),
-                token: cookies.get('accessToken')
-            });  
+            setLoginUser(cookies.get('userId'));  
         } 
         cookies.remove("userId");
         cookies.remove("accessToken");

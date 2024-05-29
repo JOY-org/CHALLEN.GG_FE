@@ -54,9 +54,9 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
 
     useEffect(() => {
         //새로운 챌린지파일 이름
-        const key =`profileImg_${loginUser.id}`;
+        const key =`profileImg_${loginUser}`;
         setChallengeImg(key);
-    }, [loginUser.id]);
+    }, [loginUser]);
 
     const DeleteBtn =()=>{
         CloseModal();

@@ -48,7 +48,6 @@ Modal.setAppElement("#root");
 
 //팔로워리스트 모달창
 export const FollowList = ({isOpen, onRequestClose ,user}) => {
-    const { loginUser } = useAuth();
     //이미지를 가져오는(팔로워)
     const [profileImg, setProfileImg] = useState("");
     //팔로워리스트

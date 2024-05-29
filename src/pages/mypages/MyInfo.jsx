@@ -31,7 +31,7 @@ const MyInfo = () => {
         try {
             const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/myinfo`,{
                 headers: {
-                    Authorization: loginUser.token
+                    Authorization: localStorage.getItem('token')
                 }
             })
             setUserProfile(res.data.payload); //개인정보는 들어있다
