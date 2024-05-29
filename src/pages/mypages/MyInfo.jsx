@@ -92,10 +92,6 @@ const MyInfo = () => {
         point();
     },[])
 
-    //개인정보수정 코드
-    //일단 보류
-
-
 
     // 프로필 이미지 업로드하는곳
     const uploadProfileImg = async (e) => {
@@ -182,13 +178,12 @@ const MyInfo = () => {
                     </form>
 
                     {/* 유저레벨 레벨을 강조해주세요 각 레벨별로 색으로 표시하는등*/}
-                    {userProfile ? <p className={MyStyle.Lv}>{level}</p> : <p>Loading...</p>}
+                    {userProfile ? <p className={MyStyle.Lv}>{level}</p> : <p className={MyStyle.Lv} >Loading...</p>}
                     {/* 유저포인트 */}
-                    {myPoint ? <p className={MyStyle.Lv}>{myPoint.point}Point</p> : <p>Loading...</p>}
+                    {myPoint ? <p className={MyStyle.Lv}>{myPoint.point}Point</p> : <p className={MyStyle.Lv} >Loading...</p>}
                     {/* 팔로우팔로잉버튼 */}
                     {userProfile &&
                         <Follow user={userProfile}/>}
-
                 </div>
             </div>
 

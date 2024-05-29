@@ -90,24 +90,6 @@ export const FollowList = ({isOpen, onRequestClose ,user}) => {
         }
     }
 
-    //디비 저장한 프로필 이미지를 불러오는 코드
-    const getProfileImg = async()=>{
-        try{
-            const id =  user.id
-            await axios.get(`${process.env.REACT_APP_API_URL}/users/followers/${id}`,{
-                headers:{
-                    "Authorization": localStorage.getItem('token')
-                }
-            });
-            await axios.get(`${process.env.REACT_APP_API_URL}/users/followings/${id}`,{
-                headers:{
-                    "Authorization": localStorage.getItem('token')
-                }
-            });
-    } catch(err){
-        console.error(err);
-    }
-}
 
     //(언팔로워) 삭제버튼
     const unFollow = async (id) => {
@@ -153,7 +135,7 @@ export const FollowList = ({isOpen, onRequestClose ,user}) => {
     useEffect(()=>{
         getFollowerList();
         getFollowingList();
-        getProfileImg ();
+        // getProfileImg();
     },[])
 
 
