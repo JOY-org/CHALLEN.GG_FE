@@ -2,6 +2,8 @@ import * as React from 'react';
 import styleHome from "../../../components/css_module/Home.module.css"
 import axios from 'axios';
 import { useEffect, useState } from "react";
+import { userApi } from "../../../api/services/user";
+
 
 export default function Ranker() {
     //유저의 닉네임,exp,이미지,레벨
@@ -9,10 +11,9 @@ export default function Ranker() {
     const [level, setLevel] = useState();
     //유저정보 가져오기
     const getUserInfo = async()=>{
-        try {//여기서 
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/users`)
+        try {
+            const res = await userApi.getUser()
             setRanker(res.data.payload);
-            console.log(res.data.payload);
         } catch (error){
             console.error(error);
         }
