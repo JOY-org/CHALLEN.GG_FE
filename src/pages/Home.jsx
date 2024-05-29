@@ -52,9 +52,6 @@ const Home = () => {
                 <AdMain/>
                 <div className={styleHome.challengeContainer}>
                     <Challenge handleOpen={handleOpen} />
-                    <Challenge handleOpen={handleOpen} />
-                    <Challenge handleOpen={handleOpen} />
-
 
                     <Ranker/>
                 </div>
