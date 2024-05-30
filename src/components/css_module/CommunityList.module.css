@@ -1,13 +1,13 @@
 @font-face {
-    font-family: 'WavvePADO-Regular';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/WavvePADO-Regular.woff2') format('woff2');
-    font-weight: normal;
+    font-family: 'MangoDdobak-B';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/MangoDdobak-B.woff2') format('woff2');
+    font-weight: 700;
     font-style: normal;
 }
 
 .container{
     margin-top: 50px;
-    margin-bottom: 50px;
+
 }
 
 .title{
@@ -15,7 +15,4 @@
     color: white;
 }
 
-.titleName{
-    font-family: 'WavvePADO-Regular';
-    padding-left: 50px;
-}
+

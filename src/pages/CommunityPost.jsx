@@ -24,6 +24,17 @@ const CommunityPost = () => {
     const [originalPosts, setOriginalPosts] = useState([]);
     const [open, setOpen] = useState(false);
     const [postDetail, setPostDetail] = useState(null);
+    const [postComment, setPostComment] = useState();
+
+    const getComment = async (id) => {
+        try{
+            const res = await postApi.getComment(id, localStorage.getItem("token"));
+            setPostComment(res.data.payload);
+        }catch (error) {
+            console.error(error);
+        }
+    };
+    
     
     const SHOW_POST_NUM = 7;
 
@@ -153,8 +164,7 @@ const CommunityPost = () => {
                                     return(
                                         <tr className={styles.post} onClick={()=>handleClickOpenPost(p)}>
                                             <td className={styles.postLike}>{p.Likers? p.Likers.length : 0}</td>
-                                            <th className={styles.postTitle}>{p.title}  
-                                            </th>
+                                            <th className={styles.postTitle}>{p.title} <span className={styles.commentColor}>[ 0 ]</span></th>
                                             <td>{p.User.nickname}</td>
                                             <td>{getRelativeTime(p.createdAt)}</td>
                                         </tr>
@@ -175,6 +185,9 @@ const CommunityPost = () => {
                     handleClosePost={handleClosePost}
                     setPosts={setPosts}
                     posts={posts}
+                    postComment={postComment}
+                    setPostComment={setPostComment}
+                    getComment={getComment}
                 />
             }
 

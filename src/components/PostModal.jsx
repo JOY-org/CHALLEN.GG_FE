@@ -3,7 +3,7 @@ import DialogContent from '@mui/material/DialogContent';
 import CommunityPostModal from './CommunityPostModal';
 import styles from './css_module/PostModal.module.css'
 
-export default function PostModal({open, handleClosePost, postDetail, setPosts, posts}) {
+export default function PostModal({open, handleClosePost, postDetail, setPosts, posts, postComment, setPostComment, getComment}) {
     return (
         <>
             <Dialog
@@ -19,6 +19,9 @@ export default function PostModal({open, handleClosePost, postDetail, setPosts, 
                         posts={posts} 
                         open={open} 
                         handleClosePost={handleClosePost}
+                        postComment={postComment}
+                        setPostComment={setPostComment}
+                        getComment={getComment}
                     />
                 </DialogContent>
             </Dialog>
