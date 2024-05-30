@@ -51,26 +51,34 @@ body {
   height: 210px;
 }
 
-.product_price {
+/* 임시데이터  */
+/* .product_price {
   width: 210px;
   margin-top: 5px;
   text-decoration: line-through;
   color: #b2b2b2;
   font-weight: 600;
-}
+} */
 
-.product_disc_price {
+/* API 데이터 */
+.product_price {
   width: 210px;
-  margin-top: 2px;
+  margin-top: 5px;
   font-weight: 600;
 }
 
-.product_rating {
+/* .product_disc_price {
+  width: 210px;
+  margin-top: 2px;
+  font-weight: 600;
+} */
+
+/* .product_rating {
   width: 210px;
   margin-top: 2px;
   display: flex;
   align-items: center;
-}
+} */
 
 .product_name {
   width: 210px;
@@ -126,4 +134,8 @@ body {
   height: 15px;
   margin-right: 5px;
   vertical-align: middle;
+}
+
+.product_brand {
+  font-size: small;
 }
