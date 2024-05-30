@@ -9,27 +9,31 @@ body {
 
 /* 카드 전체 묶음 div */
 .product_container {
-  margin-top: 10px;
+  margin-top: 40px;
   display: flex;
+  align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   display: grid;
-  grid-template-columns: 230px 230px 230px 230px;
+  grid-template-columns: 240px 240px 240px 240px;
 }
 
 /* 개별 카드 */
 .product_card {
-  width: 230px;
-  height: 340px;
+  padding: 10px;
+  width: 240px;
+  height: 420px;
   text-align: center;
   text-decoration: none;
   cursor: pointer;
+  vertical-align: middle;
 }
 
 .product_card:hover {
   background-color: rgb(247, 250, 253);
 }
+
 
 /* name, discountPrice, price  div */
 .product_details {
@@ -39,14 +43,16 @@ body {
   margin-left: 10px;
 }
 
+
 /* 상품 이미지 */
 .product_img {
-  margin-top: 10px;
+  margin-top: 5px;
   width: 210px;
   height: 210px;
 }
 
 .product_price {
+  width: 210px;
   margin-top: 5px;
   text-decoration: line-through;
   color: #b2b2b2;
@@ -54,15 +60,22 @@ body {
 }
 
 .product_disc_price {
+  width: 210px;
   margin-top: 2px;
   font-weight: 600;
 }
 
 .product_rating {
+  width: 210px;
   margin-top: 2px;
   display: flex;
   align-items: center;
 }
+
+.product_name {
+  width: 210px;
+}
+
 
 /* 카테고리 버튼 */
 .filter_button {
@@ -81,7 +94,7 @@ body {
 }
 
 .filter_buttons {
-  width: 920px;
+  width: 960px;
   margin:auto;
   align-items: center;
   justify-content: center;
@@ -92,7 +105,7 @@ body {
 
 /* 검색 창 */
 .search_input {
-  margin-left: 250px;
+  margin-left: 290px;
   height: 25px;
 }
 

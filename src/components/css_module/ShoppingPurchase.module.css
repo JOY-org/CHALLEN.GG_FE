@@ -149,3 +149,7 @@
   box-shadow: 1px 1px 4px #174194 inset;
   background-color: #326de4;
 }
+
+.table_container {
+  margin-bottom: 20px;
+}

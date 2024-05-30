@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom'; // ShoppingList에서 가�
 import ReviewPagination from './components/ReviewPagination';
 import InquiryPagination from "./components/InquiryPagination";
 
-// 페이지네이션 임시 데이터
+// 후기글 페이지네이션 임시 데이터
 const reviews = [
   { name: 'User1', date: '2024.5.23', rating: "⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
   { name: 'User2', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
@@ -22,8 +22,25 @@ const reviews = [
   { name: 'User13', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
 ]
 
+// 문의글 페이지네이션 임시데이터
+const inquiries = [
+  {id: 1, status: '답변완료', category: '사이즈', content: '상품 관련 문의 합니다.', writer: 'dfkgj24', date: '2024-05-29'},
+  {id: 2, status: '대기중', category: '배송', content: '배송기간 문의 합니다.', writer: 'wkrtjdwk1', date: '2024-05-29'},
+  {id: 3, status: '대기중', category: '상품', content: '상품 관련 문의 합니다.', writer: 'tkdvna12', date: '2024-05-29'},
+  {id: 4, status: '답변완료', category: '기타', content: '상품 관련 문의 합니다.', writer: 'rlxk123', date: '2024-05-29'},
+  {id: 5, status: '대기중', category: '교환', content: '교환 문의 합니다.', writer: 'ryghks1', date: '2024-05-29'},
+  {id: 6, status: '답변완료', category: '반품', content: '반품 문의 합니다.', writer: 'qksvna2', date: '2024-05-29'},
+]
 // 페이지 네이션 페이지당 게시물 수
 const REVIEWS_PER_PAGE = 3;
+const INQUIRIES_PER_PAGE = 5;
+
+// 작성자 아이디 일부 가리기 함수
+const maskWriter = (writer) => {
+  if (writer.length <= 3) return writer; // 이름이 3글자 이하인 경우 그대로 반환
+  const masked = writer.slice(0, 3) + '*'.repeat(writer.length - 3);
+  return masked;
+};
 
 const ProductDetail = () => {
   const location = useLocation(); // ShoppingList에서 카드의 정보를 가져옴.
@@ -55,8 +72,10 @@ const ProductDetail = () => {
 
   // 문의글 페이지 네이션
   const [currentInquiryPage, setCurrentInquiryPage] = useState(1);
-  const INQUIRIES_PER_PAGE = 5; // 문의글 페이지당 게시물 수
-  const totalInquiryPages = 2; // 예시로 문의글 페이지 수 2로 설정, 실제 데이터로 변경 필요
+  const indexOfLastInquiry = currentInquiryPage * INQUIRIES_PER_PAGE;
+  const indexOfFirstInquiry = indexOfLastInquiry - INQUIRIES_PER_PAGE;
+  const currentInquiries = inquiries.slice(indexOfFirstInquiry, indexOfLastInquiry);
+  const totalInquiryPages = Math.ceil(inquiries.length / INQUIRIES_PER_PAGE);
   const handleInquiryPageChange = (pageNumber)  => {
     setCurrentInquiryPage(pageNumber);
   };
@@ -82,11 +101,11 @@ const ProductDetail = () => {
         </div>
         
         <div className={styled.info_box}>
-          <div className={styled.info}>
+          <div className={styled.info_content}>
             {/* product 객체의 속성 접근 시 product? 형식을 이용해 안전하게 접근한다. Cart컴포넌트에서 뒤로가기 누르면 오류가 난거 해결됨. */}
             <h2 style={{ marginBottom: "20px" }}>{product?.name}</h2>
-            <p style={{ marginBottom: "20px" }}>{product?.price}</p>
-            <p style={{ marginBottom: "20px" }}>{product?.discountPrice}</p>
+            <p style={{ marginBottom: "10px" }}>{product?.price}</p>
+            <p style={{ marginBottom: "10px" }}>{product?.discountPrice}</p>
             <span className={styled.quantity_text}>수량</span>
             <select 
               className={styled.select_box}
@@ -97,15 +116,14 @@ const ProductDetail = () => {
                 <option key={number} value={number}>{number}</option> // Key도 number(요소), value도 number(요소)
               ))}
             </select>
-          </div>
-          <div className={styled.small_img_box}>
-            {[1, 2, 3, 4, 5].map((_, index) => (
-              <img
-                key={index}
-                className={styled.small_img}
-                src="http://via.placeholder.com/62"
-                alt="small_img"
-              />
+            <div className={styled.small_img_box}>
+              {[1, 2, 3, 4, 5].map((_, index) => (
+                <img
+                  key={index}
+                  className={styled.small_img}
+                  src="http://via.placeholder.com/62"
+                  alt="small_img"
+            />
             ))}
           </div>
           <div className={styled.buttons}>
@@ -118,6 +136,7 @@ const ProductDetail = () => {
             <Link to='/ShoppingPurchase'>
               <img src="http://via.placeholder.com/30" alt="cart_icon" />
             </Link>
+          </div>
           </div>
         </div>
       </div>
@@ -189,17 +208,20 @@ const ProductDetail = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
                 {/* 문의글 임시 데이터 */}
-                <td>1</td>
-                <td>답변완료</td>
-                <td>구분</td>
-                <td>내용</td>
-                <td>작성자</td>
-                <td>등록일자</td>
-              </tr>
+                {currentInquiries.map((inquiry, index) => (
+                  <tr key={index}>
+                    <td className={styled.write_content_id}>{inquiry.id}</td>
+                    <td className={styled.write_content_status}>{inquiry.status}</td>
+                    <td className={styled.write_content_category}>{inquiry.category}</td>
+                    <td className={styled.write_content_content}>{inquiry.content}</td>
+                    <td className={styled.write_content_writer}>{maskWriter(inquiry.writer)}</td>
+                    <td className={styled.write_content_date}>{inquiry.date}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
+          <div className={styled.empty}></div>
           {/* 문의 페이지네이션 컴포넌트 */}
           <InquiryPagination
             currentPage={currentInquiryPage}

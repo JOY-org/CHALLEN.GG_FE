@@ -5,6 +5,8 @@ import styled from "../../../../CHALLEN.GG_FE/src/components/css_module/Shopping
 import likeIcon from "../../images/likeIcon.png";
 
 
+
+
 const ProductCard = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -36,6 +38,34 @@ const ProductCard = () => {
     fetchProducts();
   }, []);
 
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     // 실제 API 호출 
+  //     try {
+  //       const response = await axios('http://localhost:8000/v1/product/');
+  //       const data = await response.data.payload;
+
+  //       // 임시 데이터 형태로 변환
+  //       const formattedData = data.map((item, index) => ({
+  //         id: item.id,
+  //         name: item.title,
+  //         brand: item.brand,
+  //         price: `${item.price}원`,
+  //         count: item.count,
+  //         imageUrl: item.image,
+  //         largeImageUrl: item.image
+  //       }));
+
+  //       setProducts(formattedData);
+  //       setFilteredProducts(formattedData);
+  //     } catch (error) {
+  //       console.error("Failed to fetch products", error);
+  //     }
+  //   };
+  //   fetchProducts();
+  // }, []);
+
+
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -58,6 +88,13 @@ const ProductCard = () => {
       handleSearchClick();
     }
   };
+
+  // 전체 필터 클릭 시
+const handleAllFilterClick = () => {
+  setActiveFilter('');
+};
+
+
   // 카테고리 클릭 시 필터 기능
   const handleFilterClick = (filter) => {
     setActiveFilter(filter);
@@ -82,14 +119,14 @@ const ProductCard = () => {
 
   // ShoppingDetail로 정보 전달
   const handleCardClick = (product) => {
-    navigate('/ShoppingDetail', {state: { product } });
+    navigate('/ShoppingDetail', { state: { product } });
   }
 
   return (
     <div className={styled.container}>
       <div>
         <div className={styled.filter_buttons}>
-        {/* 카테고리 버튼 클릭 시 handleFilterClick()함수를 통해 필터기능 동작 */}
+          <button className={styled.filter_button} onClick={handleAllFilterClick}>전체</button>
           <button className={styled.filter_button} onClick={() => handleFilterClick('신상품')}>신상품</button>
           <button className={styled.filter_button} onClick={() => handleFilterClick('추천')}>추천</button>
           <button className={styled.filter_button} onClick={() => handleFilterClick('인기')}>인기</button>
@@ -118,7 +155,7 @@ const ProductCard = () => {
             >
               <img className={styled.product_img} src={product.imageUrl} alt="Product" />
               <div className={styled.product_details}>
-                <h3 className={styled.product_name}>{product.name}</h3>
+                <h3 className={styled.product_name}>{product.name.length > 50 ? `${product.name.substring(0, 50)}...` : product.name}</h3>
                 <p className={styled.product_price}>{product.price}</p>
                 <p className={styled.product_disc_price} >{product.discountPrice}</p>
                 <p className={styled.product_rating}>

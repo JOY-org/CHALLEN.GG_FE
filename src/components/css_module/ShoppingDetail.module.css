@@ -7,9 +7,10 @@
 
 
 .main_box{
+  height: 500px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   margin-bottom: 20px;
 }
 
@@ -31,11 +32,12 @@
   padding: 10px;
 }  
 
-/* 상품명, 가격,수량  간격 조정 */
-.info {
-  margin-bottom: 40px;
-  padding-left: 20px;
+
+.info_content {
+height: 400px;
+
 }
+/* 상품명, 가격,수량  간격 조정 */
 
 /* 경로 */
 .path {
@@ -52,6 +54,7 @@
 
 /* 오른쪽 작은 이미지 div*/
 .small_img_box {
+  margin-top: 20px;
   margin-bottom: 20px;
   height: 70px;
   display: flex;
@@ -279,4 +282,43 @@
   width: 70px;
   height: 25px;
   cursor: pointer;
+}
+
+/* 문의 내용 */
+.write_content_id {
+  height: 40px;
+  border-bottom: 1px solid rgb(189, 185, 185);
+  font-size: small;
+}
+.write_content_status {
+  height: 40px;
+  border-bottom: 1px solid rgb(189, 185, 185);
+  font-weight: 600;
+  font-size: small;
+}
+.write_content_category{
+  height: 40px;
+  border-bottom: 1px solid rgb(189, 185, 185);
+  font-size: small;
+}
+.write_content_content {
+  height: 40px;
+  border-bottom: 1px solid rgb(189, 185, 185);
+  font-size: small;
+}
+.write_content_writer {
+  height: 40px;
+  border-bottom: 1px solid rgb(189, 185, 185);
+  font-size: small;
+}
+.write_content_date {
+  height: 40px;
+  border-bottom: 1px solid rgb(189, 185, 185);
+  font-weight: 600;
+  font-size: small;
+}
+
+.empty {
+  height: 40px;
+
 }
