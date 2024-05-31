@@ -23,8 +23,9 @@
 .ChallengeManag{
 
     width: calc(100% / 3);
-    height:calc(90vh - 180px);
-    margin-top: 10px;
+    height:calc(90vh - 200px);
+    margin-top: 20px;
+    background-color: white;
 }
 
 .MyButtons{

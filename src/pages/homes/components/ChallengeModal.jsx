@@ -1,41 +1,112 @@
-import { Box, Modal, Typography, styled } from '@mui/material';
-import React, { useState } from 'react';
+import { Box, Modal, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
+import { useState,useEffect } from "react";
+import { challengApi } from "../../../api/services/challenge"
+import { useAuth } from "../../../hooks/useAuth";
+
+const ChallengeModal = ({isModalOpen, handleClose,challenge}) => {
+    const token = localStorage.getItem('token');
+    const { loginUser } = useAuth();
+    //유저가 참석했는지 확인하는 코드
+    const [userAttend, setUserAttend] = useState();
+    //참석하기 / 취소하기 버튼
+    const [attend, setAttend] = useState();
+    //참석버튼 클릭시 백엔드로 유저 정보 보내는 코드
+    const [attendChallenge, setAttendChallenge] = useState();
+    //취소버튼 클릭시 백엔드로 유저정보 보내는 코드
+    const [refuse, setRefuse] = useState();
+
+    const openAttend = () => {
+        deleteAttend();
+        setAttend(true)
+    }
+
+    const closeAttend = () => {
+        postAttend(challenge.id)
+        setAttend(false)
+    }
+
+    //챌린저 참여 여부를 알수있는 코드
+    const getAttend = async()=>{
+        try{
+            const id = challenge.id
+            const res = await challengApi.getSuccess(id,token)
+            console.log(res.data.payload);
+            setUserAttend(Boolean(res.data.payload.length))
+            //.length 빈배열이면 0(false)
+        }
+        catch(err){
+            console.error(err);
+        }
+    }
+
+    //참여버튼 클릭시 백엔드로 유저 정보 보내는 코드
+    const postAttend = async()=>{
+        try{
+            const challengeId = challenge.id
+            const res = await challengApi.uploadSuccess(challengeId,token);
+            setAttendChallenge(res.data.payload);
+            setUserAttend(true);
+        }
+        catch(err){
+            console.error(err);
+        }
+    }
+
+    //취소버튼 클릭시 백엔드로 유저정보 보내는 코드
+    const deleteAttend = async()=>{
+        try{
+            const challengeId = challenge.id
+            const res = await challengApi.deleteSuccess(challengeId, token)
+            setRefuse(res.data.payload)
+            setUserAttend(false);
+        }
+        catch(err){
+            console.error(err);
+        }
+    }
 
 
-const ChallengeModal = ({IsModalOpen, handleClose,handleOpen}) => {
+    useEffect(()=>{
+        getAttend();
+    },[challenge])
 
     return (
-        <>
-        <div>
-            <Modal
-                open={IsModalOpen}
-                onClose={handleClose}
-                aria-labelledby="title"
-                aria-describedby="body"
+        <Modal
+            open={isModalOpen}
+            onClose={handleClose}
+            aria-labelledby="title"
+            aria-describedby="body"
         >
-                <Box sx={style}>
-                <Typography id="title" variant="h6" component="h2">
-                    챌린지 제목
-                </Typography>
-                <Typography id="body1" >
-                    이미지넣을 곳
-                </Typography>
-                <Typography id="body2" >
-                    상세설명,후기,주의사항,기한
-                </Typography>
-                <Typography id="body3" >
-                    <Button>신청/취소버튼</Button>
-                </Typography>
-                <Typography id="body4" >
-                    포인트점수
-                </Typography>
-                </Box>
+            <Box sx={style}>
+                <div key={challenge.id}>
+                    <Typography id="title" variant="h6" component="h2">
+                        {challenge.name}
+                    </Typography>
+                    <Typography id="body1">
+                        <img src={`http://localhost:8000${challenge.img}`} alt="챌린지 이미지" />
+                    </Typography>
+                    <Typography id="body2">
+                        {challenge.comment}<br />
+                        {challenge.caution}<br />
+                        시작일: {challenge.startDay}<br />
+                        완료일: {challenge.endDay}
+                    </Typography>
+                    <Typography id="body3">
+                        {userAttend ?
+                            <Button onClick={openAttend}>취소하기</Button>
+                            :
+                            <Button onClick={closeAttend}>참여하기</Button>
+                        }
+                    </Typography>
+                    <Typography id="body4">
+                        포인트점수:{challenge.point}P
+                    </Typography>
+                </div>
+            </Box>
         </Modal>
-    </div>
-    </>
     );
-}
+};
 const style = {
     position: 'absolute',
     top: '50%',
