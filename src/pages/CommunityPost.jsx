@@ -35,7 +35,6 @@ const CommunityPost = () => {
         }
     };
     
-    
     const SHOW_POST_NUM = 7;
 
     const search = () => {
@@ -69,11 +68,11 @@ const CommunityPost = () => {
     useEffect(() => {
         setCommId(obj[params.title])
         getPostsByCommId(obj[params.title]);
-
         if(!Object.keys(obj).includes(params.title)){
             navigate('*')
         }
     }, [open]);
+
 
     const getPostsByCommId = async(commId) => {
         try {
@@ -89,6 +88,7 @@ const CommunityPost = () => {
     useEffect(()=> {
         setTotalPage(Math.floor(posts?.length/SHOW_POST_NUM) + 1);
     }, [posts])
+
 
     const handlePage = (e, v) => {
         setCurPage(v);
@@ -164,7 +164,10 @@ const CommunityPost = () => {
                                     return(
                                         <tr className={styles.post} onClick={()=>handleClickOpenPost(p)}>
                                             <td className={styles.postLike}>{p.Likers? p.Likers.length : 0}</td>
-                                            <th className={styles.postTitle}>{p.title} <span className={styles.commentColor}>[ 0 ]</span></th>
+                                            <th className={styles.postTitle}>
+                                                {p.title} 
+                                                <span className={styles.commentColor}>[{p.Comments? p.Comments.length : 0}]</span>
+                                            </th>
                                             <td>{p.User.nickname}</td>
                                             <td>{getRelativeTime(p.createdAt)}</td>
                                         </tr>

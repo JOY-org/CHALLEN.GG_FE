@@ -38,7 +38,9 @@ export default function CommunityPostModal({
   setPosts,
   posts,
   handleClosePost,
-  postComment, setPostComment, getComment
+  postComment,
+  setPostComment,
+  getComment,
 }) {
   const SHOW_POST_NUM = 5;
   const { loginUser } = useAuth();
@@ -110,6 +112,7 @@ export default function CommunityPostModal({
     setShowComment((prev) => !prev);
   };
 
+  console.log(postComment);
   const onRegist = async (data) => {
     try {
       const commentInput = {
@@ -121,14 +124,24 @@ export default function CommunityPostModal({
         localStorage.getItem("token")
       );
       if (res.data.code === 200) {
-        console.log(res.data);
-        // setPostComment([...postComment, res.data.payload])
+        setPostComment(res.data.payload);
         reset();
       } else {
         throw new Error("알 수 없는 에러");
       }
     } catch (err) {
       console.error(err);
+    }
+  };
+
+  const deleteComment = async (id) => {
+    const res = await postApi.deleteComment(id, localStorage.getItem("token"));
+    if (res.data.code === 200) {
+      setPostComment(postComment.filter((c) => c.id !== id));
+      Swal.fire({
+        text: res.data.message,
+        icon: "success",
+      });
     }
   };
 
@@ -228,6 +241,7 @@ export default function CommunityPostModal({
         component="img"
         // height="200"
         style={{ width: "100%", cursor: "pointer" }}
+        title="클릭하면 확대된 사진을 볼 수 있어요"
         image={`http://localhost:8000/${postDetail.img}`}
         onClick={handleClick}
         alt="본문 이미지"
@@ -266,7 +280,7 @@ export default function CommunityPostModal({
           ) : null}
 
           <IconButton onClick={toggleComment}>
-            <ModeCommentIcon />
+            <ModeCommentIcon sx={{color:'#4483FD'}}/>
           </IconButton>
         </div>
         {loginUser === postDetail.UserId && (
@@ -324,21 +338,31 @@ export default function CommunityPostModal({
                           secondary={
                             <React.Fragment>
                               <Typography
-                                sx={{ display: "inline"}}
+                                sx={{ display: "inline" }}
                                 component="span"
                                 variant="body2"
                                 color="text.primary"
                               >
                                 {c.User.nickname}
-                                <p 
-                                  style={{marginRight:'0px', fontSize:'12px'}}
-                                >{getRelativeTime(c.createdAt)}</p>
+                                <p
+                                  style={{
+                                    marginRight: "0px",
+                                    fontSize: "12px",
+                                  }}
+                                >
+                                  {getRelativeTime(c.createdAt)}
+                                </p>
                               </Typography>
                               <br />
                               {c.content}
                             </React.Fragment>
                           }
                         />
+                        {loginUser === c.UserId && (
+                          <Button onClick={()=>{deleteComment(c.id)}}>
+                            삭제
+                          </Button>
+                        )}
                       </ListItem>
                     </>
                   );

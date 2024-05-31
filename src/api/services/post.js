@@ -52,4 +52,11 @@ export const postApi = {
             "Authorization": token
         }
     }),
+
+    deleteComment : (id, token) => api.delete(`post/commment/${id}`, {
+        headers: {
+            "Authorization": token
+        },
+        data: {id}
+    })
 }
