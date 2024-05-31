@@ -1,5 +1,5 @@
-import CommunityList from "../components/CommunityList";
-import styles from '../components/css_module/Community.module.css'
+import CommunityList from "./CommunityList";
+import styles from './css_module/Community.module.css'
 
 const Community = () => {
     return ( 

@@ -23,13 +23,13 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import { useEffect } from "react";
-import { postApi } from "./../api/services/post";
-import { userApi } from "../api/services/user";
-import { getRelativeTime } from "../utils/date";
+import { postApi } from "../../api/services/post";
+import { userApi } from "../../api/services/user";
+import { getRelativeTime } from "../../utils/date";
 import AddCommentIcon from "@mui/icons-material/AddComment";
 import { useForm } from "react-hook-form";
 

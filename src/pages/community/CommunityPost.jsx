@@ -1,16 +1,16 @@
 import {IconButton, InputAdornment, Stack, TextField} from '@mui/material';
-import styles from '../components/css_module/CommunityPost.module.css'
+import styles from './css_module/CommunityPost.module.css'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Pagination } from '@mui/material';
-import PostCreate from '../components/PostCreate';
-import PostModal from '../components/PostModal';
-import { postApi } from "../api/services/post";
+import PostCreate from './PostCreate';
+import PostModal from './PostModal';
+import { postApi } from "../../api/services/post";
 import Swal from 'sweetalert2';
 import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import { useAuth } from '../hooks/useAuth';
-import { getRelativeTime } from '../utils/date';
+import { useAuth } from '../../hooks/useAuth';
+import { getRelativeTime } from '../../utils/date';
 
 const CommunityPost = () => {
     const { logout } = useAuth();
