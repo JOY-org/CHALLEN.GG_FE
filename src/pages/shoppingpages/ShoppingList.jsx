@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // ShoppingDetail로 정보 전달
 import styled from "../../components/css_module/ShoppingList.module.css";
 import likeIcon from "../../images/likeIcon.png";
+import axios from 'axios';
 
 
 const ProductCard = () => {
@@ -12,33 +13,71 @@ const ProductCard = () => {
   const [activeFilter, setActiveFilter] = useState('');
   const navigate = useNavigate(); // ShoppingDetail로 정보 전달
 
+
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     // API 호출 
+  //     // 임시 데이터, index 값을 이용해서 카테고리 값도 적용
+  //     const data = Array.from({length: 12}, (_, index) => ({
+  //       id: index,
+  //       name: `상품명 ${index + 1}`,
+  //       discountPrice: `${(index + 1) * 1000}원`,
+  //       price: `${(index + 1) * 2000}원`,
+  //       rating: ` ${index + 1}`,
+  //       category: index % 2 === 0 ? '남성' : '여성',
+  //       isNew: index < 6,
+  //       isRecommended: index % 3 === 0,
+  //       isPopular: index % 4 === 0,
+  //       onSale: index % 5 === 0,
+  //       imageUrl: "http://via.placeholder.com/150",
+  //       largeImageUrl: "http://via.placeholder.com/834"
+  //     }));
+  //     setProducts(data); // data.reverse() 상품 1번이 맨 밑으로 감
+  //     setFilteredProducts(data); 
+  //   };
+  //   fetchProducts();
+  // }, []);
+
   useEffect(() => {
     const fetchProducts = async () => {
-      // API 호출 
-      // 임시 데이터, index 값을 이용해서 카테고리 값도 적용
-      const data = Array.from({length: 12}, (_, index) => ({
-        id: index,
-        name: `상품명 ${index + 1}`,
-        discountPrice: `${(index + 1) * 1000}원`,
-        price: `${(index + 1) * 2000}원`,
-        rating: ` ${index + 1}`,
-        category: index % 2 === 0 ? '남성' : '여성',
-        isNew: index < 6,
-        isRecommended: index % 3 === 0,
-        isPopular: index % 4 === 0,
-        onSale: index % 5 === 0,
-        imageUrl: "http://via.placeholder.com/150",
-        largeImageUrl: "http://via.placeholder.com/834"
-      }));
-      setProducts(data); // data.reverse() 상품 1번이 맨 밑으로 감
-      setFilteredProducts(data); 
+      // 실제 API 호출 
+      try {
+        const response = await axios('http://localhost:8000/v1/product/');
+        const data = await response.data.payload;
+
+        // 임시 데이터 형태로 변환
+        const formattedData = data.map((item, index) => ({
+          id: item.id,
+          name: item.name,
+          brand: item.brand,
+          price: `${item.price}원`,
+          count: item.count,
+          description: item.description,
+          // 이미지가 출력이 되지 않는 문제 해결됨. 데이터 쪽 단어랑 똑같아야함
+          imageUrl: `http://localhost:8000/${item.img}`,
+
+          // API에 카테고리 없어서 임의로 추가함.
+          category: index % 3 === 0 ? '남성' : '여성',
+          isNew: index < 6,
+          isRecommended: index % 2 === 0,
+          isPopular: index % 4 === 0,
+          onSale: index % 5 === 0,
+        }));
+
+        setProducts(formattedData);
+        setFilteredProducts(formattedData);
+      } catch (error) {
+        console.error("Failed to fetch products", error);
+      }
     };
     fetchProducts();
   }, []);
 
+
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
+
   // 검색버튼 클릭
   const handleSearchClick = () => {
     if (searchTerm.trim() === '') {
@@ -47,8 +86,8 @@ const ProductCard = () => {
       // 공백 구분 없이, 띄어쓰지 않아도 검색됨
       const sanitizedSearchTerm = searchTerm.toLowerCase().replace(/\s/g, '');
       const filtered = products.filter(product =>
-        product.name.toLowerCase().replace(/\s/g, '') === sanitizedSearchTerm
-      );
+        product.name.toLowerCase().replace(/\s/g, '').includes(sanitizedSearchTerm)
+);
       setFilteredProducts(filtered);
     }
   };
@@ -58,10 +97,17 @@ const ProductCard = () => {
       handleSearchClick();
     }
   };
+
+  // 전체 필터 클릭 시
+const handleAllFilterClick = () => {
+  setActiveFilter('');
+};
+
   // 카테고리 클릭 시 필터 기능
   const handleFilterClick = (filter) => {
     setActiveFilter(filter);
   };
+
   // 임시데이터에 index를 이용해서 각 카테고리 값을 적용
   useEffect(() => {
     if (activeFilter) {
@@ -82,14 +128,14 @@ const ProductCard = () => {
 
   // ShoppingDetail로 정보 전달
   const handleCardClick = (product) => {
-    navigate('/ShoppingDetail', {state: { product } });
+    navigate('/ShoppingDetail', { state: { product } });
   }
 
   return (
     <div className={styled.container}>
       <div>
         <div className={styled.filter_buttons}>
-        {/* 카테고리 버튼 클릭 시 handleFilterClick()함수를 통해 필터기능 동작 */}
+          <button className={styled.filter_button} onClick={handleAllFilterClick}>전체</button>
           <button className={styled.filter_button} onClick={() => handleFilterClick('신상품')}>신상품</button>
           <button className={styled.filter_button} onClick={() => handleFilterClick('추천')}>추천</button>
           <button className={styled.filter_button} onClick={() => handleFilterClick('인기')}>인기</button>
@@ -118,12 +164,16 @@ const ProductCard = () => {
             >
               <img className={styled.product_img} src={product.imageUrl} alt="Product" />
               <div className={styled.product_details}>
+                <p className={styled.product_brand}>{product.brand}</p>
                 <h3 className={styled.product_name}>{product.name}</h3>
+                <p className={styled.product_description}>{product.description}</p>
                 <p className={styled.product_price}>{product.price}</p>
-                <p className={styled.product_disc_price} >{product.discountPrice}</p>
-                <p className={styled.product_rating}>
+                {/* <h3 className={styled.product_name}>{product.name.length > 50 ? `${product.name.substring(0, 50)}...` : product.name}</h3> */}
+                {/* <p className={styled.product_disc_price} >{product.discountPrice}</p> */}
+                {/* <p className={styled.product_rating}>
                   <img src={likeIcon} alt='like_icon' className={styled.like_icon}></img>
-                  {product.rating}</p>
+                  {product.rating}
+                </p> */}
               </div>
             </div>
           ))}

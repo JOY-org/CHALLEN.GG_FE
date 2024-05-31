@@ -7,9 +7,10 @@
 
 
 .main_box{
+  height: 500px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   margin-bottom: 20px;
 }
 
@@ -31,11 +32,12 @@
   padding: 10px;
 }  
 
-/* 상품명, 가격,수량  간격 조정 */
-.info {
-  margin-bottom: 40px;
-  padding-left: 20px;
+
+.info_content {
+height: 400px;
+
 }
+/* 상품명, 가격,수량  간격 조정 */
 
 /* 경로 */
 .path {
@@ -52,6 +54,7 @@
 
 /* 오른쪽 작은 이미지 div*/
 .small_img_box {
+  margin-top: 20px;
   margin-bottom: 20px;
   height: 70px;
   display: flex;
@@ -61,8 +64,11 @@
 }
 
 .small_img {
+  width: 62px;
+  height: 62px;
   margin:0 5px;
   cursor: pointer;
+  border: 1px solid gray;
 }
 
 /* 큰 이미지, 상세 이미지 */
@@ -82,8 +88,7 @@
 }
 
 .cart_button {
-  background-color: #4483FD;
-  box-shadow: 1px 1px 2px #174194;
+  background-color: #00aeda;
   color: white;
   border: none;
   font-weight: 600;
@@ -91,12 +96,19 @@
   height: 38px;
   margin-bottom: 10px;
   cursor: pointer;
+  border-radius: 30px;
 }
 
-.cart_button:active {
+.cart_button:hover {
+	color: #00aeda;
+	background: #222225;
+	border-color: #222225;
+}
+
+/* .cart_button:active {
   box-shadow: 1px 1px 4px #174194 inset;
   background-color: #326de4;
-}
+} */
 
 /* 메인 박스와 아래 큰 이미지 구분선 */
 .line {
@@ -237,7 +249,7 @@
 
 /* 문의글 테이블 제목 */
 .inquiry_title {
-  background-color: #4483FD;
+  background-color: #00aeda;
   color: white;
   height: 30px;
 }
@@ -279,4 +291,48 @@
   width: 70px;
   height: 25px;
   cursor: pointer;
+}
+
+/* 문의 내용 */
+.write_content_id {
+  height: 40px;
+  border-bottom: 1px solid rgb(189, 185, 185);
+  font-size: small;
+}
+.write_content_status {
+  height: 40px;
+  border-bottom: 1px solid rgb(189, 185, 185);
+  font-weight: 600;
+  font-size: small;
+}
+.write_content_category{
+  height: 40px;
+  border-bottom: 1px solid rgb(189, 185, 185);
+  font-size: small;
+}
+.write_content_content {
+  height: 40px;
+  border-bottom: 1px solid rgb(189, 185, 185);
+  font-size: small;
+}
+.write_content_writer {
+  height: 40px;
+  border-bottom: 1px solid rgb(189, 185, 185);
+  font-size: small;
+}
+.write_content_date {
+  height: 40px;
+  border-bottom: 1px solid rgb(189, 185, 185);
+  font-weight: 600;
+  font-size: small;
+}
+
+.empty {
+  height: 40px;
+
+}
+
+.prod_img {
+  width: 50px;
+  height: 50px;
 }

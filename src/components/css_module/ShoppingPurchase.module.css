@@ -41,6 +41,7 @@
   text-align: center;
   margin-right: 5px;
   border: none;
+  border-radius: 30px;
   box-shadow: 1px 1px 2px gray;
 }
 
@@ -48,32 +49,48 @@
   height: 30px;
   width: 60px;
   font-weight: 600;
-  background-color: #4483FD;
+  background-color: #00aeda;
   border: none;
+  border-radius: 30px;
   margin-right: 4px;
-  box-shadow: 1px 1px 2px #174194;
+  /* box-shadow: 1px 1px 2px #174194; */
   color: white;
   cursor: pointer;
 }
 
-.search_button:active {
+.search_button:hover {
+	color: #00aeda;
+	background: #222225;
+	border-color: #222225;
+}
+
+/* .search_button:active {
   box-shadow: 1px 1px 4px #174194 inset;
   background-color: #326de4;
-}
+} */
 
 .reset_button {
   height: 30px;
   width: 60px;
   font-weight: 600;
   border: none;
-  box-shadow: 1px 1px 4px rgb(150, 150, 150);
+  border-radius: 30px;
+  /* box-shadow: 1px 1px 4px rgb(150, 150, 150); */
+  background-color: rgb(150, 150, 150);
+  color: white;
   cursor: pointer;
 }
 
-.reset_button:active {
+.reset_button:hover {
+	color: #00aeda;
+	background: #222225;
+	border-color: #222225;
+}
+
+/* .reset_button:active {
   box-shadow: 1px 1px 4px #8b8b8d inset;
   background-color: #dadada;
-}
+} */
 
 
 /* search_box가 정렬이 잘 되지 않아서 겉에다가 랩핑함  */
@@ -99,7 +116,7 @@
 
 /* 주문내역 table 제목 */
 .order_title {
-  background-color: #4483FD;
+  background-color: #00aeda;
   height: 30px;
   color: white;
   
@@ -139,13 +156,24 @@
   margin: auto;
   margin-bottom: 4px;
   border: none;
-  background-color: #4483FD;
+  border-radius: 30px;
+  background-color: #00aeda;
   color: white;
   line-height: 2;
   cursor: pointer;
 }
 
-.button:active {
+.button:hover {
+    color: #00aeda;
+    background: #222225;
+    border-color: #222225;
+}
+
+/* .button:active {
   box-shadow: 1px 1px 4px #174194 inset;
   background-color: #326de4;
+} */
+
+.table_container {
+  margin-bottom: 20px;
 }
