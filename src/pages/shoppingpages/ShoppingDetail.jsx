@@ -146,13 +146,16 @@ const ProductDetail = () => {
       {/* -------------- 상세 이미지 -------------- */}
       <div className={styled.large_img}>
         <div><img src={product?.imageUrl} alt="large_img" /></div>
-        <div><img src="http://via.placeholder.com/820" alt="large_img" /></div>
+        {/* <div><img src="http://via.placeholder.com/820" alt="large_img" /></div> */}
       </div>
       <div className={styled.line}></div>
 
       {/* --------------  후기글 --------------  */}
       <div className={styled.review_container}>
         <h3 className={styled.review_text}>구매후기</h3>
+        <div className={styled.inquiry_write_wrap}>
+          <button className={styled.inquiry_write_btn}>후기작성</button>
+          </div>
         {currentReviews.map((review, index) =>(
         <div className={styled.review_box}> 
           <div className={styled.review_profile}>
@@ -195,7 +198,7 @@ const ProductDetail = () => {
         <div className={styled.inquiry_container}>
           <h3 style={{marginBottom: '10px'}}>Q&A 상품문의</h3>
           <div className={styled.inquiry_write_wrap}>
-          <button className={styled.inquiry_write_btn}>작성하기</button>
+          <button className={styled.inquiry_write_btn}>문의하기</button>
           </div>
           <table className={styled.inquiry_table}>
             <thead className={styled.inquiry_title} >
