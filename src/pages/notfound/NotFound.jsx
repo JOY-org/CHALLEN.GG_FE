@@ -1,5 +1,5 @@
 import Button from '@mui/material/Button';
-import styles from '../components/css_module/NotFoundCss.module.css'
+import styles from './NotFoundCss.module.css'
 import { useNavigate } from 'react-router-dom';
 
 const NotFound = () => {

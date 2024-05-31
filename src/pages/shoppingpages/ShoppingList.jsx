@@ -1,11 +1,9 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // ShoppingDetail로 정보 전달
-import styled from "../../../../CHALLEN.GG_FE/src/components/css_module/ShoppingList.module.css";
-// import likeIcon from "../../images/likeIcon.png";
+import styled from "../../components/css_module/ShoppingList.module.css";
+import likeIcon from "../../images/likeIcon.png";
 import axios from 'axios';
-
-
 
 
 const ProductCard = () => {

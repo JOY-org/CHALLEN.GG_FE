@@ -6,12 +6,14 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from 'react';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
+import { postApi } from '../../api/services/post';
+import UploadIcon from '@mui/icons-material/Upload';
 
-export default function PostCreate() {
+
+export default function PostCreate({commId, setPosts, posts, setOriginalPosts}) {
     const{
         register,
         reset,
@@ -23,12 +25,9 @@ export default function PostCreate() {
 
     const [open, setOpen] = useState(false);
 
-    // loginUser = null
-    // loginUser = {id: 1, token: 1hnlksdafnlka}
-    // loginUser = {id: null, token: null}
     const handleClickOpen = () => {
         try {
-            if(loginUser.id){
+            if(loginUser){
                 setOpen(true)
             } else {
                 throw new Error();
@@ -42,18 +41,21 @@ export default function PostCreate() {
     };
 
     const onRegist = (async (data)=>{
-        const { title, content, img } = data
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API_URL}/post`, {
-                title,
-                content,
-                img
-            })
+            const formData = new FormData();
+            formData.append('title', data.title);
+            formData.append('content', data.content);
+            formData.append('img', data.img[0]);
+            formData.append('category', commId)
+            const res = await postApi.addPost(formData, localStorage.getItem("token"));
             if (res.data.code === 200) {
                 Swal.fire({
                     title: "게시글 등록!",
                     icon: "success"
                 });
+                // console.log(res.data.payload);
+                setPosts([res.data.payload, ...posts]);
+                setOriginalPosts([res.data.payload, ...posts]);
                 handleClose();
             }else {
                 throw new Error('알 수 없는 에러');
@@ -74,9 +76,10 @@ export default function PostCreate() {
 
     return (
         <React.Fragment>
-            <Button variant="outlined" onClick={handleClickOpen} style={{height:'56px'}}>
+            <Button variant="contained" endIcon={<UploadIcon />} onClick={handleClickOpen} style={{height:'56px'}}>
                 게시글 등록
-            </Button>
+            </Button>   
+            
             <Dialog
             open={open}
             onClose={handleClose}
@@ -128,8 +131,9 @@ export default function PostCreate() {
                     />
                     <TextField
                         type='file'
-                        style={{marginTop:5}}
+                        accept="image/*"
                         {...register('img', {required: '이미지는 필수 입력입니다.',})}
+                        style={{marginTop:5}}
                         error={errors.img ? true : false}
                         helperText={errors.img && errors.img.message}
                     />
