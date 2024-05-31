@@ -1,5 +1,5 @@
 import {Card, CardActionArea, CardContent, CardMedia, Grid, Typography} from '@mui/material';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styles from './css_module/CommunityList.module.css'
 
 
@@ -8,22 +8,22 @@ export default function CommunityList() {
 
     return (
         <div className={styles.container}>
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+            <Grid container spacing={2} direction="row" wrap="nowrap" style={{ overflowX: 'auto' }}>
                 {itemData.map((d)=>{
                     return(
-                        <Grid item xs={6}>
-                            <Card onClick={()=>{navigate(`/communitypost/${d.title}`)}}>
+                        <Grid item sx={{ width: '100%'}} onClick={()=>{navigate(`/communitypost/${d.title}`)}}>
+                            <Card sx={{boxShadow: '5px 5px 15px 0px rgba(0, 0, 0, 0.3)', padding:0}}>
                                 <CardActionArea>
-                                    <CardContent className={styles.title}>
-                                        <Typography gutterBottom variant="h5" component="div" className={styles.titleName}>
+                                    <CardMedia
+                                        component="img"
+                                        height="180"
+                                        image={d.img}
+                                    />
+                                    <CardContent sx={{padding:"5px", textAlign:'center'}}>
+                                        <Typography gutterBottom variant="h5" component="div" sx={{marginBottom:0}}>
                                             {d.title}
                                         </Typography>
                                     </CardContent>
-                                    <CardMedia
-                                        component="img"
-                                        height="250"
-                                        image={d.img}
-                                    />
                                 </CardActionArea>
                             </Card>
                         </Grid>

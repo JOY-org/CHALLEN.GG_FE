@@ -40,4 +40,23 @@ export const postApi = {
         },
         data: {id}
     }),
+
+    uploadComment: (data, token) => api.post('post/comment', data, {
+        headers: {
+            "Authorization": token
+        }
+    }),
+
+    getComment: (id, token) => api.get(`post/comment/${id}`, {
+        headers: {
+            "Authorization": token
+        }
+    }),
+
+    deleteComment : (id, token) => api.delete(`post/commment/${id}`, {
+        headers: {
+            "Authorization": token
+        },
+        data: {id}
+    })
 }

@@ -9,27 +9,31 @@ body {
 
 /* 카드 전체 묶음 div */
 .product_container {
-  margin-top: 10px;
+  margin-top: 40px;
   display: flex;
+  align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   display: grid;
-  grid-template-columns: 230px 230px 230px 230px;
+  grid-template-columns: 240px 240px 240px 240px;
 }
 
 /* 개별 카드 */
 .product_card {
-  width: 230px;
-  height: 340px;
+  padding: 10px;
+  width: 240px;
+  height: 420px;
   text-align: center;
   text-decoration: none;
   cursor: pointer;
+  vertical-align: middle;
 }
 
 .product_card:hover {
-  background-color: rgb(247, 250, 253);
+  background: #fafafa;
 }
+
 
 /* name, discountPrice, price  div */
 .product_details {
@@ -39,30 +43,56 @@ body {
   margin-left: 10px;
 }
 
+
 /* 상품 이미지 */
 .product_img {
-  margin-top: 10px;
+  margin-top: 5px;
   width: 210px;
   height: 210px;
 }
 
-.product_price {
+/* 임시데이터  */
+/* .product_price {
+  width: 210px;
   margin-top: 5px;
   text-decoration: line-through;
   color: #b2b2b2;
   font-weight: 600;
-}
+} */
 
-.product_disc_price {
-  margin-top: 2px;
+/* API 데이터 */
+.product_price {
+  width: 210px;
+  margin-top: 5px;
   font-weight: 600;
 }
 
-.product_rating {
+/* .product_disc_price {
+  width: 210px;
+  margin-top: 2px;
+  font-weight: 600;
+} */
+
+/* .product_rating {
+  width: 210px;
   margin-top: 2px;
   display: flex;
   align-items: center;
+} */
+
+.product_name {
+  width: 210px;
 }
+
+.product_brand {
+  width: 210px;
+}
+
+.product_description {
+  width: 210px;
+}
+
+
 
 /* 카테고리 버튼 */
 .filter_button {
@@ -70,30 +100,34 @@ body {
   height:25px;
   margin: 0 5px;
   border: none;
-  background-color: white;
+  color: #00aeda;
+  background: white;
   font-weight: 600;
-  color: #4483FD;
   cursor: pointer;
+  border-radius: 30px;
 }
 
 .filter_button:hover {
-  border-bottom: 2px solid #4483FD;
+	color: #00aeda;
+	background: #222225;
+	border-color: #222225;
 }
 
 .filter_buttons {
-  width: 920px;
+  width: 960px;
   margin:auto;
   align-items: center;
   justify-content: center;
   display: flex;
-  
 }
 
 
 /* 검색 창 */
 .search_input {
-  margin-left: 250px;
+
+  margin-left: 290px;
   height: 25px;
+  border-radius: 30px;
 }
 
 /* 검색 버튼 */
@@ -102,10 +136,17 @@ body {
   height:25px;
   margin: 0 5px;
   border: none;
-  background-color: #4483FD;
+  color: #FFFFFF;
+  background: #00aeda;
   font-weight: 600;
-  color: white;
   cursor: pointer;
+  border-radius: 30px;
+}
+
+.search_button:hover {
+	color: #00aeda;
+	background: #222225;
+	border-color: #222225;
 }
 
 .like_icon {
@@ -113,4 +154,8 @@ body {
   height: 15px;
   margin-right: 5px;
   vertical-align: middle;
+}
+
+.product_brand {
+  font-size: small;
 }

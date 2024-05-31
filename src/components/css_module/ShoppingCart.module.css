@@ -16,7 +16,7 @@
 
 /* table 제목 색상 */
 .t_title {
-  background-color: #4483FD;
+  background-color: #00aeda;
   height: 40px
 }
 
@@ -60,18 +60,25 @@
 /* 삭제버튼 */
 .del_button {
   border: none;
-  background-color: #4483FD;
+  background-color: #00aeda;
   color: white;
   height: 25px;
   width: 70px;
   cursor: pointer;
   margin-top: 10px;
+  border-radius: 30px;
 }
 
-.del_button:active {
+.del_button:hover {
+	color: #00aeda;
+	background: #222225;
+	border-color: #222225;
+}
+
+/* .del_button:active {
   box-shadow: 1px 1px 4px #174194 inset;
   background-color: #326de4;
-}
+} */
 
 /* 뒤로가기, 주문하기 div */
 .buttons {
@@ -81,36 +88,51 @@
 
 /* 뒤로가기 버튼 */
 .back_button {
+  border-radius: 30px;
   width: 100px;
   height: 40px;
   font-weight: 600;
   border: none;
-  box-shadow: 1px 1px 4px rgb(90, 90, 90);
+  /* box-shadow: 1px 1px 4px rgb(90, 90, 90); */
   margin-right:20px;
+  background-color: rgb(150, 150, 150);
+  color: white;
   cursor: pointer;
 }
 
-.back_button:active {
+.back_button:hover {
+	color: #00aeda;
+	background: #222225;
+	border-color: #222225;
+}
+
+/* .back_button:active {
   box-shadow: 1px 1px 4px #8b8b8d inset;
   background-color: #dadada;
-}
+} */
 
 /* 주문하기 버튼 */
 .order_button {
   width: 100px;
   height: 40px;
   font-weight: 600;
-  background-color: #4483FD;
+  background-color: #00aeda;
   border: none;
+  border-radius: 30px;
   color: white;
-  box-shadow: 1px 1px 4px rgb(0, 55, 173);
   cursor: pointer;
 }
 
-.order_button:active {
+.order_button:hover {
+	color: #00aeda;
+	background: #222225;
+	border-color: #222225;
+}
+
+/* .order_button:active {
   box-shadow: 1px 1px 4px #174194 inset;
   background-color: #326de4;
-}
+} */
 
 .tr_body {
   text-align: center;

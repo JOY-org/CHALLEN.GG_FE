@@ -1,15 +1,16 @@
-import { Button, IconButton, InputAdornment, Stack, TextField} from '@mui/material';
-import styles from '../components/css_module/CommunityPost.module.css'
+import {IconButton, InputAdornment, Stack, TextField} from '@mui/material';
+import styles from './css_module/CommunityPost.module.css'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Pagination } from '@mui/material';
-import PostCreate from '../components/PostCreate';
-import PostModal from '../components/PostModal';
-import { postApi } from "../api/services/post";
+import PostCreate from './PostCreate';
+import PostModal from './PostModal';
+import { postApi } from "../../api/services/post";
 import Swal from 'sweetalert2';
 import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth';
+import { getRelativeTime } from '../../utils/date';
 
 const CommunityPost = () => {
     const { logout } = useAuth();
@@ -21,9 +22,18 @@ const CommunityPost = () => {
     const [totalPage, setTotalPage] = useState();
     const [searchWord, setSearchWord] = useState();
     const [originalPosts, setOriginalPosts] = useState([]);
-    // post modal 관련
     const [open, setOpen] = useState(false);
     const [postDetail, setPostDetail] = useState(null);
+    const [postComment, setPostComment] = useState();
+
+    const getComment = async (id) => {
+        try{
+            const res = await postApi.getComment(id, localStorage.getItem("token"));
+            setPostComment(res.data.payload);
+        }catch (error) {
+            console.error(error);
+        }
+    };
     
     const SHOW_POST_NUM = 7;
 
@@ -58,11 +68,11 @@ const CommunityPost = () => {
     useEffect(() => {
         setCommId(obj[params.title])
         getPostsByCommId(obj[params.title]);
-
         if(!Object.keys(obj).includes(params.title)){
             navigate('*')
         }
     }, [open]);
+
 
     const getPostsByCommId = async(commId) => {
         try {
@@ -78,6 +88,7 @@ const CommunityPost = () => {
     useEffect(()=> {
         setTotalPage(Math.floor(posts?.length/SHOW_POST_NUM) + 1);
     }, [posts])
+
 
     const handlePage = (e, v) => {
         setCurPage(v);
@@ -97,14 +108,6 @@ const CommunityPost = () => {
             search();
         }
     };
-
-    // const getLikersByPostId = async(id)=>{
-    //     try {
-    //         const res = await postApi.getLikersByPostId(id, localStorage.getItem("token"))
-    //     } catch (error){
-    //         console.error(error);
-    //     }
-    // }
 
     return ( 
         <section className={styles.notice}>
@@ -161,12 +164,12 @@ const CommunityPost = () => {
                                     return(
                                         <tr className={styles.post} onClick={()=>handleClickOpenPost(p)}>
                                             <td className={styles.postLike}>{p.Likers? p.Likers.length : 0}</td>
-                                            <th className={styles.postTitle}>{p.title}  
-                                                {/* <span className={styles.commentColor}>[0]</span>  */}
+                                            <th className={styles.postTitle}>
+                                                {p.title} 
+                                                <span className={styles.commentColor}>[{p.Comments? p.Comments.length : 0}]</span>
                                             </th>
                                             <td>{p.User.nickname}</td>
-                                            <td>{p.createdAt}</td>
-                                            {/* {p.createdAt.slice(0,10)} */}
+                                            <td>{getRelativeTime(p.createdAt)}</td>
                                         </tr>
                                     )
                                 })}
@@ -185,6 +188,9 @@ const CommunityPost = () => {
                     handleClosePost={handleClosePost}
                     setPosts={setPosts}
                     posts={posts}
+                    postComment={postComment}
+                    setPostComment={setPostComment}
+                    getComment={getComment}
                 />
             }
 
