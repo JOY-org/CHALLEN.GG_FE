@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // ShoppingDetail로 정보 전달
-import styled from "../../components/css_module/ShoppingList.module.css";
+import styled from "./css_module/ShoppingProduct.module.css";
 import likeIcon from "../../images/likeIcon.png";
 import axios from 'axios';
 

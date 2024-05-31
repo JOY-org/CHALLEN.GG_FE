@@ -10,10 +10,10 @@ import { useProvideAuth } from "./hooks/useProvideAuth";
 import CommunityPost from './pages/community/CommunityPost';
 
 import Shopping from "./pages/Shopping";
-import ProductCard from "./pages/shoppingpages/ShoppingList";
-import ProductDetail from './pages/shoppingpages/ShoppingDetail';
-import Cart from "./pages/shoppingpages/ShoppingCart";
-import Purchase from "./pages/shoppingpages/ShoppingPurchase";
+import ProductCard from "./pages/shoppingmall/ShoppingProduct";
+import ProductDetail from './pages/shoppingmall/ShoppingDetail';
+import Cart from "./pages/shoppingmall/ShoppingCart";
+import Purchase from "./pages/shoppingmall/ShoppingPurchase";
 import NotFound from "./pages/notfound/NotFound";
 
 
