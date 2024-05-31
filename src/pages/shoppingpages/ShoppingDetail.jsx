@@ -97,15 +97,16 @@ const ProductDetail = () => {
       <h2 className={styled.path}>경로</h2>
       <div className={styled.main_box}>
         <div className={styled.main_img_box}>
-          <img className={styled.main_img} src="http://via.placeholder.com/834" alt="main_img" />
+          {/* 아래 product?.name 처럼 이미지도 똑같이 써주면 됨 */}
+          <img className={styled.main_img} src={product?.imageUrl} alt="main_img" />
         </div>
         
         <div className={styled.info_box}>
           <div className={styled.info_content}>
             {/* product 객체의 속성 접근 시 product? 형식을 이용해 안전하게 접근한다. Cart컴포넌트에서 뒤로가기 누르면 오류가 난거 해결됨. */}
             <h2 style={{ marginBottom: "20px" }}>{product?.name}</h2>
+            <p style={{ marginBottom: "10px" }}>{product?.description}</p>
             <p style={{ marginBottom: "10px" }}>{product?.price}</p>
-            <p style={{ marginBottom: "10px" }}>{product?.discountPrice}</p>
             <span className={styled.quantity_text}>수량</span>
             <select 
               className={styled.select_box}
@@ -121,7 +122,7 @@ const ProductDetail = () => {
                 <img
                   key={index}
                   className={styled.small_img}
-                  src="http://via.placeholder.com/62"
+                  src={product?.imageUrl}
                   alt="small_img"
             />
             ))}
@@ -144,7 +145,7 @@ const ProductDetail = () => {
 
       {/* -------------- 상세 이미지 -------------- */}
       <div className={styled.large_img}>
-        <div><img src="http://via.placeholder.com/820" alt="large_img" /></div>
+        <div><img src={product?.imageUrl} alt="large_img" /></div>
         <div><img src="http://via.placeholder.com/820" alt="large_img" /></div>
       </div>
       <div className={styled.line}></div>
@@ -160,7 +161,7 @@ const ProductDetail = () => {
           </div>
           {/* 이미지 , 상품정보 */}
           <div className={styled.prod_infomation}>
-            <img className={styled.prod_img} src="http://via.placeholder.com/50"></img>
+            <img className={styled.prod_img} src={product?.imageUrl}></img>
             <div className={styled.brief_info_wrap}>
               <a className={styled.brief_info} href='ShoppingDetail'>상품 정보</a>
             </div>

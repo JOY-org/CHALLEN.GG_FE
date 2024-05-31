@@ -48,15 +48,22 @@ const ProductCard = () => {
         const data = await response.data.payload;
 
         // 임시 데이터 형태로 변환
-        const formattedData = data.map((item) => ({
+        const formattedData = data.map((item, index) => ({
           id: item.id,
           name: item.name,
           brand: item.brand,
           price: `${item.price}원`,
           count: item.count,
           description: item.description,
-          // 이미지가 출력이 되지 않는 문제 해결됨. 데이터 쪽 단어랑 똑같아야함----------
-          imageUrl: `http://localhost:8000/${item.img}`
+          // 이미지가 출력이 되지 않는 문제 해결됨. 데이터 쪽 단어랑 똑같아야함
+          imageUrl: `http://localhost:8000/${item.img}`,
+
+          // API에 카테고리 없어서 임의로 추가함.
+          category: index % 3 === 0 ? '남성' : '여성',
+          isNew: index < 6,
+          isRecommended: index % 2 === 0,
+          isPopular: index % 4 === 0,
+          onSale: index % 5 === 0,
         }));
 
         setProducts(formattedData);
@@ -82,7 +89,7 @@ const ProductCard = () => {
       const sanitizedSearchTerm = searchTerm.toLowerCase().replace(/\s/g, '');
       const filtered = products.filter(product =>
         product.name.toLowerCase().replace(/\s/g, '').includes(sanitizedSearchTerm)
-      );
+);
       setFilteredProducts(filtered);
     }
   };
@@ -125,8 +132,6 @@ const handleAllFilterClick = () => {
   const handleCardClick = (product) => {
     navigate('/ShoppingDetail', { state: { product } });
   }
-
-  
 
   return (
     <div className={styled.container}>
