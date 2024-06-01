@@ -2,11 +2,9 @@ import { Box, Modal, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import { useState,useEffect } from "react";
 import { challengApi } from "../../../api/services/challenge"
-import { useAuth } from "../../../hooks/useAuth";
 
-const ChallengeModal = ({isModalOpen, handleClose,challenge}) => {
+const ChallengeModal = ({isModalOpen, handleClose, challenge}) => {
     const token = localStorage.getItem('token');
-    const { loginUser } = useAuth();
     //유저가 참석했는지 확인하는 코드
     const [userAttend, setUserAttend] = useState();
     //참석하기 / 취소하기 버튼
@@ -15,14 +13,17 @@ const ChallengeModal = ({isModalOpen, handleClose,challenge}) => {
     const [attendChallenge, setAttendChallenge] = useState();
     //취소버튼 클릭시 백엔드로 유저정보 보내는 코드
     const [refuse, setRefuse] = useState();
-
+    //max값 렌더링을위한 코드
+    const [max, setMax] = useState(challenge.max);
     const openAttend = () => {
         deleteAttend();
+        deleteMax();
         setAttend(true)
     }
 
     const closeAttend = () => {
         postAttend(challenge.id)
+        postMax();
         setAttend(false)
     }
 
@@ -43,8 +44,8 @@ const ChallengeModal = ({isModalOpen, handleClose,challenge}) => {
     //참여버튼 클릭시 백엔드로 유저 정보 보내는 코드
     const postAttend = async()=>{
         try{
-            const challengeId = challenge.id
-            const res = await challengApi.uploadSuccess(challengeId,token);
+            const challengeId = challenge.id;
+            const res = await challengApi.uploadSuccess(challengeId, token);
             setAttendChallenge(res.data.payload);
             setUserAttend(true);
         }
@@ -52,7 +53,29 @@ const ChallengeModal = ({isModalOpen, handleClose,challenge}) => {
             console.error(err);
         }
     }
+    //참여버튼 클릭시 백엔드로 max+1해주는 코드
+    const postMax = async () => {
+        try {
+            const id = challenge.id;
+            const updatedMax = max + 1; // max 값을 1 증가
+            const res = await challengApi.modifyChallenge(id, { max: updatedMax }, token);
+            setMax(updatedMax); // max 값을 업데이트
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
+    //취소버튼 클릭시 백엔드로 max-1해주는 코드
+    const deleteMax = async () => {
+        try {
+            const id = challenge.id;
+            const updatedMax = max - 1;
+            const res = await challengApi.modifyChallenge(id, { max: updatedMax }, token);
+            setMax(updatedMax); 
+        } catch (err) {
+            console.error(err);
+        }
+    }
     //취소버튼 클릭시 백엔드로 유저정보 보내는 코드
     const deleteAttend = async()=>{
         try{
@@ -66,6 +89,9 @@ const ChallengeModal = ({isModalOpen, handleClose,challenge}) => {
         }
     }
 
+    useEffect(() => {
+        setMax(challenge.max);
+    }, [challenge]);
 
     useEffect(()=>{
         getAttend();
@@ -93,13 +119,20 @@ const ChallengeModal = ({isModalOpen, handleClose,challenge}) => {
                         완료일: {challenge.endDay}
                     </Typography>
                     <Typography id="body3">
-                        {userAttend ?
-                            <Button onClick={openAttend}>취소하기</Button>
-                            :
-                            <Button onClick={closeAttend}>참여하기</Button>
-                        }
+                        <p>모집인원:{max}/20명</p>
                     </Typography>
                     <Typography id="body4">
+                        {max>=20?
+                            (<p>모집인원마감</p>)
+                        :
+                            (userAttend ?
+                                <Button onClick={openAttend}>취소하기</Button>
+                            :
+                                <Button onClick={closeAttend}>참여하기</Button>
+                            )
+                        }
+                    </Typography>
+                    <Typography id="body5">
                         포인트점수:{challenge.point}P
                     </Typography>
                 </div>

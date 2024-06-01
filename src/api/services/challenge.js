@@ -36,4 +36,22 @@ export const challengApi = {
         },
         params:{id}
     }),
+    modifyChallenge: (id, data, token) =>  api.patch(
+        `challenge/${id}`,
+        data,
+        {
+            headers: {
+                "Authorization": token,
+                "Content-Type": "application/json"
+            }
+        }
+    ),
+    uploadChallenge : (data, token) =>  api.post(
+        'challenge/',
+        data,
+        {headers: {
+            'Content-Type': 'application/json',
+            "Authorization": token
+        }}
+    ),
 }

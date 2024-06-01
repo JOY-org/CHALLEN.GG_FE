@@ -4,27 +4,53 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
-import styleHome from "../../../components/css_module/Home.module.css";
+import styleHome from "../css_module/Home.module.css"
 import { RiStarSmileFill } from "react-icons/ri";
 import { useState, useEffect } from "react";
 import { useAuth } from "../../../hooks/useAuth";
 import { challengApi } from "../../../api/services/challenge";
+import ChallengeModal from "../components/ChallengeModal";
 
-export default function Challenge({ challengeList, handleOpen }) {
+// 이페이안에는 챌린지 컴포넌트가 들어있습니다 하단의ChallengeCard는 메인페이지에서 보여주는 페이지입니다
+//ChallengeModal 컴포넌트는 ChallengeModal.jsx파일에 있습니다
+export default function Challenge({challengeList}) {
+    const { loginUser } = useAuth();
+    //챌린지의 디테일(모달창내용)
+    const [challengeDetail, setChallengeDetail] = useState();
+    //챌린지상세모달창의 상태 관리 코드
+    const [ isModalOpen, setIsModalOpen] = useState(false);
+    //모달창의 오픈코드
+    const handleOpen = (challenge) => {
+        setIsModalOpen(true);
+        setChallengeDetail(challenge);
+    }
+    //모달창 클로즈코드
+    const handleClose = () => setIsModalOpen(false);
+
+    //아이디순으로 정렬한 이유는 생성일자순으로 나열되어 "신규"버튼과 같은 동작을하기때문입니다
+    //그럼 신규를 없애야하는건가????
+    const sortedChallengeList = challengeList?.sort((a,b)=> a.id - b.id)
+
 
     return (
         <>
-        {challengeList?.map((challenge) => (
-        <ChallengeCard
-            challenge={challenge}
-            handleOpen={handleOpen}
-        />
-        ))}
-    </>
+            {sortedChallengeList?.map((challenge) => (
+            <ChallengeCard
+                key={challenge.id}
+                challenge={challenge}
+                handleOpen={handleOpen}
+                loginUser={loginUser} // loginUser 전달
+            />
+            ))}
+            { challengeDetail &&
+                <ChallengeModal isModalOpen={isModalOpen} handleClose={handleClose} challenge={challengeDetail}/>
+            }
+        </>
     );
 }
 
-//챌린지 내용
+//메인에 보여주는 챌린지 내용
+
 const ChallengeCard = ({ challenge, handleOpen }) => {
     const token = localStorage.getItem('token');
     const { loginUser } = useAuth();
@@ -62,13 +88,14 @@ const ChallengeCard = ({ challenge, handleOpen }) => {
             console.error(err);
         }
     }
-
+    //흥미있는(별모양을 킨) 챌린지코드
     useEffect(()=>{
         const interesterArr = challenge.Interester;
         const result = interesterArr.some(obj => obj.id === loginUser);
         setStarLike(result)
     }, [challenge.Interester,loginUser.userId])
 
+    //흥미없는(별모양을 끈)챌린지 코드
     useEffect(()=>{
         const uninteresterArr = challenge.Interester;
         const result = uninteresterArr.some(obj => obj.id === loginUser);
@@ -118,5 +145,7 @@ const ChallengeCard = ({ challenge, handleOpen }) => {
 
         </Typography>
     </Card>
+
+
     );
 };

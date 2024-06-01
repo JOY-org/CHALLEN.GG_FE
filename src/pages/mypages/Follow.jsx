@@ -2,7 +2,7 @@ import { Button } from "@material-ui/core";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Modal from 'react-modal';
-import MyStyle from "../../components/css_module/MyPage.module.css"
+import MyStyle from "../mypages/css_module/MyPage.module.css"
 import { Height, Margin } from "@mui/icons-material";
 import { useAuth } from "../../hooks/useAuth";
 import { userApi } from "../../api/services/user";
