@@ -1,4 +1,4 @@
-import styles from '../../../components/css_module/Home.module.css'
+import styles from '../css_module/Home.module.css'
 
 
 const AdMain = () => {

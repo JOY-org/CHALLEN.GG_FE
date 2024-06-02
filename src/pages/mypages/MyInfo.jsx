@@ -1,5 +1,5 @@
 import axios from "axios";
-import MyStyle from "../../components/css_module/MyPage.module.css"
+import MyStyle from "../mypages/css_module/MyPage.module.css"
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Follow from "./Follow";

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import MyStyle from "../../components/css_module/MyPage.module.css"
+import MyStyle from "../mypages/css_module/MyPage.module.css"
 import Modal from 'react-modal';
-import { Chalet } from "@mui/icons-material";
 import { useAuth } from "../../hooks/useAuth";
+import { challengApi } from "../../api/services/challenge";
 
 
 const MadeChallenge = () => {
@@ -32,81 +32,116 @@ export default MadeChallenge;
 
 //챌린지 기획 모달
 export const MadeChallengeModal = ({isOpen, CloseModal}) => {
+    const token = localStorage.getItem('token');
     const { loginUser } = useAuth();
-    //챌린지 기획서 이미지
-    const [challengeImg, setChallengeImg] = useState();
 
-    const customStyles = {
-        content: {
-            top: "50%",
-            left: "50%",
-            right: "auto",
-            bottom: "auto",
-            width:'500px',
-            height:'500px',
-            transform: "translate(-50%, -50%)",
-        },
+    const [uploadPlan, setUploadPlan] = useState();
+
+    const [img, setImg] = useState(null);
+    const [challengeName, setChallengeName] = useState("");
+    const [imagePreview, setImagePreview] = useState(null);
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const [introduction, setIntroduction] = useState("");
+    const [caution, setCaution] = useState("");
+    const [deposit, setDeposit] = useState("");
+    const [max, setMax] = useState(20);
+
+    const handleImageUpload = (event) => {
+        const file = event.target.files[0];
+        setImg(file);
+        setImagePreview(URL.createObjectURL(file)); // 이미지 미리보기 업데이트
+    };
+
+    const handleChallengeNameChange = (e) => setChallengeName(e.target.value);
+    const handleStartDateChange = (e) => setStartDate(e.target.value);
+    const handleEndDateChange = (e) => setEndDate(e.target.value);
+    const handleIntroductionChange = (e) => setIntroduction(e.target.value);
+    const handlemaxChange = (e) => setMax(e.target.value);
+    const handleCautionChange = (e) => setCaution(e.target.value);
+    const handleDepositChange = (e) => setDeposit(e.target.value);
+
+    const uploadChallenge = async () => {
+        if (!challengeName || !startDate || !endDate) {
+            console.error('필수 필드를 모두 입력해야 합니다.');
+            return;
+        }
+        let imgUrl = null;
+    if (img) {
+        imgUrl = URL.createObjectURL(img);
+    }
+        // 서버로 전송할 데이터 구성
+        const data = {
+            name: challengeName,
+            startDay: startDate,
+            endDay: endDate,
+            comment: introduction,
+            caution: caution,
+            point: deposit,
+            max:max,
+            img:imgUrl
         };
-
-    const UploadchallengeImg = () =>{
-        //챌린지를 업로드합니다
+        try{
+            // 파일이 선택된 경우에만 이미지 URL을 전달하도록 수정
+            if (img) {
+                data.img = URL.createObjectURL(img);
+            }
+                const res = await challengApi.uploadChallenge(data, token);
+                setUploadPlan(res.data.payload);
+        }
+        catch(err){
+            console.error(err);
+        }
     }
 
-    useEffect(() => {
-        //새로운 챌린지파일 이름
-        const key =`profileImg_${loginUser}`;
-        setChallengeImg(key);
-    }, [loginUser]);
-
-    const DeleteBtn =()=>{
+    const DeleteBtn = () => {
         CloseModal();
     }
 
     return (
-    <div>
-        <Modal
-            isOpen={isOpen}
-            onRequestClose={CloseModal}
-            style={customStyles}
-            contentLabel="Followers List"
-        >
-            <h3 className={MyStyle.name}>챌린지 기획서</h3>
-            <div className={MyStyle.image}>
-                <p>대표이미지</p>
-                <img
-                    src={`http://localhost:8000/uploads/challenge/${challengeImg}.png`}
-                    onError={(e) => e.target.src = `http://localhost:8000/uploads/challenge/default.png`}
-                />
-                <input type='file' onChange={UploadchallengeImg}></input>
-                <div>
-                    <label>챌린지 이름</label>
-                    <input type="text" placeholder="챌린지명을 입력하시오"></input>
-                </div>
-                <div>
-                    <label>챌린지 기간</label>
-                    <input type="date" placeholder="챌린지명을 입력하시오"></input>
-                    -
-                    <input type="date"></input>
-                </div>
-                <div>
-                    <label>챌린지 소개</label>
-                    <input type="text" placeholder="당신의 챌린지를 소개해주세요"></input>
-                </div>
-                <div>
-                    <label>챌린지 주의사항</label>
-                    <input type="text" placeholder="당신의 챌린지를 소개해주세요"></input>
-                </div>
-                <div>
-                    <label>예치금</label>
-                    <input type="number" ></input>:P
-                </div>
-                <div>
-                    <button>등록하기</button>
-                    <button onClick={DeleteBtn}>취소하기</button>
+        <div>
+            <Modal
+                isOpen={isOpen}
+                onRequestClose={CloseModal}
+                contentLabel="챌린지 기획서"
+            >
+                <h3 className={MyStyle.name}>챌린지 기획서</h3>
+                <div className={MyStyle.image}>
+                    <p>대표이미지</p>
+                    <input type="file" onChange={handleImageUpload}></input>
+                    <img src={imagePreview} alt="대표 이미지 미리보기" />
+                    <div>
+                        <label>챌린지 이름</label>
+                        <input type="text" placeholder="챌린지명을 입력하시오" onChange={handleChallengeNameChange}></input>
                     </div>
-            </div>
-
-        </Modal>
-    </div> );
+                    <div>
+                        <label>챌린지 기간</label>
+                        <input type="date" onChange={handleStartDateChange}></input>
+                        -
+                        <input type="date" onChange={handleEndDateChange}></input>
+                    </div>
+                    <div>
+                        <label>챌린지 소개</label>
+                        <input type="text" placeholder="당신의 챌린지를 소개해주세요" onChange={handleIntroductionChange}></input>
+                    </div>
+                    <div>
+                        <label>챌린지 주의사항</label>
+                        <input type="text" placeholder="당신의 챌린지를 소개해주세요" onChange={handleCautionChange}></input>
+                    </div>
+                    <div>
+                        <label>모집인원</label>
+                        <input type="text"  onChange={handlemaxChange} placeholder="최대 20명"></input>:명
+                    </div>
+                    <div>
+                        <label>예치금</label>
+                        <input type="number" onChange={handleDepositChange}></input>:P
+                    </div>
+                    <div>
+                        <button onClick={uploadChallenge}>등록하기</button>
+                        <button onClick={DeleteBtn}>취소하기</button>
+                    </div>
+                </div>
+            </Modal>
+        </div>
+    );
 }
-

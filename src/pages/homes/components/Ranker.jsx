@@ -1,6 +1,5 @@
 import * as React from 'react';
-import styleHome from "../../../components/css_module/Home.module.css"
-import axios from 'axios';
+import styleHome from "../css_module/Home.module.css"
 import { useEffect, useState } from "react";
 import { userApi } from "../../../api/services/user";
 

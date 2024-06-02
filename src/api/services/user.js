@@ -33,7 +33,7 @@ export const userApi = {
             "Authorization": token
         }
     }),
-    
+
     getUserInfo: (token) => api.get(`/users/myinfo`, {
         headers: {
             "Authorization": token

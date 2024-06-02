@@ -1,4 +1,4 @@
-import MyStyle from "../../components/css_module/MyPage.module.css";
+import MyStyle from "../mypages/css_module/MyPage.module.css"
 import * as React from "react";
 import { useState } from "react";
 import Calendar from "react-calendar";
