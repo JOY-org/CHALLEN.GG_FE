@@ -10,8 +10,6 @@ const MadeChallenge = () => {
     const OpenModal = () => setIsOpen(true);
     const CloseModal = () => setIsOpen(false);
 
-
-
     return (
         <div>
             <button
@@ -30,13 +28,13 @@ const MadeChallenge = () => {
 
 export default MadeChallenge;
 
-//챌린지 기획 모달
+
+//챌린지 기획 모달--------------------------------------------------------
 export const MadeChallengeModal = ({isOpen, CloseModal}) => {
     const token = localStorage.getItem('token');
-    const { loginUser } = useAuth();
-
+    //전체파일 상태관리
     const [uploadPlan, setUploadPlan] = useState();
-
+    //각각 상태관리
     const [img, setImg] = useState(null);
     const [challengeName, setChallengeName] = useState("");
     const [imagePreview, setImagePreview] = useState(null);
@@ -46,13 +44,25 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
     const [caution, setCaution] = useState("");
     const [deposit, setDeposit] = useState("");
     const [max, setMax] = useState(20);
+    // FileReader()방식?
+    //string길이가김 대신 가비지콜렉터에 의해 자동 수거
+    //createObjectURL 방식??
+    //가짜이미지??string길이가 짧은대신 자동수거 불가 적절한 revoke =>URL.revokeObjectURL()???
 
-    const handleImageUpload = (event) => {
-        const file = event.target.files[0];
-        setImg(file);
-        setImagePreview(URL.createObjectURL(file)); // 이미지 미리보기 업데이트
+    const handleImageUpload = (e) => {
+        const files = e.target.files;
+        if (files && files[0]) {
+            const file = files[0];
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImg(file);
+                //console.log(file);
+                setImagePreview(reader.result);
+                //console.log(reader.result); //잘 들어오는데 서버로 전달이 안된다???
+            };
+            reader.readAsDataURL(file);
+        }
     };
-
     const handleChallengeNameChange = (e) => setChallengeName(e.target.value);
     const handleStartDateChange = (e) => setStartDate(e.target.value);
     const handleEndDateChange = (e) => setEndDate(e.target.value);
@@ -62,14 +72,11 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
     const handleDepositChange = (e) => setDeposit(e.target.value);
 
     const uploadChallenge = async () => {
-        if (!challengeName || !startDate || !endDate) {
-            console.error('필수 필드를 모두 입력해야 합니다.');
+        if (!challengeName || !startDate || !endDate || !introduction || !deposit) {
+            alert('필수 필드를 모두 입력해야 합니다.');
             return;
         }
-        let imgUrl = null;
-    if (img) {
-        imgUrl = URL.createObjectURL(img);
-    }
+
         // 서버로 전송할 데이터 구성
         const data = {
             name: challengeName,
@@ -79,15 +86,14 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
             caution: caution,
             point: deposit,
             max:max,
-            img:imgUrl
+            img:img
         };
         try{
-            // 파일이 선택된 경우에만 이미지 URL을 전달하도록 수정
-            if (img) {
-                data.img = URL.createObjectURL(img);
-            }
                 const res = await challengApi.uploadChallenge(data, token);
                 setUploadPlan(res.data.payload);
+                console.log(res.data.payload);
+                alert("챌린지 등록이 완료되었습니다");
+                CloseModal();
         }
         catch(err){
             console.error(err);
@@ -109,7 +115,7 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
                 <div className={MyStyle.image}>
                     <p>대표이미지</p>
                     <input type="file" onChange={handleImageUpload}></input>
-                    <img src={imagePreview} alt="대표 이미지 미리보기" />
+                    {imagePreview && <img src={imagePreview} alt="대표 이미지 미리보기" />}
                     <div>
                         <label>챌린지 이름</label>
                         <input type="text" placeholder="챌린지명을 입력하시오" onChange={handleChallengeNameChange}></input>

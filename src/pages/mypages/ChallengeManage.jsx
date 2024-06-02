@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import MyStyle from "../mypages/css_module/MyPage.module.css";
 import { challengApi } from "../../api/services/challenge";
 import { useAuth } from "../../hooks/useAuth";
+import Certification from "./certification";
 
 const ChallengeManage = () => {
     const { loginUser } = useAuth();
@@ -15,7 +16,6 @@ const ChallengeManage = () => {
     const getChallenge = async () => {
         try {
             const res = await challengApi.getSuccess(loginUser.userId, token);
-            console.log(res.data.payload);
             setMyChallenge(res.data.payload);
         } catch (err) {
             console.error(err);
@@ -44,20 +44,23 @@ const ChallengeManage = () => {
 
 export default ChallengeManage;
 
+export const UserChallengeItem = createContext("챌린지 정보가없습니다")
+
 export const ChallengeList = ({ challenges }) => {
     return (
         <ul>
             {challenges.map((challengeItem) => (
-                challengeItem.Challenge && (
-                    <li key={challengeItem.Challenge.id} className={MyStyle.ChallengeItem}>
-                        {challengeItem.Challenge.name}
-                        {!challengeItem.success?
-                            <button className={MyStyle.AuthButton}>인증</button>
-                        :
-                            ""
-                        }
-                    </li>
-                )
+                <UserChallengeItem.Provider key={challengeItem.Challenge.id} value={challengeItem}>
+                    {challengeItem.Challenge && (
+                        <li key={challengeItem.Challenge.id} className={MyStyle.ChallengeItem}>
+                            {challengeItem.Challenge.name}
+                            {!challengeItem.success ?
+                                <Certification challengeItem={challengeItem} />
+                                : ""
+                            }
+                        </li>
+                    )}
+                </UserChallengeItem.Provider>
             ))}
         </ul>
     );
