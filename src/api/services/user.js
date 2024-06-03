@@ -56,7 +56,10 @@ export const userApi = {
             "Authorization": token
         }
     }),
-
-
+    getNotification: (token)=> api.get(`users/notification`, {
+        headers:{
+            "Authorization": token
+        }
+    })
     // delRefreshToken: (id) => api.patch(`/auth/refresh`, {id})
 }
