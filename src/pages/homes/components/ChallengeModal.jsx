@@ -14,16 +14,16 @@ const ChallengeModal = ({isModalOpen, handleClose, challenge}) => {
     //취소버튼 클릭시 백엔드로 유저정보 보내는 코드
     const [refuse, setRefuse] = useState();
     //max값 렌더링을위한 코드
-    const [max, setMax] = useState(challenge.max);
+    const [number, setNumber] = useState(challenge.number);
     const openAttend = () => {
         deleteAttend();
-        deleteMax();
+        deleteNumber();
         setAttend(true)
     }
 
     const closeAttend = () => {
         postAttend(challenge.id)
-        postMax();
+        postNumber();
         setAttend(false)
     }
 
@@ -54,24 +54,24 @@ const ChallengeModal = ({isModalOpen, handleClose, challenge}) => {
         }
     }
     //참여버튼 클릭시 백엔드로 max+1해주는 코드
-    const postMax = async () => {
+    const postNumber = async () => {
         try {
             const id = challenge.id;
-            const updatedMax = max + 1; // max 값을 1 증가
-            const res = await challengApi.modifyChallenge(id, { max: updatedMax }, token);
-            setMax(updatedMax); // max 값을 업데이트
+            const updatedNumber = number + 1; // max 값을 1 증가
+            const res = await challengApi.modifyChallenge(id, { number: updatedNumber }, token);
+            setNumber(updatedNumber); // max 값을 업데이트
         } catch (err) {
             console.error(err);
         }
     }
 
     //취소버튼 클릭시 백엔드로 max-1해주는 코드
-    const deleteMax = async () => {
+    const deleteNumber = async () => {
         try {
             const id = challenge.id;
-            const updatedMax = max - 1;
-            const res = await challengApi.modifyChallenge(id, { max: updatedMax }, token);
-            setMax(updatedMax); 
+            const updatedNumber = number - 1;
+            const res = await challengApi.modifyChallenge(id, { number: updatedNumber }, token);
+            setNumber(updatedNumber);
         } catch (err) {
             console.error(err);
         }
@@ -90,7 +90,7 @@ const ChallengeModal = ({isModalOpen, handleClose, challenge}) => {
     }
 
     useEffect(() => {
-        setMax(challenge.max);
+        setNumber(challenge.number);
     }, [challenge]);
 
     useEffect(()=>{
@@ -119,10 +119,10 @@ const ChallengeModal = ({isModalOpen, handleClose, challenge}) => {
                         완료일: {challenge.endDay}
                     </Typography>
                     <Typography id="body3">
-                        <p>모집인원:{max}/20명</p>
+                        <p>모집인원:{number}/{challenge.max}명</p>
                     </Typography>
                     <Typography id="body4">
-                        {max>=20?
+                        {number>=challenge.max?
                             (<p>모집인원마감</p>)
                         :
                             (userAttend ?

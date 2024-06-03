@@ -16,11 +16,32 @@ export const challengApi = {
         },
         data: {id}
     }),
+    modifyChallenge: (id, data, token) =>  api.patch(
+        `challenge/${id}`,
+        data,
+        {
+            headers: {
+                "Authorization": token,
+                "Content-Type": "application/json"
+            }
+        }
+    ),
+    uploadChallenge : (data, token) =>  api.post(
+        'challenge/',
+        data,
+        {
+            headers: {
+            'Content-Type': 'multipart/form-data',
+            "Authorization": token
+        }}
+    ),
 
     uploadSuccess: (id, token) =>  api.post(
         'challenge/success',
         {id},
-        {headers: {"Authorization": token}}
+        {
+            headers: {"Authorization": token}
+        }
     ),
 
     deleteSuccess: (challengeId,token) => api.delete(`challenge/success`, {
@@ -36,22 +57,17 @@ export const challengApi = {
         },
         params:{id}
     }),
-    modifyChallenge: (id, data, token) =>  api.patch(
-        `challenge/${id}`,
+    uploadCheck: (data, token) =>  api.post(
+        'challenge/check',
         data,
         {
             headers: {
-                "Authorization": token,
-                "Content-Type": "application/json"
-            }
+                "Content-Type": "multipart/form-data",
+                "Authorization": token}
         }
     ),
-    uploadChallenge : (data, token) =>  api.post(
-        'challenge/',
-        data,
-        {headers: {
-            'Content-Type': 'application/json',
-            "Authorization": token
-        }}
+    getCheckByChallengeId : (challengeId) => api.get(`check/challenge/${challengeId}`
     ),
+
+
 }

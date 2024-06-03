@@ -1,23 +1,43 @@
 import MyStyle from "../mypages/css_module/MyPage.module.css"
 import * as React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import moment from "moment";
 import Modal from 'react-modal';
+import { userApi } from "../../api/services/user";
+import { VscGlobe } from "react-icons/vsc";
+
+
 //마이페이지의 칼로리 달력 코드입니다
 //칼로리달력 , 칼로리 계산 모달창
 
 const Kcal = () => {
+  const token = localStorage.getItem("token")
   const [value, setValue] = useState(new Date());
 
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
+  const [dateKcal, setDateKcal] = useState(0);
 
   const kcalOpen = (value, event) => {
     setIsOpen(true);
   };
+
+  const todayKcal = async()=>{
+    try{
+        const res = await userApi.getCalorie(token);
+          setDateKcal(res.data.payload)
+          console.log(res.data.payload);
+    }catch(err){
+      console.error(err);
+    }
+  }
+
+  useEffect(()=>{
+    todayKcal();
+  })
 
   return (
     <div className={MyStyle.Kcal}>
@@ -45,14 +65,34 @@ export default Kcal;
 Modal.setAppElement("#root");
 
 const KcalCalc = ({ isOpen, handleOpen, handleClose }) => {
+  const token = localStorage.getItem("token")
   const [morning, setMorning] = useState(0);
   const [lunch, setLunch] = useState(0);
   const [dinner, setDinner] = useState(0);
   const [snack, setSnack] = useState(0);
 
-  const sum = () => {
+  const [Kcal, setKcal] = useState(0);
+
+  const sum = ()=>{
     return morning + lunch + dinner + snack;
+  }
+
+  const sumKcal = async() => {
+    try{
+      const date = new Date();
+      const totalCalories = morning + lunch + dinner + snack;
+      const data = {
+        date: date,
+        calories: totalCalories
+      };
+        const res = await userApi.uploadCalorie(data,token);
+        setKcal(res.data.payload);
+        console.log(res.data.payload);
+    }catch(err){
+      console.error(err);
+    }
   };
+
 
   return (
     <div >
@@ -96,7 +136,8 @@ const KcalCalc = ({ isOpen, handleOpen, handleClose }) => {
             onChange={(e) => setSnack(parseInt(e.target.value))}
           />
         </div>
-        <p className={MyStyle.sum}>총 칼로리: {sum()}Kcal</p>
+        <button onClick={sumKcal}>등록</button>
+        <p className={MyStyle.sum} >총 칼로리: {Kcal}Kcal</p>
         <button type="submit" onClick={handleClose}>
           저장
         </button>
