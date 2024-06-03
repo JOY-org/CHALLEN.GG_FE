@@ -86,7 +86,7 @@ const CommunityPost = () => {
     }
     // pagination 관련
     useEffect(()=> {
-        setTotalPage(Math.floor(posts?.length/SHOW_POST_NUM) + 1);
+        setTotalPage(Math.ceil(posts?.length/SHOW_POST_NUM) );
     }, [posts])
 
 
@@ -113,7 +113,9 @@ const CommunityPost = () => {
         <section className={styles.notice}>
             <div className={styles.pageTitle}>
                 <div className={styles.container}>
-                    <h3 className={styles.title}>{params.title}</h3>
+                    <div className={styles.title}>
+                        <div className={styles.paramTitle}>{params.title}</div>
+                    </div>
                 </div>
             </div>
 
@@ -175,7 +177,7 @@ const CommunityPost = () => {
                                 })}
                         </tbody>
                     </table>
-                    <Stack sx={{alignItems: 'center', mt: '20px'}}>
+                    <Stack sx={{alignItems: 'center', mt: '20px', marginBottom:'20px'}}>
                         <Pagination count={totalPage} onChange={handlePage}></Pagination>
                     </Stack>
                 </div>
