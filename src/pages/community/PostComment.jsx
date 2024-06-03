@@ -51,7 +51,10 @@ const PostComment = ({postComment, setPostComment, postDetail}) => {
         throw new Error("알 수 없는 에러");
       }
     } catch (err) {
-      console.error(err);
+      Swal.fire({
+        text: '로그인 이후에 가능해요',
+        icon: "error"
+    });
     }
   };
 
@@ -68,7 +71,7 @@ const PostComment = ({postComment, setPostComment, postDetail}) => {
 
   // pagination 관련
   useEffect(() => {
-    setTotalPage(Math.floor(postComment?.length / SHOW_POST_NUM) + 1);
+    setTotalPage(Math.ceil(postComment?.length / SHOW_POST_NUM));
   }, [postComment]);
 
   const handlePage = (e, v) => {

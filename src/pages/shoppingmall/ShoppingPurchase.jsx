@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from "../../components/css_module/ShoppingPurchase.module.css";
+import styled from "./css_module/ShoppingPurchase.module.css";
 
 
 const Purchase = () => {

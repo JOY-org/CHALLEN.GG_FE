@@ -1,5 +1,5 @@
 import React from "react";
-import ProductCard from "./shoppingpages/ShoppingList";
+import ProductCard from "./shoppingmall/ShoppingProduct";
 // import { Button } from "@mui/material";
 
 
