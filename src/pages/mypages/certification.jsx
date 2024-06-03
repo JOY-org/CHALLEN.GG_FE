@@ -29,7 +29,7 @@ export const CertificationModal = ({close,modal}) => {
     const [myImg, setMyImg] = useState(null);
     const [preImg, setPreImg] = useState(null);
     const [complete, setComplete] = useState();
-    const [showChallengeList, setShowChallengeList] = useState();
+    const [showChallengeList, setShowChallengeList] = useState([]);
 
     const showChallenge = (e) => {
         const files = e.target.files;
@@ -38,9 +38,7 @@ export const CertificationModal = ({close,modal}) => {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setMyImg(file);
-                console.log(file);
                 setPreImg(reader.result);
-                console.log(reader.result);
             };
             reader.readAsDataURL(file);
         }
@@ -55,9 +53,8 @@ export const CertificationModal = ({close,modal}) => {
             if(myImg){
             const res = await challengApi.uploadCheck(data , token)
                 setComplete(res.data.payload)
-                console.log(res.data.payload);
             }else{
-                alert("이미지를 업로드 챌린지 인증이 가능합니다")
+                alert("이미지를 업로드해야 챌린지 인증이 가능합니다")
             }
         }catch(err){
             console.error(err);
@@ -66,10 +63,10 @@ export const CertificationModal = ({close,modal}) => {
     // 인증현황리스트
     const showList =async()=>{
         try{
-            const challengeId = challengeItem.ChallengeId
-            const res = await challengApi.getCheckByChallengeId(challengeId)
-            setShowChallengeList(res.data.payload)
-            console.log(res.data.payload);
+            const id = challengeItem.ChallengeId;
+            const res = await challengApi.getCheckByChallengeId(id);
+            setShowChallengeList(res.data.payload);
+            console.log("111111111111",res.data.payload);
         }catch(err){
             console.error(err);
         }
@@ -77,7 +74,7 @@ export const CertificationModal = ({close,modal}) => {
 
     useEffect(()=>{
         showList()
-    })
+    },[])
 
     return (
                 <Modal
@@ -86,6 +83,7 @@ export const CertificationModal = ({close,modal}) => {
                     contentLabel="챌린지 인증모달"
                 >
                     <h3>{challengeItem.Challenge.name}</h3>
+                    <p>인증 처리는 오전 12시이후 갱신 됩니다</p>
                     <label htmlFor="uploadImg">인증 자료를 업로드 하기</label>
                     <input type="file" onChange={showChallenge} id="uploadImg" />
                     {preImg ?
@@ -96,7 +94,17 @@ export const CertificationModal = ({close,modal}) => {
                     <button onClick={uploadChallenge} >인증완료</button>
 
                     <p>일자별 인증 현황리스트</p>
-                    <p>{showChallengeList}</p>
+                    <div>
+                        {showChallengeList.length === 0 && <p>데이터가 없습니다.</p>}
+                        {showChallengeList.map(item => (
+                            item.SuccessId=== challengeItem.id &&
+                            (<div key={item.id}>
+                                <p>ID: {challengeItem.UserId}</p>
+                                <p>Date: {item.createdAt}</p>
+                                <img src={item.img} alt="타 유저의 인증 이미지" />
+                            </div>)
+                        ))}
+                    </div>
                 </Modal>
     );
 };

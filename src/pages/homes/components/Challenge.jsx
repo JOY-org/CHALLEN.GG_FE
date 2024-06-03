@@ -29,12 +29,10 @@ export default function Challenge({challengeList}) {
 
     //아이디순으로 정렬한 이유는 생성일자순으로 나열되어 "신규"버튼과 같은 동작을하기때문입니다
     //그럼 신규를 없애야하는건가????
-    const sortedChallengeList = challengeList?.sort((a,b)=> a.id - b.id)
-
 
     return (
         <>
-            {sortedChallengeList?.map((challenge) => (
+            {challengeList?.map((challenge) => (
             <ChallengeCard
                 key={challenge.id}
                 challenge={challenge}
@@ -93,7 +91,7 @@ const ChallengeCard = ({ challenge, handleOpen }) => {
         const interesterArr = challenge.Interester;
         const result = interesterArr.some(obj => obj.id === loginUser);
         setStarLike(result)
-    }, [challenge.Interester,loginUser.userId])
+    }, [challenge.Interester,loginUser])
 
     //흥미없는(별모양을 끈)챌린지 코드
     useEffect(()=>{
