@@ -44,67 +44,73 @@ export const CertificationModal = ({close,modal}) => {
         }
     };
 
-    const uploadChallenge = async()=>{
+    const uploadChallenge = async () => {
         const data = {
-            img:myImg,
-            SuccessId:challengeItem.id
-        }
-        try{
-            if(myImg){
-            const res = await challengApi.uploadCheck(data , token)
-                setComplete(res.data.payload)
-            }else{
-                alert("이미지를 업로드해야 챌린지 인증이 가능합니다")
+            img: myImg,
+            SuccessId: challengeItem.id
+        };
+        try {
+            if (myImg) {
+                const res = await challengApi.uploadCheck(data, token);
+                setComplete(res.data.payload);
+            } else {
+                alert("이미지를 업로드해야 챌린지 인증이 가능합니다");
             }
-        }catch(err){
-            console.error(err);
-        }
-    }
-    // 인증현황리스트
-    const showList =async()=>{
-        try{
-            const id = challengeItem.ChallengeId;
-            const res = await challengApi.getCheckByChallengeId(id);
-            setShowChallengeList(res.data.payload);
-            console.log("111111111111",res.data.payload);
-        }catch(err){
+        } catch (err) {
             console.error(err);
         }
     }
 
-    useEffect(()=>{
-        showList()
-    },[])
+    // 인증현황리스트
+    const showList = async () => {
+        try {
+            const id = challengeItem.ChallengeId;
+            console.log(id);
+            const res = await challengApi.getCheckByChallengeId(id);
+            if (res && res.data) {
+                setShowChallengeList(res.data);  // res.data를 사용해 상태 설정
+                console.log(res.data);
+            } else {
+                console.error("Unexpected response structure", res);
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    useEffect(() => {
+        showList();
+    }, [challengeItem.ChallengeId]);
 
     return (
-                <Modal
-                    isOpen={modal}
-                    onRequestClose={close}
-                    contentLabel="챌린지 인증모달"
-                >
-                    <h3>{challengeItem.Challenge.name}</h3>
-                    <p>인증 처리는 오전 12시이후 갱신 됩니다</p>
-                    <label htmlFor="uploadImg">인증 자료를 업로드 하기</label>
-                    <input type="file" onChange={showChallenge} id="uploadImg" />
-                    {preImg ?
-                    <img src={preImg} alt="나의 인증 이미지"  />
-                    :
-                    ""
-                    }
-                    <button onClick={uploadChallenge} >인증완료</button>
+        <Modal
+            isOpen={modal}
+            onRequestClose={close}
+            contentLabel="챌린지 인증모달"
+        >
+            <h3>{challengeItem.Challenge.name}</h3>
+            <p>인증 처리는 오전 12시 이후 갱신 됩니다</p>
+            <label htmlFor="uploadImg">인증 자료를 업로드 하기</label>
+            <input type="file" onChange={showChallenge} id="uploadImg" />
+            {preImg ?
+                <img src={preImg} alt="나의 인증 이미지" />
+                :
+                ""
+            }
+            <button onClick={uploadChallenge}>인증완료</button>
 
-                    <p>일자별 인증 현황리스트</p>
-                    <div>
-                        {showChallengeList.length === 0 && <p>데이터가 없습니다.</p>}
-                        {showChallengeList.map(item => (
-                            item.SuccessId=== challengeItem.id &&
-                            (<div key={item.id}>
-                                <p>ID: {challengeItem.UserId}</p>
-                                <p>Date: {item.createdAt}</p>
-                                <img src={item.img} alt="타 유저의 인증 이미지" />
-                            </div>)
-                        ))}
-                    </div>
-                </Modal>
+            <p>일자별 인증 현황리스트</p>
+            <div>
+                {showChallengeList.map(item => (
+                    item.SuccessId === challengeItem.id && (
+                        <div key={item.id}>
+                            <p>ID: {challengeItem.UserId}</p>
+                            <p>Date: {item.createdAt}</p>
+                            <img src={`http://localhost:8000${item.img}`} alt="타 유저의 인증 이미지" />
+                        </div>
+                    )
+                ))}
+            </div>
+        </Modal>
     );
 };

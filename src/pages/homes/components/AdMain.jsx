@@ -23,7 +23,7 @@ const AdMain = () => {
         <div className={styles.AdMain}>
             {challengeImg.map((c) => (
                 <div key={c.id}>
-                    <img src={c.img} />
+                    <img src={`http://localhost:8000${c.img}`} />
                 </div>
             ))}
         </div>
