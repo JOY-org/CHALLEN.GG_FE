@@ -1,4 +1,4 @@
-import socket from '../api/services/socket';
+//import socket from '../api/services/socket';
 import * as React from 'react';
 import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
@@ -31,10 +31,13 @@ const StyledBox = styled('div')(({ theme }) => ({
 
 function SwipeableEdgeDrawer({openDrawer,toggleDrawer}) {
 
-
+  //const [loginUser.setloginUser]=usestate()
   //socket.emit("주제를 쓰시오",loginUser,()=>{
-//  console.log("res",res);
-//  })
+  //  console.log("res",res);
+  //if(res?.ok){
+  //setloginUser(res.data)
+  //}
+  //  })
 
   return (
     <Root >
