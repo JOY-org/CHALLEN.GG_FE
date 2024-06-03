@@ -1,5 +1,6 @@
 import React from 'react';
-import styles from '../components/css_module/Btn.module.css';
+import styles  from "../css_module/Btn.module.css"
+
 
 const Btn = ({children,style, btnEvent}) => {
     return (

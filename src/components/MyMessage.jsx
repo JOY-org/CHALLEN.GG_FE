@@ -1,15 +1,14 @@
 //import socket from '../api/services/socket';
 import * as React from 'react';
-import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { grey } from '@mui/material/colors';
-import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { userApi } from '../api/services/user';
 import { useEffect } from 'react';
 import { useState } from 'react';
+
 const drawerBleeding = 56;
 
 
