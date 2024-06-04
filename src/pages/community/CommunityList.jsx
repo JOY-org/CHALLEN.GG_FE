@@ -1,4 +1,4 @@
-import {Card, CardActionArea, CardContent, CardMedia, Grid, Typography} from '@mui/material';
+import {Box, Card, CardActionArea, CardContent, CardMedia, Grid, Typography} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import styles from './css_module/CommunityList.module.css'
 
@@ -8,28 +8,39 @@ export default function CommunityList() {
 
     return (
         <div className={styles.container}>
-            <Grid container spacing={2} direction="row" wrap="nowrap" style={{ overflowX: 'auto' }}>
-                {itemData.map((d)=>{
-                    return(
-                        <Grid item sx={{ width: '100%'}} onClick={()=>{navigate(`/communitypost/${d.title}`)}}>
-                            <Card sx={{boxShadow: '5px 5px 15px 0px rgba(0, 0, 0, 0.3)', padding:0}}>
-                                <CardActionArea>
-                                    <CardMedia
-                                        component="img"
-                                        height="180"
-                                        image={d.img}
-                                    />
-                                    <CardContent sx={{padding:"5px", textAlign:'center'}}>
-                                        <Typography gutterBottom variant="h5" component="div" sx={{marginBottom:0}}>
-                                            {d.title}
-                                        </Typography>
-                                    </CardContent>
-                                </CardActionArea>
-                            </Card>
-                        </Grid>
-                    )
-                })}
-            </Grid>
+            <Grid container spacing={2} direction="row" wrap="wrap">
+            {itemData.map((d, i) => (
+                <Grid item xs={12} sm={4} key={i} onClick={() => { navigate(`/communitypost/${d.title}`); }}>
+                    <Card sx={{ boxShadow: '5px 5px 15px 0px rgba(0, 0, 0, 0.3)', padding: 0 }}>
+                        <CardActionArea>
+                            <CardMedia
+                                component="img"
+                                height="180"
+                                image={d.img}
+                            />
+                            <Box
+                                sx={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    width: '100%',
+                                    height: '100%',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    color: 'white',
+                                    backgroundColor: 'rgba(0, 0, 0, 0.4)'
+                                }}
+                            >
+                                <Typography variant="h5" component="div">
+                                    {d.title}
+                                </Typography>
+                            </Box>
+                        </CardActionArea>
+                    </Card>
+                </Grid>
+            ))}
+        </Grid>
         </div>
     )
 }
