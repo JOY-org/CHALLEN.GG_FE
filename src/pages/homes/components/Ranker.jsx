@@ -26,7 +26,7 @@ export default function Ranker() {
 
 
     return (
-        <div  className={styleHome.RankerName}>
+        <span  className={styleHome.RankerName}>
             <h1>ToDay ranker</h1>
             <div>
                 </div>
@@ -43,6 +43,6 @@ export default function Ranker() {
                 </div>
                 )
             )}
-        </div>
+        </span>
     );
 }

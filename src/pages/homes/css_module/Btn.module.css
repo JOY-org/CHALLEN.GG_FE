@@ -1,6 +1,7 @@
 /* 버튼 공통 컴포넌트  */
 :root {
-    --btn-bg: #ffffff;
+    --btn-bg: #f2f5fa;;
+    --font:#00aeda
 }
 
 .body {
@@ -15,12 +16,15 @@
     margin: 1rem;
 }
 
+
 .btn-open-line {
     border: none;
     transition: 0.3s;
     position: relative;
-    color: var(--btn-bg);
-    background-color: #4483FD;
+    color: var(--font);
+    background-color: var(--btn-bg);
+    font-weight: bolder;
+    font-size: large;
 
     &::before,
     &::after {
@@ -45,9 +49,9 @@
 
     &:hover {
         letter-spacing: 5px;
-        color: var(--btn-bg);
+        color: #c0e6f0;
         background: transparent;
-
+        border-bottom: 1px solid #c0e6f0;
         &::before,
         &::after {
             opacity: 1;
