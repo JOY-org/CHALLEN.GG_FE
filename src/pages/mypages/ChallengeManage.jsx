@@ -29,12 +29,11 @@ const ChallengeManage = () => {
 
         return (
             <div className={MyStyle.ChallengeManag}>
-                <button onClick={openList}>진행중</button>
-                <button onClick={closeList}>완료</button>
+                <button onClick={openList} id={MyStyle.btn1}>진행중</button>
+                <button onClick={closeList} id={MyStyle.btn2}>완료</button>
                 {openChallengeList ? (
                 <ChallengeList challenges={myChallenge.filter((challengeItem) => !challengeItem.success)}
                 />
-
             ) : (
                 <ChallengeList challenges={myChallenge.filter((challengeItem) => challengeItem.success)} />
             )}
@@ -48,11 +47,11 @@ export const UserChallengeItem = createContext("챌린지 정보가없습니다"
 
 export const ChallengeList = ({ challenges }) => {
     return (
-        <ul>
+        <ul >
             {challenges.map((challengeItem) => (
                 <UserChallengeItem.Provider key={challengeItem.Challenge.id} value={challengeItem}>
                     {challengeItem.Challenge && (
-                        <li key={challengeItem.Challenge.id} className={MyStyle.ChallengeItem}>
+                        <li key={challengeItem.Challenge.id} >
                             {challengeItem.Challenge.name}
                             {!challengeItem.success ?
                                 <Certification challengeItem={challengeItem} />

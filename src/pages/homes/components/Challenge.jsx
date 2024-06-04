@@ -27,19 +27,37 @@ export default function Challenge({challengeList}) {
     //모달창 클로즈코드
     const handleClose = () => setIsModalOpen(false);
 
-    //아이디순으로 정렬한 이유는 생성일자순으로 나열되어 "신규"버튼과 같은 동작을하기때문입니다
-    //그럼 신규를 없애야하는건가????
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const handlePrevSlide = () => {
+        setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+    };
+
+    const handleNextSlide = () => {
+        setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, challengeList.length - 1));
+    };
 
     return (
         <>
+            <button
+                onClick={handlePrevSlide}
+                className={styleHome.Slide}
+                > ≪ </button>
+            <div className={styleHome.challengeContainer}>
             {challengeList?.map((challenge) => (
             <ChallengeCard
                 key={challenge.id}
                 challenge={challenge}
                 handleOpen={handleOpen}
-                loginUser={loginUser} // loginUser 전달
+                loginUser={loginUser}
+                isActive={challengeList.index === currentIndex}
             />
             ))}
+            </div>
+            <button
+                onClick={handleNextSlide}
+                className={styleHome.Slide}
+                >≫</button>
             { challengeDetail &&
                 <ChallengeModal isModalOpen={isModalOpen} handleClose={handleClose} challenge={challengeDetail}/>
             }
@@ -49,7 +67,7 @@ export default function Challenge({challengeList}) {
 
 //메인에 보여주는 챌린지 내용
 
-const ChallengeCard = ({ challenge, handleOpen }) => {
+const ChallengeCard = ({ challenge, handleOpen,isActive }) => {
     const token = localStorage.getItem('token');
     const { loginUser } = useAuth();
     //관심챌린지 백엔드로 전송하는 상태관리코드
@@ -103,8 +121,8 @@ const ChallengeCard = ({ challenge, handleOpen }) => {
     return (
     <Card
         key={challenge.id}
-        sx={{ maxWidth: 345 }}
-        className={styleHome.Challenge}
+        sx={{ maxWidth: 345 , boxShadow:"5px 5px 20px 1px gray"}}
+        className={`${styleHome.Challenge} ${isActive ? styleHome.active : ''}`}
     >
         <CardActionArea onClick={() => handleOpen(challenge)}>
         <CardMedia
@@ -114,10 +132,14 @@ const ChallengeCard = ({ challenge, handleOpen }) => {
             alt="챌린지사진"
         />
         <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography
+                sx={{fontFamily: 'Giants-Bold'}}
+                gutterBottom variant="h5"
+                component="div">
             {challenge.name}
             </Typography>
-            <Typography variant="body2" >
+            <Typography variant="body2"
+            sx={{fontFamily: 'Giants-Bold'}}>
             시작일: {challenge.startDay}
             <br />
             완료일: {challenge.endDay}

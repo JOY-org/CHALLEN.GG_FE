@@ -110,15 +110,16 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
                 isOpen={isOpen}
                 onRequestClose={CloseModal}
                 contentLabel="챌린지 기획서"
+                className={MyStyle.MadeModal}
             >
                 <h3 className={MyStyle.name}>챌린지 기획서</h3>
                 <div className={MyStyle.image}>
-                    <p>대표이미지</p>
-                    <input type="file" onChange={handleImageUpload}></input>
+                    <label  htmlFor={MyStyle.mainImg} id="label">이미지 등록하기 click!</label>
+                    <input type="file" onChange={handleImageUpload} id={MyStyle.mainImg}></input>
                     {imagePreview && <img src={imagePreview} alt="대표 이미지 미리보기" />}
                     <div>
                         <label>챌린지 이름</label>
-                        <input type="text" placeholder="챌린지명을 입력하시오" onChange={handleChallengeNameChange}></input>
+                        <input type="text" placeholder="8글자 내외로 작성하세요" onChange={handleChallengeNameChange}></input>
                     </div>
                     <div>
                         <label>챌린지 기간</label>
@@ -132,11 +133,11 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
                     </div>
                     <div>
                         <label>챌린지 주의사항</label>
-                        <input type="text" placeholder="당신의 챌린지를 소개해주세요" onChange={handleCautionChange}></input>
+                        <input type="text" placeholder="이건 꼭챙겨 참여하자!" onChange={handleCautionChange}></input>
                     </div>
                     <div>
                         <label>모집인원</label>
-                        <input type="text"  onChange={handlemaxChange} placeholder="최대 20명"></input>:명
+                        <input type="text"  onChange={handlemaxChange}></input>:명
                     </div>
                     <div>
                         <label>예치금</label>

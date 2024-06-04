@@ -11,7 +11,7 @@
     border: none;
     overflow: hidden;
     transition: 0.3s;
-    width: 100%;
+    width: 99%;
     background-color: transparent;
 
 
@@ -30,7 +30,7 @@
             display: inline;
             justify-content: center;
             align-items: center;
-            width: 100%;
+            width: 99%;
             height: 100%;
 
         }
