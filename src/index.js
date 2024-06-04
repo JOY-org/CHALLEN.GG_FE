@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const theme = createTheme({
   palette: {
-    mainColor: { main: '#4483FD' },
+    mainColor: { main: '#00aeda' },
     yellowButton: { yellow: '#F8C514'},
     grayButton: { gray: '#D9D9D9' },
     likeButton: { red: '#E64C3C'},

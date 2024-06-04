@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styleHeader from  "../css_module/Header.module.css"
-import { Navigate, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import PeopleIcon from '@mui/icons-material/People';//커뮤니티아이콘
@@ -12,15 +12,31 @@ import AdMessage from "../AdMessage";
 import NotificationsIcon from '@mui/icons-material/Notifications';//마이메세지아이콘
 import SwipeableEdgeDrawer from "../MyMessage"
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';//로그인아이콘
-import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import { useAuth } from "../../hooks/useAuth";
-import { Nightlife } from "@mui/icons-material";
 import Swal from "sweetalert2";
-//styleHeader.HeaderClass:헤더 전체
-//logo:challen.gg 로고
+
 
 const Header = () => {
-    const {loginUser, login, logout} = useAuth();
+
+    const [showNav, setShowNav] = useState(false);
+    const [scrollY, setScrollY] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = (e) => {
+            const myScrollY = window.scrollY;
+            if (myScrollY < scrollY) {
+                setShowNav(false);
+            } else {
+                setShowNav(true);
+            }
+            setScrollY(myScrollY);
+        }
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [scrollY]);
+
+
+    const {loginUser,logout} = useAuth();
     const [value, setValue] = React.useState('recents');
 
     const handleChange = (event, newValue) => {
@@ -86,36 +102,44 @@ const Header = () => {
             goToMenu('/')
         });
     }
+    const bottonNavStyle = {
+        width: "700px",
+        backgroundColor: "transparent"
+    };
 
     return (
         <>
         {/* 최상단 광고배너 */}
         <Banner ><AdMessage /></Banner>
         {/* 챌린지 홈 마크 */}
-        <div className={styleHeader.HeaderClass}>
+        <div className={`${styleHeader.HeaderClass} ${showNav && styleHeader.TestClass}`}>
             <h1 id={styleHeader['logo']}
                 onClick={() => goToMenu('/')}
             >CHALLEN.GG</h1>
         {/* 상단바  */}
-        <BottomNavigation sx={{ width: 700 , backgroundColor:'#4483FD' }} value={value} onChange={handleChange}>
+        <BottomNavigation
+            sx={bottonNavStyle}
+            className={styleHeader.BottomNavigation}
+            value={value}
+            onChange={handleChange}>
                 {
                     menus.map((m, idx) => (
                         <BottomNavigationAction
+                            sx={{color:"white"}}
+                            className={styleHeader.BottomNavigationAction}
                             key={idx}
+                            icon={m.icon ? <m.icon /> : null}
                             label={m.label}
-                            icon={m.icon?<m.icon />: null}
                             onClick={
-                                m.path === '/logout'?
-                                    ()=>handleLogout()
-                                    :
-                                    m.label === '마이메세지' ? toggleDrawer :()=>goToMenu(m.path)
+                                m.path === '/logout' ?
+                                () => handleLogout()
+                                :
+                                m.label === '마이메세지' ? toggleDrawer : () => goToMenu(m.path)
                             }
-                            >
-                                {m.label}
-                        </BottomNavigationAction>
+                        />
                     ))
                 }
-            </BottomNavigation>
+        </BottomNavigation>
         </div>
 
         {/* 마이메세지페이지 사이드바 창 */}

@@ -6,11 +6,13 @@ import Main from './Main';
 const Layout = ({ children }) => {
     return (
         <BrowserRouter>
-            <Header />
-            <Main>
-                {children}
-            </Main>
-            <Footer/>
+            <div style={{height: "100vh"}}>
+                <Header />
+                <Main>
+                    {children}
+                </Main>
+                <Footer/>
+            </div>
         </BrowserRouter>
     );
 }
