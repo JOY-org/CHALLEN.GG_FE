@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // ShoppingDetail로 정보 전달
 import styled from "./css_module/ShoppingProduct.module.css";
+
 // import likeIcon from "../../images/likeIcon.png";
 import axios from 'axios';
 import ProductPagination from './components/ProductPagination';
@@ -9,11 +10,13 @@ import ProductPagination from './components/ProductPagination';
 const CARDS_PER_PAGE = 12; // 페이지당 카드 수를 정의
 
 const ShoppingProduct = () => {
+
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilter, setActiveFilter] = useState('');
   const navigate = useNavigate(); // ShoppingDetail로 정보 전달
+
 
   // 페이지 네이션
   const [currentCardPage, setCurrentCardPage] = useState(1);
@@ -190,15 +193,19 @@ const handleAllFilterClick = () => {
             </div>
           ))}
         </div>
+
         <ProductPagination
         currentPage={currentCardPage}
         totalPages={totalPages}
         handlePageChange={handleCardPageChange}
         styled={styled}
         />
+
       </div>
     </div>
   );
 };
 
+
 export default ShoppingProduct;
+

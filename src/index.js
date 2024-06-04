@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { RecoilRoot, atom, selector, useRecoilState, useRecoilValue, } from 'recoil';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -21,13 +21,11 @@ const theme = createTheme({
 })
 
 root.render(
-  <RecoilRoot>
     <ThemeProvider theme={theme}>
       <React.StrictMode>
         <App />
       </React.StrictMode>
     </ThemeProvider>
-  </RecoilRoot>
 );
 
 // If you want to start measuring performance in your app, pass a function

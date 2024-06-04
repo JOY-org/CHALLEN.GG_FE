@@ -2,7 +2,7 @@ import { Button } from "@material-ui/core";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Modal from 'react-modal';
-import MyStyle from "../../components/css_module/MyPage.module.css"
+import MyStyle from "../mypages/css_module/MyPage.module.css"
 import { Height, Margin } from "@mui/icons-material";
 import { useAuth } from "../../hooks/useAuth";
 import { userApi } from "../../api/services/user";
@@ -90,7 +90,7 @@ export const FollowList = ({isOpen, onRequestClose ,user}) => {
     //(언팔로워) 삭제버튼
     const unFollow = async (id) => {
         try{
-            const res = await userApi.followUser(id, token)
+            const res = await userApi.unFollowUser(id, token)
             if(res.data.code === 200) {
                 setFollowingList(prevList => prevList.filter(following => following.id !== id));
             }

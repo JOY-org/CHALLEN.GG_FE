@@ -1,7 +1,6 @@
-
-import MyStyle from "../../components/css_module/MyPage.module.css"
-import MadeChallenge from "./MadeChallenge";
-import PurchaseList from "./PurchaseList";
+import MyStyle from "../mypages/css_module/MyPage.module.css"
+import MadeChallenge from "../mypages/MadeChallenge";
+import PurchaseList from "../mypages/PurchaseList";
 
 const MyButtons = () => {
     return (

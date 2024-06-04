@@ -1,7 +1,6 @@
 import api from "../api"
 
 
-
 export const userApi = {
     followUser: (id, token) => api.post(`users/follow`, {id}, {
         headers: {
@@ -33,7 +32,7 @@ export const userApi = {
             "Authorization": token
         }
     }),
-    
+
     getUserInfo: (token) => api.get(`/users/myinfo`, {
         headers: {
             "Authorization": token
@@ -45,6 +44,22 @@ export const userApi = {
         },
         data: {id}
     }),
-
+    uploadCalorie: (data,token) =>  api.post('/users/calorie',
+        data,
+        {
+        headers: {
+            "Authorization": token
+        }
+    }),
+    getCalorie: (token) => api.get(`/users/calorie`, {
+        headers: {
+            "Authorization": token
+        }
+    }),
+    getNotification: (token)=> api.get(`users/notification`, {
+        headers:{
+            "Authorization": token
+        }
+    })
     // delRefreshToken: (id) => api.patch(`/auth/refresh`, {id})
 }

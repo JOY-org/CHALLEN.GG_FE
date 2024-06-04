@@ -1,70 +1,89 @@
-import styleHome from "../components/css_module/Home.module.css"
+import styleHome from "../pages/homes/css_module/Home.module.css"
 import Challenge from "../pages/homes/components/Challenge";
 import Ranker from "../pages/homes/components/Ranker";
-import { Children, useEffect, useState } from "react";
-import ChallengeModal from "../pages/homes/components/ChallengeModal";
-import Btn from "../components/Btn";
 import AdMain from "../pages/homes/components/AdMain";
-
+import Menufilter from "./homes/components/MenuFilter";
+import { useState, useEffect } from "react";
+import { challengApi } from "../api/services/challenge";
+import { useAuth } from "../hooks/useAuth";
 
 
 const Home = () => {
-    //챌린지상세모달창의 상태 관리 코드
-    const [ IsModalOpen, setIsModalOpen] = useState(false);
-    const handleOpen = () => setIsModalOpen(true);
-    const handleClose = () => setIsModalOpen(false);
-    const [adText, setAdText] = useState();
-    const [clickHolder, setClickHolder] = useState(false);
-    const TextList = [
-        '오늘의 챌린지 추천!',
-        "하늘 봉사단에서 멤버모집",
-        '베스트첼린저 랭킹 변동!',
-        '다이어트에 좋은 챌린지추천',
-        '트래킹챌린지 출시'
-    ]
+    const { loginUser } = useAuth();
+    const [sortKey, setSortKey] = useState();
+    const [searchTerm, setSearchTerm] = useState("");
+    const [challengeList, setChallengeList] = useState([]);
 
-    function getRandomInt(max){
-        return Math.floor(Math.random()*max);
-    }
+    useEffect(() => {
+        getChallenge(); // 페이지가 처음 렌더링될 때 챌린지 데이터를 가져옴
+    }, [sortKey]);
 
-    useEffect(()=>{
-        const randomIndex = getRandomInt(TextList.length);
-        const selecedAdText = TextList[randomIndex];
-        setAdText(selecedAdText);
-    }, [])
+    const getChallenge = async () => {
+        try {
+            const res = await challengApi.getChallenge();
+            sortData(res.data.payload);
+            console.log(res.data.payload);
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
+    const sortData = (arr) => {
+        let data;
+        if (!sortKey || sortKey === "전체") setChallengeList(arr); // 필터가 없으면 전체 리스트 반환
+        if (sortKey === "신규") {
+            data = [...arr.sort((a, b) => {
+                return new Date(a.createdAt) - new Date(b.createdAt)
+            })];
+            setChallengeList([...data]);
+        }
+        if (sortKey === "마감임박") {
+            data = [...arr.sort((a, b) => new Date(b.endDay) - new Date(a.endDay))];
+            setChallengeList([...data]);
+        }
+        if (sortKey === "인기") {
+            data = [...arr.sort((a, b) => new Date(b.number) - new Date(a.number))];
+            setChallengeList([...data]);
+        }
+        if (sortKey === "관심") {
+            setChallengeList(arr.filter(challenge => challenge.Interester.some(user => user.id === loginUser)));
+        }
+    };
+
+    const handleSearchInputChange = (e) => {
+        setSearchTerm(e.target.value); // 입력된 검색어를 상태에 저장
+    };
+
+    const handleSearch = () => {
+        if (searchTerm.trim() === "") {
+            // 검색어가 비어있으면 전체 리스트 보여주기
+            getChallenge(); // 검색어가 없을 때는 전체 리스트를 다시 불러오기
+        } else {
+            console.log("ddddd");
+            // 검색어가 입력되면 해당 검색어를 기준으로 필터링
+            const filteredList = challengeList.filter(challenge =>
+                challenge.name.toLowerCase().includes(searchTerm.toLowerCase()) // name을 기준으로 검색
+            );
+            setChallengeList(filteredList);
+        }
+    };
 
     return (
-
-            <div className={styleHome.Home}>
-                <div className={styleHome.btn}>
-                    <Btn>전체</Btn>
-                    <Btn>신규</Btn>
-                    <Btn>마감임박</Btn>
-                    <Btn>인기</Btn>
-                    <Btn>관심</Btn>
-                    <Btn>참여챌린지</Btn>
-                    <input type="text"
-                        placeholder={adText}
-                    ></input>
-                    <Btn>검색</Btn>
-                </div>
-                <AdMain/>
-                <div className={styleHome.challengeContainer}>
-                    <Challenge handleOpen={handleOpen} />
-                    <Challenge handleOpen={handleOpen} />
-                    <Challenge handleOpen={handleOpen} />
-
-
-                    <Ranker/>
-                </div>
-                { //false가 기본값이라 클릭전에는 모달이 보이지않음
-                    <ChallengeModal handleClose={handleClose} IsModalOpen={IsModalOpen}/>
-                }
+        <div className={styleHome.Home}>
+            <Menufilter
+                sortKey={sortKey}
+                setSortKey={setSortKey}
+                handleSearchInputChange={handleSearchInputChange}
+                handleSearch={handleSearch}
+            />
+            <div className={styleHome.challengeContainer}>
+                <Challenge challengeList={challengeList} />
+                <Ranker />
             </div>
+            <AdMain />
+        </div>
     );
-}
-
-
+};
 
 export default Home;
+

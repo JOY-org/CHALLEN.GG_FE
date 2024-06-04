@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import styled from "./css_module/ShoppingPurchase.module.css";
 
 
+
 const ShoppingPurchase = () => {
+
   const [searchTerm, setSearchTerm] = useState(''); // 검색어 상태 
   const [filteredOrders, setFilteredOrders] = useState([]); // 필터된 주문 상태 
 
@@ -144,4 +146,6 @@ const ShoppingPurchase = () => {
   );
 };
 
+
 export default ShoppingPurchase;
+

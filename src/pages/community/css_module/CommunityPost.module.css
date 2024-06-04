@@ -7,8 +7,17 @@
 
 .title{
     font-family: 'WavvePADO-Regular';
-    font-size: 36px;
+    background-image: url("https://images.unsplash.com/photo-1501785888041-af3ef285b470?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8d2FsbHBhcGVyc3x8fHx8fDE3MTc0MDI4MjY&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080");
+    height: 330px;
+    font-size: 60px;
+    color: white;
+    padding-top: 100px;
 }
+
+.paramTitle{
+    text-align: center;
+}
+
 
 table {
     border-collapse: collapse;
@@ -16,11 +25,7 @@ table {
 }
 
 section.notice {
-    padding: 80px 0;
-}
-
-.pageTitle {
-    margin-bottom: 60px;
+    padding: 0;
 }
 
 .pageTitle h3 {

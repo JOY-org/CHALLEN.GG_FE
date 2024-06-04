@@ -71,7 +71,7 @@ const PostComment = ({postComment, setPostComment, postDetail}) => {
 
   // pagination 관련
   useEffect(() => {
-    setTotalPage(Math.floor(postComment?.length / SHOW_POST_NUM) + 1);
+    setTotalPage(Math.ceil(postComment?.length / SHOW_POST_NUM));
   }, [postComment]);
 
   const handlePage = (e, v) => {

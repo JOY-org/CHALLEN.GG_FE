@@ -1,5 +1,5 @@
 import axios from "axios";
-import MyStyle from "../../components/css_module/MyPage.module.css"
+import MyStyle from "../mypages/css_module/MyPage.module.css"
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Follow from "./Follow";
@@ -45,15 +45,15 @@ const MyInfo = () => {
     const getExp = (exp) =>{
         let level;
         if (exp >= 21) {
-            level = 'Lv.5';
+            level = '카이저';
         }else if (exp >= 13) {
-            level = 'Lv.4';
+            level = '에너자이저';
         }else if (exp >= 8) {
-            level = 'Lv.3';
+            level = '에너지';
         }else if (exp >= 5) {
-            level = 'Lv.2';
+            level = '엔돌핀';
         }else if (exp >= 0) {
-            level = 'Lv.1';
+            level = '스타터';
         }
         return level;
     }

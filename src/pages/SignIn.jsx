@@ -117,12 +117,7 @@ export default function SignIn() {
                     로그인
                 </Button>
 
-                <Grid container>
-                    <Grid item xs>
-                        <Link href="#" variant="body2">
-                            비밀번호를 잊으셨나요?
-                        </Link>
-                    </Grid>
+                <Grid container justifyContent="flex-end">
                     <Grid item>
                         <Link href="/signup" variant="body2">
                             아직 회원가입을 안하셨나요?

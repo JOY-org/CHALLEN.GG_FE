@@ -11,6 +11,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { useAuth } from '../../hooks/useAuth';
 import { getRelativeTime } from '../../utils/date';
+import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
 
 const CommunityPost = () => {
     const { logout } = useAuth();
@@ -86,7 +87,7 @@ const CommunityPost = () => {
     }
     // pagination 관련
     useEffect(()=> {
-        setTotalPage(Math.floor(posts?.length/SHOW_POST_NUM) + 1);
+        setTotalPage(Math.ceil(posts?.length/SHOW_POST_NUM) );
     }, [posts])
 
 
@@ -113,7 +114,9 @@ const CommunityPost = () => {
         <section className={styles.notice}>
             <div className={styles.pageTitle}>
                 <div className={styles.container}>
-                    <h3 className={styles.title}>{params.title}</h3>
+                    <div className={styles.title}>
+                        <div className={styles.paramTitle}>{params.title}</div>
+                    </div>
                 </div>
             </div>
 
@@ -151,7 +154,7 @@ const CommunityPost = () => {
                     <table className={styles.boardTable}>
                         <thead>
                         <tr>
-                            <th scope="col" className={styles.thNum}>추천수</th>
+                            <th scope="col" className={styles.thNum}><KeyboardDoubleArrowUpIcon fontSize='small'/></th>
                             <th scope="col" className={styles.thtitle}>제목</th>
                             <th scope="col" className={styles.thwriter}>작성자</th>
                             <th scope="col" className={styles.thDate}>등록일</th>
@@ -163,7 +166,7 @@ const CommunityPost = () => {
                                 .map((p)=>{
                                     return(
                                         <tr className={styles.post} onClick={()=>handleClickOpenPost(p)}>
-                                            <td className={styles.postLike}>{p.Likers? p.Likers.length : 0}</td>
+                                            <td className={styles.postLike}> {p.Likers? p.Likers.length : 0}</td>
                                             <th className={styles.postTitle}>
                                                 {p.title} 
                                                 <span className={styles.commentColor}>[{p.Comments? p.Comments.length : 0}]</span>
@@ -175,7 +178,7 @@ const CommunityPost = () => {
                                 })}
                         </tbody>
                     </table>
-                    <Stack sx={{alignItems: 'center', mt: '20px'}}>
+                    <Stack sx={{alignItems: 'center', mt: '20px', marginBottom:'20px'}}>
                         <Pagination count={totalPage} onChange={handlePage}></Pagination>
                     </Stack>
                 </div>
