@@ -1,13 +1,16 @@
-import socket from '../api/services/socket';
+//import socket from '../api/services/socket';
 import * as React from 'react';
-import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { grey } from '@mui/material/colors';
-import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import { userApi } from '../api/services/user';
+import { useEffect } from 'react';
+import { useState } from 'react';
+
 const drawerBleeding = 56;
+
 
 const Root = styled('div')(({ theme }) => ({
   height: '100%',
@@ -15,78 +18,52 @@ const Root = styled('div')(({ theme }) => ({
     theme.palette.mode === 'light' ? grey[100] : theme.palette.background.default,
 }));
 
-const StyledBox = styled('div')(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'light' ? '#fff' : grey[800],
-}));
-
-// const Puller = styled('div')(({ theme }) => ({
-//   width: 30,
-//   height: 6,
-//   backgroundColor: theme.palette.mode === 'light' ? grey[300] : grey[900],
-//   borderRadius: 3,
-//   position: 'absolute',
-//   top: 8,
-//   left: 'calc(50% - 15px)',
-// }));
-
 function SwipeableEdgeDrawer({openDrawer,toggleDrawer}) {
 
+  const token = localStorage.getItem("token")
+  const [notis, setNotis] = useState([]);
 
-  //socket.emit("주제를 쓰시오",loginUser,()=>{
-//  console.log("res",res);
-//  })
+  const GetNotification = async () => {
+    try {
+      const res = await userApi.getNotification(token);
+      if (!res.data.payload || res.data.payload.length === 0) {
+        setNotis(["알림이 없습니다"]);
+      }else{
+        setNotis(res.data.payload);
+        console.log(res.data.payload);}
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    GetNotification();
+  }, []); // useEffect를 이 함수 내에서 호출하도록 이동
+
 
   return (
     <Root >
       <CssBaseline />
-      <Global
-        styles={{
-          '.MuiDrawer-root > .MuiPaper-root': {
-            height: '100%',
-            //`calc(50% - ${drawerBleeding}px)`
-            width:'400px',
-            overflow: 'visible',
-          },
-        }}
-      />
       <SwipeableDrawer
         open={openDrawer}
-        onClose={()=>{toggleDrawer(true)}}
-        onOpen={()=>{toggleDrawer(true)}}
+        onClose={() => { toggleDrawer(false) }}
+        onOpen={() => { toggleDrawer(true) }}
         swipeAreaWidth={drawerBleeding}
         disableSwipeToOpen={false}
         ModalProps={{
           keepMounted: true,
         }}
       >
-        <StyledBox
-        //회색박스
-          sx={{
-            top: -drawerBleeding,
-            borderTopLeftRadius: 8,
-            borderTopRightRadius: 8,
-            visibility: 'visible',
-            right: 0,
-            left: 0,
-          }}
-        >
           <Typography sx={{ p: 2, color: 'text.secondary' }}>My Message</Typography>
-        </StyledBox>
-        <StyledBox
-          sx={{
-            px: 2,
-            pb: 2,
-            height: '100%',
-            overflow: 'auto',
-          }}
-        >
-          <Skeleton variant="rectangular" height="100%" />
-        </StyledBox>
+            {notis.map((noti, index) => (
+              <div key={noti.id || index}>
+              <Typography>{noti.content || noti}</Typography>
+            </div>
+            ))
+          }
       </SwipeableDrawer>
     </Root>
   );
 }
-
-
 
 export default SwipeableEdgeDrawer;

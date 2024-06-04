@@ -66,7 +66,7 @@ export const challengApi = {
                 "Authorization": token}
         }
     ),
-    getCheckByChallengeId : (challengeId) => api.get(`check/challenge/${challengeId}`
+    getCheckByChallengeId : (id) => api.get(`challenge/check/challenge/${id}`
     ),
 
 
