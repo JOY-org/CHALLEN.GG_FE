@@ -11,7 +11,7 @@ export default function CommunityList() {
             <Grid container spacing={2} direction="row" wrap="wrap">
             {itemData.map((d, i) => (
                 <Grid item xs={12} sm={4} key={i} onClick={() => { navigate(`/communitypost/${d.title}`); }}>
-                    <Card sx={{ boxShadow: '5px 5px 15px 0px rgba(0, 0, 0, 0.3)', padding: 0 }}>
+                    <Card sx={{ boxShadow: '5px 5px 15px 0px rgba(0, 0, 0, 0.5)', padding: 0 }}>
                         <CardActionArea>
                             <CardMedia
                                 component="img"
@@ -26,7 +26,8 @@ export default function CommunityList() {
                                     width: '100%',
                                     height: '100%',
                                     display: 'flex',
-                                    alignItems: 'center',
+                                    alignItems: 'flex-end',
+                                    padding: '20px',
                                     justifyContent: 'center',
                                     color: 'white',
                                     backgroundColor: 'rgba(0, 0, 0, 0.4)'
