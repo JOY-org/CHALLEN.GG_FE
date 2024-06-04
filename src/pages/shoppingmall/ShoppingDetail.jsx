@@ -1,9 +1,13 @@
 import React, { useState } from "react";
-import { Button, Modal } from "@mui/material";
+
+import { Modal } from "@mui/material";
 import styled from "./css_module/ShoppingDetail.module.css";
-import { Link, useLocation } from 'react-router-dom'; // ShoppingList에서 가져옴.
+import { Link, useLocation, useNavigate } from 'react-router-dom'; // ShoppingList에서 가져옴.
 import ReviewPagination from './components/ReviewPagination';
 import InquiryPagination from "./components/InquiryPagination";
+import check_icon from '../../images/check_icon.png';
+
+
 
 // 후기글 페이지네이션 임시 데이터
 const reviews = [
@@ -42,7 +46,9 @@ const maskWriter = (writer) => {
   return masked;
 };
 
-const ProductDetail = () => {
+
+const ShoppingDetail = () => {
+
   const location = useLocation(); // ShoppingList에서 카드의 정보를 가져옴.
   const { product } = location.state || {}; 
   const [quantity, setQuantity] = useState(1); // 수량?
@@ -50,7 +56,21 @@ const ProductDetail = () => {
   // 모달 상태를 관리.
   const [modalOpen, setModalOpen] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleAddToCart = () => {
+    navigate({
+      state: {
+        cartItems: [
+          {
+            name: product?.name,
+            price: product?.price,
+            quantity: quantity,
+          }
+        ]
+      }
+    });
+
     // 장바구니담기 버튼 클릭하면 모달이 나타나도록 상태변경.
     setModalOpen(true);
   };
@@ -59,6 +79,7 @@ const ProductDetail = () => {
     // 모달 닫기 버튼 클릭하면 모달 닫힘, 다른곳 눌러도 닫힌다.
     setModalOpen(false); 
   }
+
 
   // 후기글 페이지 네이션 
   const [currentPage, setCurrentPage] = useState(1);
@@ -81,6 +102,31 @@ const ProductDetail = () => {
   };
 
 
+  const [mainImage, setMainImage] = useState(product?.imageUrl);
+  const [thumbnailImages, setThumbnailImages] = useState([
+    mainImage,
+    'http://via.placeholder.com/150',
+    'http://via.placeholder.com/150',
+    'http://via.placeholder.com/150',
+    'http://via.placeholder.com/150',
+  ])
+
+// 썸네일 클릭 시 이미지 교체 함수 (수정된 부분)
+const handleThumbnailClick = (clickedImage) => {
+  // 클릭된 이미지와 메인 이미지가 같으면 아무것도 변경하지 않음
+  if (clickedImage === mainImage) {
+    return;
+  }
+  
+  // 클릭된 이미지를 메인 이미지로 설정
+  setMainImage(clickedImage);
+
+  // 다른 작은 이미지는 그대로 유지하고 클릭된 이미지만 메인 이미지로 변경
+  const newThumbnailImages = thumbnailImages.map(img => img);
+  setThumbnailImages(newThumbnailImages);
+};
+
+
   return (
     <div className={styled.container}>
       <div style={{
@@ -98,7 +144,9 @@ const ProductDetail = () => {
       <div className={styled.main_box}>
         <div className={styled.main_img_box}>
           {/* 아래 product?.name 처럼 이미지도 똑같이 써주면 됨 */}
-          <img className={styled.main_img} src={product?.imageUrl} alt="main_img" />
+
+          <img className={styled.main_img} src={mainImage} alt="main_img" />
+
         </div>
         
         <div className={styled.info_box}>
@@ -118,12 +166,15 @@ const ProductDetail = () => {
               ))}
             </select>
             <div className={styled.small_img_box}>
-              {[1, 2, 3, 4, 5].map((_, index) => (
+
+              {thumbnailImages.map((img, index) => (
                 <img
                   key={index}
                   className={styled.small_img}
-                  src={product?.imageUrl}
+                  src={img}
                   alt="small_img"
+                  onClick={() => handleThumbnailClick(img)}
+
             />
             ))}
           </div>
@@ -164,7 +215,9 @@ const ProductDetail = () => {
           </div>
           {/* 이미지 , 상품정보 */}
           <div className={styled.prod_infomation}>
-            <img className={styled.prod_img} src={product?.imageUrl}></img>
+
+            <img className={styled.prod_img} src={product?.imageUrl} alt="prod_img"></img>
+
             <div className={styled.brief_info_wrap}>
               <a className={styled.brief_info} href='ShoppingDetail'>상품 정보</a>
             </div>
@@ -245,7 +298,12 @@ const ProductDetail = () => {
         aria-describedby="modal-modal-description"
       >
         <div className={styled.modal_box}>
-          <h3 className={styled.modal_msg}>장바구니에 추가되었습니다.</h3>
+
+            <img className={styled.check_icon} src="check_icon"></img>
+          <div className={styled.msg_box}>
+            <h3 className={styled.modal_msg}>장바구니에 추가되었습니다.</h3>
+          </div>
+
           <div className={styled.modal_button_wrap}>
           <button className={styled.modal_close_button} onClick={handleCloseModal}>닫기</button>
           </div>
@@ -255,4 +313,6 @@ const ProductDetail = () => {
   );
 };
 
-export default ProductDetail;
+
+export default ShoppingDetail;
+
