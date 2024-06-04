@@ -4,6 +4,8 @@ import styled from "./css_module/ShoppingDetail.module.css";
 import { Link, useLocation, useNavigate } from 'react-router-dom'; // ShoppingList에서 가져옴.
 import ReviewPagination from './components/ReviewPagination';
 import InquiryPagination from "./components/InquiryPagination";
+import check_icon from '../../images/check_icon.png';
+
 
 // 후기글 페이지네이션 임시 데이터
 const reviews = [
@@ -282,7 +284,10 @@ const handleThumbnailClick = (clickedImage) => {
         aria-describedby="modal-modal-description"
       >
         <div className={styled.modal_box}>
-          <h3 className={styled.modal_msg}>장바구니에 추가되었습니다.</h3>
+            <img className={styled.check_icon} src="check_icon"></img>
+          <div className={styled.msg_box}>
+            <h3 className={styled.modal_msg}>장바구니에 추가되었습니다.</h3>
+          </div>
           <div className={styled.modal_button_wrap}>
           <button className={styled.modal_close_button} onClick={handleCloseModal}>닫기</button>
           </div>
