@@ -9,10 +9,14 @@ import { useAuth } from "../hooks/useAuth";
 
 
 const Home = () => {
-    const { loginUser } = useAuth();
+    const { loginUser, kakaoLogin } = useAuth();
     const [sortKey, setSortKey] = useState();
     const [searchTerm, setSearchTerm] = useState("");
     const [challengeList, setChallengeList] = useState([]);
+    
+    useEffect(() => {
+        kakaoLogin();
+    }, []);
 
     useEffect(() => {
         getChallenge(); // 페이지가 처음 렌더링될 때 챌린지 데이터를 가져옴

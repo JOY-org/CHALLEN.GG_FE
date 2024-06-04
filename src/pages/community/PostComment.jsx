@@ -149,7 +149,7 @@ const PostComment = ({postComment, setPostComment, postDetail}) => {
                       </>
                     }
                   />
-                  {loginUser === c.UserId && (
+                  {loginUser == c.UserId && (
                     <Button
                       onClick={() => {
                         deleteComment(c.id);
