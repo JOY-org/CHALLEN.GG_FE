@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
 
-const Cart = () => {
+const ShoppingCart = () => {
   // const location = useLocation(); // 현재 위치의 상태를 가져옴
   // const initialProducts = location.state?.cartItems || []; // 초기 제품목록을 위치 상태에서 가져옴, 없으면 빈 배열 사용. location.state에 있는 cartItems를 초기 목록으로 설정
 
@@ -105,4 +105,4 @@ const Cart = () => {
       </div>
   )
 }
-export default Cart;
+export default ShoppingCart;

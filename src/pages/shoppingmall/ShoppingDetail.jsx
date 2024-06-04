@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "@mui/material";
 import styled from "./css_module/ShoppingDetail.module.css";
-import { Link, useLocation } from 'react-router-dom'; // ShoppingList에서 가져옴.
+import { Link, useLocation, useNavigate } from 'react-router-dom'; // ShoppingList에서 가져옴.
 import ReviewPagination from './components/ReviewPagination';
 import InquiryPagination from "./components/InquiryPagination";
 
@@ -42,15 +42,27 @@ const maskWriter = (writer) => {
   return masked;
 };
 
-const ProductDetail = () => {
+const ShoppingDetail = () => {
   const location = useLocation(); // ShoppingList에서 카드의 정보를 가져옴.
   const { product } = location.state || {}; 
   const [quantity, setQuantity] = useState(1); // 수량?
 
   // 모달 상태를 관리.
   const [modalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleAddToCart = () => {
+    navigate({
+      state: {
+        cartItems: [
+          {
+            name: product?.name,
+            price: product?.price,
+            quantity: quantity,
+          }
+        ]
+      }
+    });
     // 장바구니담기 버튼 클릭하면 모달이 나타나도록 상태변경.
     setModalOpen(true);
   };
@@ -59,6 +71,7 @@ const ProductDetail = () => {
     // 모달 닫기 버튼 클릭하면 모달 닫힘, 다른곳 눌러도 닫힌다.
     setModalOpen(false); 
   }
+
 
   // 후기글 페이지 네이션 
   const [currentPage, setCurrentPage] = useState(1);
@@ -279,4 +292,4 @@ const handleThumbnailClick = (clickedImage) => {
   );
 };
 
-export default ProductDetail;
+export default ShoppingDetail;
