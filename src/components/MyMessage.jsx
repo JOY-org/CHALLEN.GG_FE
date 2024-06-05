@@ -62,13 +62,16 @@ function SwipeableEdgeDrawer({openDrawer,toggleDrawer}) {
         ModalProps={{
           keepMounted: true,
         }}
+        sx={{
+          width: 400,
+        }}
       >
           <Typography sx={{ p: 2, }}>&lt;My Message/&gt;</Typography>
           <div className={styleHome.Messages}>
             {notis.map((noti, index) => (
               <div key={noti.id || index}>
                 <Typography className={styleHome.Message}>{noti.content || noti}</Typography>
-                <button                      
+                <button
                   onClick={() => {
                   deleteNotification(noti.id);
                   }}>
