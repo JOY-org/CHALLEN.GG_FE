@@ -62,7 +62,7 @@ export const userApi = {
         }
     }),
     // delRefreshToken: (id) => api.patch(`/auth/refresh`, {id})
-    deleteNotification: (id,token) => api.delete(`users/notification/${id}`,{
+    deleteNotification: (id,token) => api.delete(`users/notification`,{
         headers:{
             "Authorization": token
         },

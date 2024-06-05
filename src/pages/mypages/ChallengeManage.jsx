@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import MyStyle from "../mypages/css_module/MyPage.module.css";
 import { challengApi } from "../../api/services/challenge";
 import { useAuth } from "../../hooks/useAuth";
-import Certification from "../mypages/Certification";
+import Certification from "./Certification";
 
 const ChallengeManage = () => {
     const { loginUser } = useAuth();
