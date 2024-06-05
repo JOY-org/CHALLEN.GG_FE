@@ -58,7 +58,12 @@ export default function SignIn() {
     }
 
     return (
-        <Container component="main" maxWidth="xs" >
+        <>
+        <img 
+            src={`${process.env.PUBLIC_URL}/main.jpg`}
+            style={{height:'300px', width:'100vw'}}
+        />
+        <Container component="main" maxWidth="xs" sx={{marginBottom:'40px'}}>
             <CssBaseline />
             <Box
                 sx={{
@@ -68,7 +73,7 @@ export default function SignIn() {
                 alignItems: 'center',
                 }}
             >
-            <Avatar sx={{ m: 1, bgcolor: '#4483FD' }}>
+            <Avatar sx={{ m: 1, bgcolor: '#00aeda' }}>
                 <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
@@ -110,7 +115,7 @@ export default function SignIn() {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    sx={{ mt: 2, mb: 1, height: '40px'}}
+                    sx={{ mt: 2, mb: 1, height: '40px', backgroundColor: '#00aeda'}}
                     // onClick={handleNavi}
                 >
                     로그인
@@ -130,5 +135,6 @@ export default function SignIn() {
             </Box>
         </Box>
         </Container>
+        </>
     );
 }

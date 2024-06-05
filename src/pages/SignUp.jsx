@@ -57,7 +57,12 @@ export default function SignUp() {
         }
     });
     return (
-        <Container component="main" maxWidth="xs">
+        <>
+        <img 
+            src={`${process.env.PUBLIC_URL}/main.jpg`}
+            style={{height:'300px', width:'100vw'}}
+        />
+        <Container component="main" maxWidth="xs" sx={{marginBottom:'40px'}}>
             <CssBaseline />
             <Box
                 sx={{
@@ -67,7 +72,7 @@ export default function SignUp() {
                 alignItems: 'center',
                 }}
             >
-            <Avatar sx={{ m: 1, bgcolor: '#4483FD' }}>
+            <Avatar sx={{ m: 1, bgcolor: '#00aeda' }}>
                 <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
@@ -181,14 +186,14 @@ export default function SignUp() {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
+                    sx={{ mt: 3, mb: 2 , backgroundColor:'#00aeda'}}
                     disabled={isSubmitting}
                 >
                     회원가입
                 </Button>
                     <Grid container justifyContent="flex-end">
                         <Grid item>
-                            <Link href="/signin" variant="body2">
+                            <Link href="/signin" variant="body2" color="#00aeda">
                                 이미 아이디가 있으신가요?
                             </Link>
                         </Grid>
@@ -196,5 +201,6 @@ export default function SignUp() {
                 </Box>
             </Box>
         </Container>
+        </>
     );
 }

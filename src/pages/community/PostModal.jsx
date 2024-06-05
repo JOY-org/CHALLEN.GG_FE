@@ -10,9 +10,10 @@ export default function PostModal({open, handleClosePost, postDetail, setPosts, 
                 open={open}
                 onClose={handleClosePost}
                 aria-labelledby="responsive-dialog-title"
+                className={styles.dialog}
                 
             >   
-                <DialogContent className={styles.dialog}>
+                <DialogContent className={styles.dialogContent}>
                     <CommunityPostModal 
                         postDetail={postDetail} 
                         setPosts={setPosts} 
