@@ -99,7 +99,7 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
     }
 
     return (
-        <div>
+        <div >
             <Modal
                 isOpen={isOpen}
                 onRequestClose={CloseModal}
@@ -108,7 +108,7 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
             >
                 <h3 className={MyStyle.name}>챌린지 기획서</h3>
                 <div className={MyStyle.image}>
-                    <label  htmlFor={MyStyle.mainImg} id="label">이미지 등록하기 click!</label>
+                    <label  htmlFor={MyStyle.mainImg} id={MyStyle.Click}>이미지 등록하기 click!</label>
                     <input type="file" onChange={handleImageUpload} id={MyStyle.mainImg}></input>
                     {imagePreview && <img src={imagePreview} alt="대표 이미지 미리보기" />}
                     <div>
@@ -123,18 +123,28 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
                     </div>
                     <div>
                         <label>챌린지 소개</label>
-                        <input type="text" placeholder="당신의 챌린지를 소개해주세요" onChange={handleIntroductionChange}></input>
+                        <input
+                            type="text"
+                            placeholder="당신의 챌린지를 소개해주세요"
+                            onChange={handleIntroductionChange}
+                            className={MyStyle.Input}
+                            ></input>
                     </div>
                     <div>
                         <label>챌린지 주의사항</label>
-                        <input type="text" placeholder="이건 꼭챙겨 참여하자!" onChange={handleCautionChange}></input>
+                        <input
+                            type="text"
+                            placeholder="이건 꼭챙기자!"
+                            onChange={handleIntroductionChange}
+                            className={MyStyle.Input}
+                            ></input>
                     </div>
                     <div>
                         <label>모집인원</label>
                         <input type="text"  onChange={handlemaxChange}></input>:명
                     </div>
                     <div>
-                        <label>예치금</label>
+                        <label>우승상금</label>
                         <input type="number" onChange={handleDepositChange}></input>:P
                     </div>
                     <div>

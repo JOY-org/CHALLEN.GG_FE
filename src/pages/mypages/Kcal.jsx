@@ -1,15 +1,15 @@
 import MyStyle from "../mypages/css_module/MyPage.module.css"
 import * as React from "react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import moment from "moment";
 import Modal from 'react-modal';
 import { userApi } from "../../api/services/user";
+import Box from '@mui/material/Box';
 
-
-//마이페이지의 칼로리 달력 코드입니다
-//칼로리달력 , 칼로리 계산 모달창
+// 마이페이지의 칼로리 달력 코드입니다
+// 칼로리달력, 칼로리 계산 모달창
 
 const Kcal = () => {
   const token = localStorage.getItem("token")
@@ -26,36 +26,41 @@ const Kcal = () => {
     setSelectedDate(value);
   };
 
-  const todayKcal = async()=>{
-    try{
+  const todayKcal = async() => {
+    try {
         const res = await userApi.getCalorie(token);
-          setDateKcal(res.data.payload)
-    }catch(err){
+        setDateKcal(res.data.payload);
+    } catch (err) {
       console.error(err);
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     todayKcal();
-  },[isOpen])
-
+  }, [isOpen]);
 
   return (
-    <div className={MyStyle.Kcal}>
-      <Calendar
-        sx={{
-          wordWrap: 'break-word',
+    <Box
+      className={MyStyle.Kcal}
+      sx={{
+        '& .react-calendar': {
+          borderTop: '3px solid #00aeda;',
+          borderBottom: '3px solid #00aeda;',
+          borderLeft:'none',
+          borderRight:'none',
+          padding: '10px',
+        },
+        '& .react-calendar__tile': {
           textAlign: 'center',
-          fontSize: '12px',
-          maxWidth: '100px', 
-          height: 'auto',
+          height: '80px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '5px',
-          boxSizing: 'border-box'
-        }}
-        className={MyStyle.Calendar}
+          flexDirection: 'column',
+        },
+      }}
+    >
+      <Calendar
         value={value}
         onClickDay={(value, event) => kcalOpen(value, event)}
         formatDay={(locale, date) => moment(date).format("DD")}
@@ -76,18 +81,16 @@ const Kcal = () => {
         isOpen={isOpen}
         selectedDate={selectedDate}
       />
-    </div>
+    </Box>
   );
 };
 
 export default Kcal;
 
-
-// 칼로리 입력하는 모달창 코드
-
 Modal.setAppElement("#root");
 
 const KcalCalc = ({ isOpen, handleOpen, handleClose, selectedDate }) => {
+
   const token = localStorage.getItem("token")
   const [morning, setMorning] = useState(0);
   const [lunch, setLunch] = useState(0);
@@ -96,41 +99,43 @@ const KcalCalc = ({ isOpen, handleOpen, handleClose, selectedDate }) => {
 
   const [Kcal, setKcal] = useState(0);
 
-  const  sumKcal = async() => {
-    try{
+  const sumKcal = async() => {
+    try {
       const totalCalories = morning + lunch + dinner + snack;
       const data = {
         date: selectedDate,
         sum: totalCalories
       };
-        const res = await userApi.uploadCalorie(data,token);
-        setKcal(res.data.payload.sum);
-        console.log(res.data.payload.sum);
-        console.log(res.data.payload);
-    }catch(err){
+      const res = await userApi.uploadCalorie(data, token);
+      setKcal(res.data.payload.sum);
+      console.log(res.data.payload.sum);
+      console.log(res.data.payload);
+    } catch (err) {
       console.error(err);
     }
   };
 
+
   return (
-    <div >
+    <div>
       <Modal
         isOpen={isOpen}
         onAfterOpen={handleOpen}
         onRequestClose={handleClose}
         className={MyStyle.KcalWrite}
+        // style={customStyles}
         contentLabel="KcalCalc Modal"
       >
-        <h2 >오늘 섭취 칼로리를 입력해주세요</h2>
-        <div>
-        <label>아침 : </label>
+        <h2 id={MyStyle.KcalText}>오늘 섭취 칼로리를 입력해주세요</h2>
+        <div className={MyStyle.FoodKcal}>
+          <label>아침 : </label>
           <input
             type="number"
             value={morning}
             onChange={(e) => setMorning(parseInt(e.target.value))}
           />
         </div>
-        <div>
+        <div className={MyStyle.FoodKcal}>
           <label>점심 : </label>
           <input
             type="number"
@@ -138,7 +143,7 @@ const KcalCalc = ({ isOpen, handleOpen, handleClose, selectedDate }) => {
             onChange={(e) => setLunch(parseInt(e.target.value))}
           />
         </div>
-        <div>
+        <div className={MyStyle.FoodKcal}>
           <label>저녁 : </label>
           <input
             type="number"
@@ -146,7 +151,7 @@ const KcalCalc = ({ isOpen, handleOpen, handleClose, selectedDate }) => {
             onChange={(e) => setDinner(parseInt(e.target.value))}
           />
         </div>
-        <div>
+        <div className={MyStyle.FoodKcal}>
           <label>간식 : </label>
           <input
             type="number"
@@ -154,11 +159,16 @@ const KcalCalc = ({ isOpen, handleOpen, handleClose, selectedDate }) => {
             onChange={(e) => setSnack(parseInt(e.target.value))}
           />
         </div>
-        <button onClick={sumKcal} className={MyStyle.btn3}>계산하기</button>
-        <p className={MyStyle.sum} >총 칼로리: {Kcal}Kcal</p>
-        <button type="submit" onClick={handleClose}  className={MyStyle.btn3}>
-          저장하기
-        </button>
+        <div  className={MyStyle.btn3}>
+          <button onClick={sumKcal} className={MyStyle.btn4}>계산하기</button>
+          <p className={MyStyle.sum}>총 칼로리: {Kcal}Kcal</p>
+          <button
+            type="submit"
+            onClick={handleClose}
+            className={MyStyle.btn4}>
+            저장하기
+          </button>
+        </div>
       </Modal>
     </div>
   );
