@@ -4,14 +4,6 @@
     --font:#00aeda
 }
 
-.body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-
-}
-
 .btn {
     margin: 1rem;
 }

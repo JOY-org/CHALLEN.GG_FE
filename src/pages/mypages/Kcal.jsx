@@ -6,7 +6,6 @@ import "react-calendar/dist/Calendar.css";
 import moment from "moment";
 import Modal from 'react-modal';
 import { userApi } from "../../api/services/user";
-import { BorderTop } from "@mui/icons-material";
 
 
 //마이페이지의 칼로리 달력 코드입니다
@@ -38,13 +37,24 @@ const Kcal = () => {
 
   useEffect(()=>{
     todayKcal();
-  },[])
+  },[isOpen])
 
 
   return (
     <div className={MyStyle.Kcal}>
       <Calendar
-
+        sx={{
+          wordWrap: 'break-word',
+          textAlign: 'center',
+          fontSize: '12px',
+          maxWidth: '100px', 
+          height: 'auto',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '5px',
+          boxSizing: 'border-box'
+        }}
         className={MyStyle.Calendar}
         value={value}
         onClickDay={(value, event) => kcalOpen(value, event)}

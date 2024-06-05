@@ -44,10 +44,6 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
     const [caution, setCaution] = useState("");
     const [deposit, setDeposit] = useState("");
     const [max, setMax] = useState(20);
-    // FileReader()방식?
-    //string길이가김 대신 가비지콜렉터에 의해 자동 수거
-    //createObjectURL 방식??
-    //가짜이미지??string길이가 짧은대신 자동수거 불가 적절한 revoke =>URL.revokeObjectURL()???
 
     const handleImageUpload = (e) => {
         const files = e.target.files;
@@ -56,9 +52,7 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setImg(file);
-                //console.log(file);
                 setImagePreview(reader.result);
-                //console.log(reader.result); //잘 들어오는데 서버로 전달이 안된다???
             };
             reader.readAsDataURL(file);
         }

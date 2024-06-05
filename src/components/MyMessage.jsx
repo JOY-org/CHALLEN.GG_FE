@@ -1,14 +1,13 @@
 //import socket from '../api/services/socket';
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import { grey } from '@mui/material/colors';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { userApi } from '../api/services/user';
 import { useEffect } from 'react';
 import { useState } from 'react';
-
+import styleHome from "../pages/homes/css_module/Home.module.css"
 const drawerBleeding = 56;
 
 
@@ -42,7 +41,6 @@ function SwipeableEdgeDrawer({openDrawer,toggleDrawer}) {
 
   return (
     <Root >
-      <CssBaseline />
       <SwipeableDrawer
         open={openDrawer}
         onClose={() => { toggleDrawer(false) }}
@@ -53,13 +51,15 @@ function SwipeableEdgeDrawer({openDrawer,toggleDrawer}) {
           keepMounted: true,
         }}
       >
-          <Typography sx={{ p: 2, color: 'text.secondary' }}>My Message</Typography>
+          <Typography sx={{ p: 2, }}>&lt;My Message/&gt;</Typography>
+          <div className={styleHome.Messages}>
             {notis.map((noti, index) => (
               <div key={noti.id || index}>
-              <Typography>{noti.content || noti}</Typography>
-            </div>
+                <Typography className={styleHome.Message}>{noti.content || noti}</Typography>
+              </div>
             ))
-          }
+          }<button>삭제</button>
+          </div>
       </SwipeableDrawer>
     </Root>
   );

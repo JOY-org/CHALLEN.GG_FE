@@ -114,7 +114,6 @@ export const FollowList = ({isOpen, onRequestClose ,user}) => {
     useEffect(()=>{
         getFollowerList();
         getFollowingList();
-
     },[])
 
 

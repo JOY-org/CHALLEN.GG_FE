@@ -8,8 +8,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    overflow-x: auto;
-    overflow-y: hidden;
     white-space: nowrap;
     /* transition: background-color 0.3s ease; */ /* 배경색 변화를 부드럽게 만듦 */
     z-index: 1000;
@@ -20,9 +18,6 @@
     top: 0;
     background-color:#00aeda;
 }
-
-
-
 
 #logo {
     cursor: pointer;

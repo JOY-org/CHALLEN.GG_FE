@@ -126,7 +126,7 @@ const Header = () => {
                 {
                     menus.map((m, idx) => (
                         <BottomNavigationAction
-                            sx={{color:"white"}}
+                            sx={{color:"black"}}
                             className={styleHeader.BottomNavigationAction}
                             key={idx}
                             icon={m.icon ? <m.icon /> : null}
