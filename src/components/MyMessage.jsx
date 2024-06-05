@@ -8,6 +8,7 @@ import { userApi } from '../api/services/user';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import styleHome from "../pages/homes/css_module/Home.module.css"
+import Swal from "sweetalert2";
 const drawerBleeding = 56;
 
 
