@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import Follow from "./Follow";
 import { useAuth } from "../../hooks/useAuth";
 import { userApi } from "../../api/services/user";
+import ChallengeManage from "./ChallengeManage";
 
 const MyInfo = () => {
     const token = localStorage.getItem('token');
@@ -163,6 +164,11 @@ const MyInfo = () => {
                     {/* 팔로우팔로잉버튼 */}
                     {userProfile &&
                         <Follow user={userProfile}/>}
+                </div>
+
+                {/* 챌린지 진행.완료목록 */}
+                <div>
+                    <ChallengeManage/>
                 </div>
             </div>
 
