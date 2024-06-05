@@ -6,23 +6,28 @@
 }
 *{
     font-family: 'Giants-Bold';
-
+    box-sizing: border-box;
 }
+
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
 .Home{
     margin:0px;
     background-color:  #f2f5fa;
-    width: 100%;
-    overflow-x: auto;
-    /* overflow-y: hidden; 이거 생성하면 스크롤바가비활성화됨*/
-    white-space: nowrap;
 }
+/* 가장최상단 주먹진 여자  */
 .girlImg {
     width: 100%;
-    position: relative;
     z-index: 1;
 }
-
+/* 가장최상단 주먹진 여자 안의 텍스트  */
 .text {
+    width: 44%;
     font-family:none;
     position: absolute;
     top: 45%;
@@ -35,6 +40,7 @@
     font-weight: 600;
 }
 
+/* 다리운동하는 여자이미지 */
 .threeImg {
     display: flex;
     align-items: center;
@@ -61,6 +67,43 @@
         font-size: 15px;
     }
 }
+/* 남자가 앉아있는 이미지 */
+.StartImg {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+/* 자그럼 챌린지를 이해하셨나요? 문구 */
+.StartBox {
+    height: 300px;
+    width: 100%;
+    position: absolute;
+    top: 2250px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    background-color: #2e2e30;
+    z-index: 2;
+    opacity: 0.7;
+    & p{
+        margin-top: 20px;
+    }
+}
+
+.StartBox p {
+    width: 70%;
+    margin: 10px;
+    position: absolute;
+    top: 50%;  /* Center vertically within .Box */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 50px;
+    z-index: 3;
+    font-weight: 600;
+}
+
 
 .menu {
     color: white;
@@ -92,8 +135,95 @@
     }
 }
 
+
+/* 메뉴 필터 전체신규 등등 */
+.btn{
+    margin-left: 2rem;
+    display: flex;
+    margin-top: 100px;
+}
+
+.inputWrapper{
+    display: flex;
+    align-items: center;
+    width: 400px;
+}
+
+.menuInput {
+    padding: 5px 10px;
+    width: 70%;
+    border-bottom: 1px solid black;
+    border-radius: 10px;
+    background-color: transparent;
+}
+
+/* 챌린지 카드 */
+#title{
+    font-family: 'Giants-Bold';
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+#body2{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    width: 318px;
+    height: 318px;
+}
+
+
+.challengeContainer {
+    margin: 50px 0px;
+
+}
+
+
+/* 랭커 */
+.RankerName{
+    background: linear-gradient(to right, rgba(128, 128, 128, 0.7), white);
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 350px;
+    justify-content: center;
+    margin: 10px 0;
+    & h1{
+        font-size: 35px;
+        margin-right: 60px;
+        border-bottom: 5px solid red;
+    }
+
+}
+/* 파란네모 상자 */
+.Ranker {
+    background-color: #00aeda;
+    align-items: center;
+    margin: 5px 30px;
+    width: 220px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+/* nickname */
+    & div {
+        margin: 20px 20px;
+        font-size: 20px;
+        font-weight: bold;
+
+    }
+    img {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+    }
+
+}
+
+
+
+/* 개발자 한마디 */
 .develop{
-    margin: 20px 10px;
+    margin-top: 20px;
     display: flex;
     width:100%;
     justify-content: center;
@@ -128,151 +258,14 @@
         margin-bottom: 20px;
     }
 }
-.lastImg {
-    width: 100%;
-    position: relative;
-    z-index: 1;
-
-}
-
-.lastText {
-    margin: 10px;
-    position: absolute;
-    top: 3000px;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    color: white;
-    font-size: 50px;
-    z-index: 3;
-    font-weight: 600;
-}
-.Box{
-    height: 300px;
-    width: 100%;
-    position: absolute;
-    top: 3000px;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    background-color: #2e2e30;
-    z-index: 2;
-    opacity:0.7
-}
-
-.challengeContainer {
-    display: flex;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    position: relative;
-    overflow: hidden;
-}
-
-.Challenge {
-    scroll-snap-align: start;
-    flex: 0 0 auto;
-    white-space: pre-line;
-    min-height: 300px;
-    margin: 30px 30px;
-    width: 280px;
-    min-width: 280px;
-    max-width: 100%;
-
-}
-.Slide{
-    border: none;
-    font-size: 40px;
-    margin: 20px;
-    cursor: pointer;
-    background-color:#00aeda;
-}
 
 
-.btn{
-    height: 20px;
-    margin-top: 20px;
-    margin-left: 60px;
-    display: flex;
-}
+/* 마이메세지(알림창) */
 
-.menuInput {
-    height: 25px;
-    left: 15px;
-    padding: 0 5px;
-    margin-right: 10px;
-    width: 100%;
-    border-bottom: 1px solid black;
-    border-radius: 10px;
-    position: relative;
-    z-index: 1;
-    background-color: transparent;
-}
+.Messages{
 
-#title{
-    font-family: 'Giants-Bold';
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-#body2{
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.body3{
-    font-family: Giants-Bold
-}
-/* .AdMain{
-    width: 90%;
-    height: 200px;
-    background-color: aliceblue;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 25px auto;
-} */
-
-.RankerName{
-    background: linear-gradient(to right, rgba(128, 128, 128, 0.3), white);
-    margin-top: 100px;
-    display: flex;
-    justify-content: center;
-    height: 300px;
-    margin-bottom: 150px;
-    & h1{
-        display: flex;
-        transform: translate(-10%, -50%);
-        margin: 140px 5px;
-        background-color: red;
-        font-size: 35px;
+    &.Message{
+        padding: 10px 20px;
+        border-bottom: 1px solid #00aeda;
     }
 }
-.Ranker {
-    background-color: #00aeda;
-    columns: row;
-    align-items: center;
-    margin: 5px 50px;
-    width: 200px;
-    display: flex;
-    justify-content: center;
-
-
-    & div {
-        margin-right: 20px;
-        margin-left: 10px;
-        font-size: 20px;
-        font-weight: bold;
-    }
-    img {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-
-    }
-
-}
-
-

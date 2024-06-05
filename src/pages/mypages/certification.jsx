@@ -1,7 +1,7 @@
 import { useState,useContext, useEffect } from "react";
 import MyStyle from "../mypages/css_module/MyPage.module.css";
 import Modal from 'react-modal';
-import { UserChallengeItem } from "../mypages/ChallengeManage"
+import { UserChallengeItem } from "./ChallengeManage"
 import { challengApi } from "../../api/services/challenge";
 import MyPage from "../MyPage";
 
@@ -106,7 +106,6 @@ export const CertificationModal = ({close,modal}) => {
             boxSizing: 'border-box',
             borderTop:'10px solid #00aedam',
             borderBottom:'10px solid #00aeda',
-            // 이거 하며 윗 공간 남는거 아닌가
             minHeight: 'calc(100vh - 200px)',
             overflowY: 'auto',
         },
@@ -123,14 +122,28 @@ export const CertificationModal = ({close,modal}) => {
             style={customStyles}
         >
             <h3>{challengeItem.Challenge.name}</h3>
+
             <p style={{color:'gray'}}>인증 처리는 오전 12시 이후 갱신 됩니다</p>
-            <label htmlFor="uploadImg">인증 자료를 업로드 하기 click!</label>
+
+            <label
+            style={{
+                    border:'1px solid gray',
+                    padding:"5px",
+                    margin:"5px",
+                    borderRadius:"5%",
+                    backgroundColor:'#00aeda',
+                    cursor:'pointer'
+            }}
+                htmlFor="uploadImg"
+                >이미지찾기</label>
+
             <input type="file" onChange={showChallenge} id="uploadImg" style={{display:'none'}} />
             {preImg ?
                 <img src={preImg} alt="나의 인증 이미지"  style={{width:'318px',height:'318px'}}/>
                 :
                 ""
             }
+
             <button onClick={uploadChallenge}>인증완료</button>
 
             <p>일자별 인증 현황리스트</p>

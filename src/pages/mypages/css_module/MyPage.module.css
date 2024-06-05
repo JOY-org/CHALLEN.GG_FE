@@ -14,19 +14,17 @@
 }
 .mainText{
     position: absolute;
-    top: 25%;
+    top:10%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
     color: white;
-    font-size: 50px;
     z-index: 2;
     font-weight: 600;
     font-size: 80px;
     border-bottom: 10px solid white;
 
 }
-
 
 .gridBox{
     width:80%;
@@ -39,7 +37,7 @@
 .MyInfo{
     background-color: f2f5fa;
     width: calc(100% / 3);
-    height:calc(90vh - 180px);
+    height:calc(90vh - 100px);
     margin-top: 10px;
     padding: 10px;
 }
@@ -48,7 +46,9 @@
     width: 90%;
     height:60px;
     display: flex;
-    justify-content:space-around;
+    justify-content:right;
+    margin-bottom: 20px;
+    margin-left: 50px;
 }
 .Kcal{
     background-color:f2f5fa;
@@ -59,7 +59,7 @@
 
 .ChallengeManag{
     width: calc(100% / 4);
-    height:calc(90vh - 200px);
+    height:calc(90vh - 134px);
     margin-top: 20px;
     background-color: white;
     border-top:10px solid #00aeda ;
@@ -105,17 +105,13 @@
 .Calendar{
     margin-top: 20PX;
     height: 455px;
-    border: none;
-    padding: 20px;
-    border-top:10px solid #00aeda ;
-    border-bottom:10px solid #00aeda ;
-
+    padding: 10px;
 }
 /* .MyInfo나의 정보관리 CSS -------------------------------------------------*/
 .BgInfo{
     background-color: #ffffff;
     width: 300px;
-    height: 450px;
+    height: 520px;
     border-top:10px solid #00aeda ;
     border-bottom:10px solid #00aeda ;
     padding: 20px;
@@ -223,6 +219,7 @@
 
 
 /* Kcal css----------------------------------------------------------------------------------*/
+/* 칼로리입력하는 모달 */
 .KcalWrite{
         position: fixed;
         top: 50%;
@@ -273,8 +270,8 @@
 }
 /* 챌린지개설기획서 */
 .MadeModal {
-    width: 400px;
-    height: 500px;
+    width: 500px;
+    height: 520px;
     position: fixed;
     top: 50%;
     left: 50%;

@@ -114,13 +114,13 @@ const ChallengeModal = ({isModalOpen, handleClose, challenge}) => {
                     <Typography id={styleHome.body2}>
                         <img src={`http://localhost:8000${challenge.img}`} alt="챌린지 이미지" />
                     </Typography>
-                    <Typography className={styleHome.body3}>
+                    <Typography sx={{fontFamily: 'Giants-Bold'}}>
                         -설명: {challenge.comment}<br />
                         -주의:{challenge.caution}<br />
                         -시작일: {challenge.startDay}<br />
                         -완료일: {challenge.endDay}
                     </Typography>
-                    <Typography id="body3">
+                    <Typography id="body4">
                         <p>모집인원:{number}/{challenge.max}명</p>
                     </Typography>
                     <Typography className={styleHome.body3}>
@@ -134,7 +134,7 @@ const ChallengeModal = ({isModalOpen, handleClose, challenge}) => {
                             )
                         }
                     </Typography>
-                    <Typography className={styleHome.body3}>
+                    <Typography sx={{fontFamily: 'Giants-Bold'}}>
                         포인트점수:{challenge.point}P
                     </Typography>
                 </div>
