@@ -258,3 +258,14 @@ body {
         margin-bottom: 20px;
     }
 }
+
+
+/* 마이메세지(알림창) */
+
+.Messages{
+
+    &.Message{
+        padding: 10px 20px;
+        border-bottom: 1px solid #00aeda;
+    }
+}
