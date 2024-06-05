@@ -142,15 +142,41 @@ height: 400px;
   text-align: center;
   align-items: end;
   border: none;
+  border-radius: 30px;
   font-weight: 600;
-  background-color: #4483FD;
+  background-color: #00aeda;
   color: white;
 }
 
+.modal_close_button:hover {
+  color: #00aeda;
+	background: #222225;
+	border-color: #222225;
+}
+
+
+.check_icon {
+  display: flex;
+  margin: auto;
+  margin-bottom: 5px;
+  height: 50px;
+  width: 50px;
+}
+
+/* 모달 메시지 div */
+.msg_box {
+  height: 30px;
+  margin-bottom: 10px;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+
 /* 모달창 메시지 */
 .modal_msg {
-  display: flex;
-  align-items: center;
+
 }
 
 /* 모달 컴포넌트 */

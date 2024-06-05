@@ -4,6 +4,7 @@
 
 /* 카드 전체 묶음 div */
 .product_container {
+  margin-bottom: 40px;
   margin-top: 40px;
   display: flex;
   align-items: center;
@@ -153,4 +154,13 @@
 
 .product_brand {
   font-size: small;
+}
+
+/* 페이지네이션 버튼 박스 */
+.pagination {
+  margin: auto;
+  width: 960px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid rgb(189, 185, 185);
 }

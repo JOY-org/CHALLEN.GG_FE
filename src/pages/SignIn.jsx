@@ -17,7 +17,6 @@ import kakaoLoginImg from '../assets/kakao_login_medium_wide.png'
 
 export default function SignIn() {
     const {login, kakaoLogin} = useAuth();
-    kakaoLogin()
     const navigate = useNavigate();
 
     const {

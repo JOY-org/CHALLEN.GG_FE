@@ -193,7 +193,7 @@ export default function CommunityPostModal({
       <CardActions style={{ display: "flex", justifyContent: "space-between" }}>
         <div>
           {loginUser ? (
-            pressedLike?.findIndex((f) => f.id === postDetail.id) === -1 ? (
+            pressedLike?.findIndex((f) => f.id == postDetail.id) === -1 ? (
               <IconButton>
                 <FavoriteBorderIcon
                   style={{ color: "red" }}
@@ -218,7 +218,7 @@ export default function CommunityPostModal({
             <ModeCommentIcon sx={{color:'#4483FD'}}/>
           </IconButton>
         </div>
-        {loginUser === postDetail.UserId && (
+        {loginUser == postDetail.UserId && (
           <Button onClick={() => deletePost(postDetail.id)}>삭제</Button>
         )}
       </CardActions>

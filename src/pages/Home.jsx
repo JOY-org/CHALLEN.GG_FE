@@ -15,10 +15,14 @@ import siximg from "../pages/homes/images/iPhone-app.png"
 import sevenimg from "../pages/homes/images/seven_img.jpg"
 
 const Home = () => {
-    const { loginUser } = useAuth();
+    const { loginUser, kakaoLogin } = useAuth();
     const [sortKey, setSortKey] = useState();
     const [searchTerm, setSearchTerm] = useState("");
     const [challengeList, setChallengeList] = useState([]);
+    
+    useEffect(() => {
+        kakaoLogin();
+    }, []);
 
     useEffect(() => {
         getChallenge(); // 페이지가 처음 렌더링될 때 챌린지 데이터를 가져옴

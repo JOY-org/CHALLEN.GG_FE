@@ -11,6 +11,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { useAuth } from '../../hooks/useAuth';
 import { getRelativeTime } from '../../utils/date';
+import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
 
 const CommunityPost = () => {
     const { logout } = useAuth();
@@ -153,7 +154,7 @@ const CommunityPost = () => {
                     <table className={styles.boardTable}>
                         <thead>
                         <tr>
-                            <th scope="col" className={styles.thNum}>추천수</th>
+                            <th scope="col" className={styles.thNum}><KeyboardDoubleArrowUpIcon fontSize='small'/></th>
                             <th scope="col" className={styles.thtitle}>제목</th>
                             <th scope="col" className={styles.thwriter}>작성자</th>
                             <th scope="col" className={styles.thDate}>등록일</th>
@@ -165,7 +166,7 @@ const CommunityPost = () => {
                                 .map((p)=>{
                                     return(
                                         <tr className={styles.post} onClick={()=>handleClickOpenPost(p)}>
-                                            <td className={styles.postLike}>{p.Likers? p.Likers.length : 0}</td>
+                                            <td className={styles.postLike}> {p.Likers? p.Likers.length : 0}</td>
                                             <th className={styles.postTitle}>
                                                 {p.title} 
                                                 <span className={styles.commentColor}>[{p.Comments? p.Comments.length : 0}]</span>
