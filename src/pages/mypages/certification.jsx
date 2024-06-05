@@ -3,6 +3,7 @@ import MyStyle from "../mypages/css_module/MyPage.module.css";
 import Modal from 'react-modal';
 import { UserChallengeItem } from "../mypages/ChallengeManage"
 import { challengApi } from "../../api/services/challenge";
+import MyPage from "../MyPage";
 
 const Certification = () => {
 
@@ -53,6 +54,11 @@ export const CertificationModal = ({close,modal}) => {
             if (myImg) {
                 const res = await challengApi.uploadCheck(data, token);
                 setComplete(res.data.payload);
+                alert("인증완료하였습니다")
+                showList();
+                setMyImg(null);
+                setPreImg(null);
+
             } else {
                 alert("이미지를 업로드해야 챌린지 인증이 가능합니다");
             }
@@ -80,27 +86,55 @@ export const CertificationModal = ({close,modal}) => {
 
     useEffect(() => {
         showList();
-    }, [challengeItem.ChallengeId]);
+    }, []);
 
+    const customStyles = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+            width: '400px',
+            height: '500px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px',
+            boxSizing: 'border-box',
+            borderTop:'10px solid #00aedam',
+            borderBottom:'10px solid #00aeda',
+            // 이거 하며 윗 공간 남는거 아닌가
+            minHeight: 'calc(100vh - 200px)',
+            overflowY: 'auto',
+        },
+        overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.75)',
+        },
+    };
     return (
+
         <Modal
             isOpen={modal}
             onRequestClose={close}
             contentLabel="챌린지 인증모달"
+            style={customStyles}
         >
             <h3>{challengeItem.Challenge.name}</h3>
-            <p>인증 처리는 오전 12시 이후 갱신 됩니다</p>
-            <label htmlFor="uploadImg">인증 자료를 업로드 하기</label>
-            <input type="file" onChange={showChallenge} id="uploadImg" />
+            <p style={{color:'gray'}}>인증 처리는 오전 12시 이후 갱신 됩니다</p>
+            <label htmlFor="uploadImg">인증 자료를 업로드 하기 click!</label>
+            <input type="file" onChange={showChallenge} id="uploadImg" style={{display:'none'}} />
             {preImg ?
-                <img src={preImg} alt="나의 인증 이미지" />
+                <img src={preImg} alt="나의 인증 이미지"  style={{width:'318px',height:'318px'}}/>
                 :
                 ""
             }
             <button onClick={uploadChallenge}>인증완료</button>
 
             <p>일자별 인증 현황리스트</p>
-            <div>
+            <div className={MyStyle.CertificationList}>
                 {showChallengeList.map(item => (
                     item.SuccessId === challengeItem.id && (
                         <div key={item.id}>
@@ -114,3 +148,4 @@ export const CertificationModal = ({close,modal}) => {
         </Modal>
     );
 };
+

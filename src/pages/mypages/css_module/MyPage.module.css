@@ -1,9 +1,33 @@
 
+
 /* 마이페이 전체 레이아웃 */
 .Container{
-    background-color:#4483FD;
+    background-color:#f2f5fa;
     width: 100%;
 }
+/* 마이페이지 상단 이미지와  글자 */
+.mainImg{
+    height: 300px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+.mainText{
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    color: white;
+    font-size: 50px;
+    z-index: 2;
+    font-weight: 600;
+    font-size: 80px;
+    border-bottom: 10px solid white;
+
+}
+
+
 .gridBox{
     width:80%;
     min-height: calc(90vh - 100px);
@@ -13,40 +37,87 @@
 }
 
 .MyInfo{
-    background-color: #4483FD;
+    background-color: f2f5fa;
     width: calc(100% / 3);
     height:calc(90vh - 180px);
     margin-top: 10px;
     padding: 10px;
 }
 
-.ChallengeManag{
-
-    width: calc(100% / 3);
-    height:calc(90vh - 200px);
-    margin-top: 20px;
-    background-color: white;
-}
-
 .MyButtons{
     width: 90%;
     height:60px;
     display: flex;
-    justify-content:flex-end;
+    justify-content:space-around;
 }
 .Kcal{
-    background-color:#4483FD;
+    background-color:f2f5fa;
     width: calc(100% / 3);
     height:calc(90vh - 250px);
-    margin-top: 10px
+
 }
 
+.ChallengeManag{
+    width: calc(100% / 4);
+    height:calc(90vh - 200px);
+    margin-top: 20px;
+    background-color: white;
+    border-top:10px solid #00aeda ;
+    border-bottom:10px solid #00aeda ;
+    padding: 20px;
+    margin-right: 90px;
+    & button{
+        margin-bottom: 10px;
+        &#btn1{
+            margin-right: 5px;
+            border: 1px solid #00aeda;
+            padding: 5px;
+            background-color: white;
+            border-radius: 20px;
+        &:hover{
+            background-color: #00aeda;
+        }
+        }
+        &#btn2{
+            margin-right: 5px;
+            border: 1px solid #00aeda;
+            padding: 5px 8px;
+            background-color: white;
+            border-radius: 20px;
+
+        &:hover{
+            background-color: #00aeda;
+        }
+        }
+        /* 챌린지 리스트 진행중+완료 */
+        & .ChallengeItem{
+            background-color: red;
+        }
+        /* 진행중 인증버튼 */
+        &.AuthButton{
+            background-color: #00aeda;
+            padding: 0 5px;
+            margin-left: 15px;
+        }
+    }
+}
+
+.Calendar{
+    margin-top: 20PX;
+    height: 455px;
+    border: none;
+    padding: 20px;
+    border-top:10px solid #00aeda ;
+    border-bottom:10px solid #00aeda ;
+
+}
 /* .MyInfo나의 정보관리 CSS -------------------------------------------------*/
 .BgInfo{
     background-color: #ffffff;
     width: 300px;
     height: 450px;
-    box-shadow: 1px 1px 5px 1px #1b3364;
+    border-top:10px solid #00aeda ;
+    border-bottom:10px solid #00aeda ;
     padding: 20px;
 
 }
@@ -66,7 +137,7 @@
     & button{
         margin-left: 5px;
         font-size: 10px;
-        background-color: #4483FD;
+        background-color: f2f5fa;
         color: white;
         border: none;
         padding: 3px 5px;
@@ -142,6 +213,13 @@
     margin-top: 10px;
     /* border-bottom: 1px solid black; */
 }
+/* 챌린지 인증 모달 */
+.CertificationList{
+    & img{
+        width: 30px;
+        height: 30px;
+    }
+}
 
 
 /* Kcal css----------------------------------------------------------------------------------*/
@@ -152,7 +230,9 @@
         transform: translate(-50%, -50%);
         background-color: white;
         padding: 20px;
-        border-radius: 5px;
+        border-top:10px solid #00aeda ;
+        border-bottom:10px solid #00aeda ;
+
     & h2{
         margin: 20px 20px 30px 20px;
     }
@@ -162,22 +242,17 @@
     & label{
         display: inline;
     }
-    & input {
 
-    }
     & .sum{
         font-size: 20px;
         margin: 20px;
-
     }
-    & button{
-        display:flex;
-        justify-content:right;
-
-
-    }
-
-    }
+}
+/* 칼로리모달창 계산하기 버튼 */
+.btn3{
+    background-color: #00aeda;
+    padding: 0px 5px;
+}
 
 /* mybuttons -----------------------------------------------------------------------------------------*/
 .MadeChallenge{
@@ -185,7 +260,7 @@
     padding: 20px 40px;
     border-radius: 15px;
     border: none;
-    background-color: #F8C514;
+    background-color: #00aeda;
     cursor: pointer;
 }
 
@@ -193,18 +268,38 @@
     padding: 20px 40px;
     border-radius: 15px;
     border: none;
-    background-color: #F8C514;
+    background-color: #00aeda;
     cursor: pointer;
 }
 /* 챌린지개설기획서 */
-.Calendar{
-    margin-top: 20PX;
-    height: 350px;
-    border: none;
-    padding: 20px;
+.MadeModal {
+    width: 400px;
+    height: 500px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f2f5fa;
+    padding: 10px;
+
+
+    & #mainImg{
+        display: none;
+
+    }
+    &#label{
+        cursor: pointer;
+    }
+    & label{
+        margin: 20px;
+    }
+    & button{
+        background-color: #00aeda;
+        margin: 20px;
+    }
 }
 .name{
-    background:#4483FD;
+    background:#00aeda;
     padding: 5px;
     text-align: center;
     color: white;
@@ -212,12 +307,16 @@
 .image{
     & p{
         background-color: red;
+
         display: flex;
         justify-content: flex-start;
     }
     & img{
+        margin-bottom: 20px;
         background-color: #1b3364;
         display: flex;
         justify-items: end;
+        width: 150px;
+        height: 150px;
     }
 }

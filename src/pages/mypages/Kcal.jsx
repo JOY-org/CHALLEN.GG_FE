@@ -6,6 +6,7 @@ import "react-calendar/dist/Calendar.css";
 import moment from "moment";
 import Modal from 'react-modal';
 import { userApi } from "../../api/services/user";
+import { BorderTop } from "@mui/icons-material";
 
 
 //마이페이지의 칼로리 달력 코드입니다
@@ -30,7 +31,6 @@ const Kcal = () => {
     try{
         const res = await userApi.getCalorie(token);
           setDateKcal(res.data.payload)
-          console.log("1111111111111111111",res.data.payload);
     }catch(err){
       console.error(err);
     }
@@ -38,11 +38,13 @@ const Kcal = () => {
 
   useEffect(()=>{
     todayKcal();
-  },[token])
+  },[])
+
 
   return (
     <div className={MyStyle.Kcal}>
       <Calendar
+
         className={MyStyle.Calendar}
         value={value}
         onClickDay={(value, event) => kcalOpen(value, event)}
@@ -51,7 +53,7 @@ const Kcal = () => {
           const formattedDate = moment(date).format("YYYY-MM-DD");
           const kcalInfo = dateKcal.find((item) => item.date === formattedDate);
           if (kcalInfo) {
-            return <p className={MyStyle.KcalTile}>{kcalInfo.sum}Kcal</p>;
+            return <p className={MyStyle.KcalTile}>{kcalInfo.sum}K</p>;
           } else {
             return null; // 칼로리 정보가 없는 날짜는 표시하지 않음
           }
@@ -100,7 +102,6 @@ const KcalCalc = ({ isOpen, handleOpen, handleClose, selectedDate }) => {
     }
   };
 
-
   return (
     <div >
       <Modal
@@ -143,9 +144,9 @@ const KcalCalc = ({ isOpen, handleOpen, handleClose, selectedDate }) => {
             onChange={(e) => setSnack(parseInt(e.target.value))}
           />
         </div>
-        <button onClick={sumKcal}>계산하기</button>
+        <button onClick={sumKcal} className={MyStyle.btn3}>계산하기</button>
         <p className={MyStyle.sum} >총 칼로리: {Kcal}Kcal</p>
-        <button type="submit" onClick={handleClose}>
+        <button type="submit" onClick={handleClose}  className={MyStyle.btn3}>
           저장하기
         </button>
       </Modal>

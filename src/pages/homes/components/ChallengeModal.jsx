@@ -2,6 +2,7 @@ import { Box, Modal, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import { useState,useEffect } from "react";
 import { challengApi } from "../../../api/services/challenge"
+import styleHome from "../css_module/Home.module.css"
 
 const ChallengeModal = ({isModalOpen, handleClose, challenge}) => {
     const token = localStorage.getItem('token');
@@ -103,25 +104,26 @@ const ChallengeModal = ({isModalOpen, handleClose, challenge}) => {
             onClose={handleClose}
             aria-labelledby="title"
             aria-describedby="body"
+
         >
-            <Box sx={style}>
-                <div key={challenge.id}>
-                    <Typography id="title" variant="h6" component="h2">
+            <Box sx={style} >
+                <div key={challenge.id} >
+                    <Typography id={styleHome.title} variant="h6" component="h2">
                         {challenge.name}
                     </Typography>
-                    <Typography id="body1">
+                    <Typography id={styleHome.body2}>
                         <img src={`http://localhost:8000${challenge.img}`} alt="챌린지 이미지" />
                     </Typography>
-                    <Typography id="body2">
-                        {challenge.comment}<br />
-                        {challenge.caution}<br />
-                        시작일: {challenge.startDay}<br />
-                        완료일: {challenge.endDay}
+                    <Typography className={styleHome.body3}>
+                        -설명: {challenge.comment}<br />
+                        -주의:{challenge.caution}<br />
+                        -시작일: {challenge.startDay}<br />
+                        -완료일: {challenge.endDay}
                     </Typography>
                     <Typography id="body3">
                         <p>모집인원:{number}/{challenge.max}명</p>
                     </Typography>
-                    <Typography id="body4">
+                    <Typography className={styleHome.body3}>
                         {number>=challenge.max?
                             (<p>모집인원마감</p>)
                         :
@@ -132,7 +134,7 @@ const ChallengeModal = ({isModalOpen, handleClose, challenge}) => {
                             )
                         }
                     </Typography>
-                    <Typography id="body5">
+                    <Typography className={styleHome.body3}>
                         포인트점수:{challenge.point}P
                     </Typography>
                 </div>
@@ -147,7 +149,8 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: 400,
     bgcolor: 'background.paper',
-    border: '2px solid #000',
+    borderTop:'10px solid #00aeda',
+    borderBottom:'10px solid #00aeda',
     boxShadow: 24,
     p: 4,
     };

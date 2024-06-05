@@ -157,7 +157,7 @@ const MyInfo = () => {
                     </form>
 
                     {/* 유저레벨 레벨을 강조해주세요 각 레벨별로 색으로 표시하는등*/}
-                    {userProfile ? <p className={MyStyle.Lv}>{level}</p> : <p className={MyStyle.Lv} >Loading...</p>}
+                    {userProfile ? <p className={MyStyle.Lv}>LV.{level}</p> : <p className={MyStyle.Lv} >Loading...</p>}
                     {/* 유저포인트 */}
                     {myPoint ? <p className={MyStyle.Lv}>{myPoint.point}Point</p> : <p className={MyStyle.Lv} >Loading...</p>}
                     {/* 팔로우팔로잉버튼 */}

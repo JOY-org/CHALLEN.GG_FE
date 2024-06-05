@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styleHeader from  "../css_module/Header.module.css"
-import {useNavigate } from "react-router-dom";
+import {useLocation, useNavigate } from "react-router-dom";
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import PeopleIcon from '@mui/icons-material/People';//커뮤니티아이콘
@@ -21,9 +21,10 @@ const Header = () => {
     const [showNav, setShowNav] = useState(false);
     const [scrollY, setScrollY] = useState(0);
 
+
     useEffect(() => {
         const handleScroll = (e) => {
-            const myScrollY = window.scrollY;
+                const myScrollY = window.scrollY;
             if (myScrollY < scrollY) {
                 setShowNav(false);
             } else {
