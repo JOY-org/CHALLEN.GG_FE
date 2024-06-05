@@ -169,3 +169,7 @@ body {
   justify-content: center;
   border: 1px solid rgb(189, 185, 185);
 }
+
+.product_brand {
+  color: #00aeda ;
+}

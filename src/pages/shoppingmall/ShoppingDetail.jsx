@@ -1,39 +1,40 @@
 import React, { useState } from "react";
-
 import { Modal } from "@mui/material";
 import styled from "./css_module/ShoppingDetail.module.css";
 import { Link, useLocation, useNavigate } from 'react-router-dom'; // ShoppingList에서 가져옴.
 import ReviewPagination from './components/ReviewPagination';
 import InquiryPagination from "./components/InquiryPagination";
-import check_icon from '../../images/check_icon.png';
+import { cartApi } from "../../api/services/cart";
+import detailBanner from "./images/detail_banner.png";
+import warningIcon from './images/warning_icon.png';
 
 
 
 // 후기글 페이지네이션 임시 데이터
 const reviews = [
-  { name: 'User1', date: '2024.5.23', rating: "⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User2', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User3', date: '2024.5.23', rating: "⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User4', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User5', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User6', date: '2024.5.23', rating: "⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User7', date: '2024.5.23', rating: "⭐⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User8', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User9', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User10', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User11', date: '2024.5.23', rating: "⭐⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User12', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
-  { name: 'User13', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://via.placeholder.com/150','http://via.placeholder.com/150']},
+  { name: 'User1', date: '2024.5.23', rating: "⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
+  { name: 'User2', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
+  { name: 'User3', date: '2024.5.23', rating: "⭐⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
+  { name: 'User4', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
+  { name: 'User5', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
+  { name: 'User6', date: '2024.5.23', rating: "⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
+  { name: 'User7', date: '2024.5.23', rating: "⭐⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
+  { name: 'User8', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
+  { name: 'User9', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
+  { name: 'User10', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
+  { name: 'User11', date: '2024.5.23', rating: "⭐⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
+  { name: 'User12', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
+  { name: 'User13', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
 ]
 
 // 문의글 페이지네이션 임시데이터
 const inquiries = [
-  {id: 1, status: '답변완료', category: '사이즈', content: '상품 관련 문의 합니다.', writer: 'dfkgj24', date: '2024-05-29'},
-  {id: 2, status: '대기중', category: '배송', content: '배송기간 문의 합니다.', writer: 'wkrtjdwk1', date: '2024-05-29'},
-  {id: 3, status: '대기중', category: '상품', content: '상품 관련 문의 합니다.', writer: 'tkdvna12', date: '2024-05-29'},
-  {id: 4, status: '답변완료', category: '기타', content: '상품 관련 문의 합니다.', writer: 'rlxk123', date: '2024-05-29'},
-  {id: 5, status: '대기중', category: '교환', content: '교환 문의 합니다.', writer: 'ryghks1', date: '2024-05-29'},
-  {id: 6, status: '답변완료', category: '반품', content: '반품 문의 합니다.', writer: 'qksvna2', date: '2024-05-29'},
+  {id: 1, status: '답변완료', category: '사이즈', content: '상품 관련 문의 합니다.🔒', writer: 'dfkgj24', date: '2024-05-29'},
+  {id: 2, status: '대기중', category: '배송', content: '배송기간 문의 합니다.🔒', writer: 'wkrtjdwk1', date: '2024-05-29'},
+  {id: 3, status: '대기중', category: '상품', content: '상품 관련 문의 합니다.🔒', writer: 'tkdvna12', date: '2024-05-29'},
+  {id: 4, status: '답변완료', category: '기타', content: '상품 관련 문의 합니다.🔒', writer: 'rlxk123', date: '2024-05-29'},
+  {id: 5, status: '대기중', category: '교환', content: '교환 문의 합니다.🔒', writer: 'ryghks1', date: '2024-05-29'},
+  {id: 6, status: '답변완료', category: '반품', content: '반품 문의 합니다.🔒', writer: 'qksvna2', date: '2024-05-29'},
 ]
 // 페이지 네이션 페이지당 게시물 수
 const REVIEWS_PER_PAGE = 3;
@@ -48,31 +49,32 @@ const maskWriter = (writer) => {
 
 
 const ShoppingDetail = () => {
-
+  const token = localStorage.getItem('token');
   const location = useLocation(); // ShoppingList에서 카드의 정보를 가져옴.
   const { product } = location.state || {}; 
-  const [quantity, setQuantity] = useState(1); // 수량?
+  const [quantity, setQuantity] = useState(1); // 수량
 
   // 모달 상태를 관리.
   const [modalOpen, setModalOpen] = useState(false);
 
   const navigate = useNavigate();
 
+  const addCart = async () => {
+    const data = {
+      count: quantity,
+      productId: product.id
+    }
+    const res = await cartApi.uploadCart(data, token);
+    if (res.data.code === 200) {
+      navigate('/shoppingcart')
+    }
+  }
   const handleAddToCart = () => {
-    navigate({
-      state: {
-        cartItems: [
-          {
-            name: product?.name,
-            price: product?.price,
-            quantity: quantity,
-          }
-        ]
-      }
-    });
+    addCart();
+  };
 
-    // 장바구니담기 버튼 클릭하면 모달이 나타나도록 상태변경.
-    setModalOpen(true);
+  const handleBuyNow = () => {
+    setModalOpen(true); // 구매하기 클릭 시 모달 오픈
   };
 
   const handleCloseModal = () => {
@@ -129,16 +131,14 @@ const handleThumbnailClick = (clickedImage) => {
 
   return (
     <div className={styled.container}>
-      <div style={{
-        height: "150px",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#F4F4F4",
-        marginBottom: "30px"
-      }}>
-        <h1>쇼핑몰 상세페이지 입니다.</h1>
-      </div>
+        <div className={styled.overlay}></div>
+            <div className={styled.banner_img_container}>
+                <img
+                className={styled.banner_img}
+                src={detailBanner}
+                />
+                <p className={styled.shop_text}>Detail</p>
+            </div>
 
       <h2 className={styled.path}>경로</h2>
       <div className={styled.main_box}>
@@ -180,14 +180,10 @@ const handleThumbnailClick = (clickedImage) => {
           </div>
           <div className={styled.buttons}>
             <button className={styled.cart_button} onClick={handleAddToCart}>장바구니 담기</button>
-            <Link to={{
-              pathname: '/ShoppingCart',
-            }}>
-            <button className={styled.cart_button} >구매하기</button>
-            </Link>
             <Link to='/ShoppingPurchase'>
               <img src="http://via.placeholder.com/30" alt="cart_icon" />
             </Link>
+            <button className={styled.cart_button} onClick={handleBuyNow}>구매하기</button>
           </div>
           </div>
         </div>
@@ -299,9 +295,9 @@ const handleThumbnailClick = (clickedImage) => {
       >
         <div className={styled.modal_box}>
 
-            <img className={styled.check_icon} src="check_icon"></img>
+            <img className={styled.check_icon} src={warningIcon}></img>
           <div className={styled.msg_box}>
-            <h3 className={styled.modal_msg}>장바구니에 추가되었습니다.</h3>
+            <h3 className={styled.modal_msg}>상품이 품절되었어요.</h3>
           </div>
 
           <div className={styled.modal_button_wrap}>

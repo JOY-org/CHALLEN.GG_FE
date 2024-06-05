@@ -2,7 +2,6 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // ShoppingDetail로 정보 전달
 import styled from "./css_module/ShoppingProduct.module.css";
-
 // import likeIcon from "../../images/likeIcon.png";
 import axios from 'axios';
 import ProductPagination from './components/ProductPagination';
@@ -10,13 +9,11 @@ import ProductPagination from './components/ProductPagination';
 const CARDS_PER_PAGE = 12; // 페이지당 카드 수를 정의
 
 const ShoppingProduct = () => {
-
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilter, setActiveFilter] = useState('');
   const navigate = useNavigate(); // ShoppingDetail로 정보 전달
-
 
   // 페이지 네이션
   const [currentCardPage, setCurrentCardPage] = useState(1);
@@ -24,7 +21,9 @@ const ShoppingProduct = () => {
   const indexOfFirstCard = indexOfLastCard - CARDS_PER_PAGE;
   const currentCards = filteredProducts.slice(indexOfFirstCard, indexOfLastCard); // 필터링된 제품 목록 사용
   const totalPages = Math.ceil(filteredProducts.length / CARDS_PER_PAGE);
-  const handleCardPageChange = (pageNumber) => {
+
+  // 페이지 변경 핸들러
+  const handlePageChange = (pageNumber) => {
     setCurrentCardPage(pageNumber);
   };
 
@@ -58,8 +57,7 @@ const ShoppingProduct = () => {
       // 실제 API 호출 
       try {
         const response = await axios('http://localhost:8000/v1/product/');
-        const data = await response.data.payload;
-
+        const data = await response.data.payload.product;
         // 임시 데이터 형태로 변환
         const formattedData = data.map((item, index) => ({
           id: item.id,
@@ -69,7 +67,7 @@ const ShoppingProduct = () => {
           count: item.count,
           description: item.description,
           // 이미지가 출력이 되지 않는 문제 해결됨. 데이터 쪽 단어랑 똑같아야함
-          imageUrl: `http://localhost:8000/${item.img}`,
+          imageUrl: `http://localhost:8000/${item.ProductImgs[0].img}`,
 
           // API에 카테고리 없어서 임의로 추가함.
           category: index % 3 === 0 ? '남성' : '여성',
@@ -102,7 +100,7 @@ const ShoppingProduct = () => {
       const sanitizedSearchTerm = searchTerm.toLowerCase().replace(/\s/g, '');
       const filtered = products.filter(product =>
         product.name.toLowerCase().replace(/\s/g, '').includes(sanitizedSearchTerm)
-);
+      );
       setFilteredProducts(filtered);
     }
   };
@@ -171,7 +169,7 @@ const handleAllFilterClick = () => {
           >검색</button>
         </div>
         <div className={styled.product_container}>
-          {filteredProducts.map((product) => (
+          {currentCards.map((product) => (
             <div
               className={styled.product_card}
               key={product.id} 
@@ -195,9 +193,9 @@ const handleAllFilterClick = () => {
         </div>
 
         <ProductPagination
-        currentPage={currentCardPage}
+        currentCardPage={currentCardPage}
         totalPages={totalPages}
-        handlePageChange={handleCardPageChange}
+        handleCardPageChange={handlePageChange}
         styled={styled}
         />
 

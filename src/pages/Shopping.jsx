@@ -1,29 +1,28 @@
 import React from "react";
 import ProductCard from "./shoppingmall/ShoppingProduct";
-// import { Button } from "@mui/material";
+import styled from "./shoppingmall/css_module/Shopping.module.css";
+import bannerImage from "./shoppingmall/images/shop.png";
 
 
 const Shopping = () => {
     return (
-        <div className="container" >
-            <div style={{
-                    height: "150px", 
-                    display: "flex", 
-                    justifyContent: "center", 
-                    alignItems: "center",
-                    backgroundColor: "#F4F4F4",
-                    marginBottom: "30px"
-                }}>
-                <h1>쇼핑몰 페이지입니다</h1>
+        <div className={styled.container} >
+            <div className={styled.overlay}></div>
+            <div className={styled.banner_img_container}>
+                <img
+                className={styled.banner_img}
+                src={bannerImage}
+                />
+                <p className={styled.shop_text}>Shop</p>
             </div>
 
-            <div className="button-box" 
+            {/* <div className="button-box" 
             style={{
                 marginBottom: "20px", 
                 width: "940px", 
                 margin: "auto"
             }}>
-            </div>
+            </div> */}
             
             <ProductCard />
 
