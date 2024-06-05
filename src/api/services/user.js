@@ -60,6 +60,12 @@ export const userApi = {
         headers:{
             "Authorization": token
         }
-    })
+    }),
     // delRefreshToken: (id) => api.patch(`/auth/refresh`, {id})
+    deleteNotification: (id,token) => api.delete(`users/notification/${id}`,{
+        headers:{
+            "Authorization": token
+        },
+        data:{id}
+    })
 }

@@ -1,4 +1,4 @@
-import {IconButton, InputAdornment, Stack, TextField} from '@mui/material';
+import {BottomNavigation, BottomNavigationAction, Box, IconButton, InputAdornment, Stack, TextField} from '@mui/material';
 import styles from './css_module/CommunityPost.module.css'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -12,6 +12,12 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { useAuth } from '../../hooks/useAuth';
 import { getRelativeTime } from '../../utils/date';
 import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
+import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
+import PsychologyAltIcon from '@mui/icons-material/PsychologyAlt';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import PlaceIcon from '@mui/icons-material/Place';
+import MoodIcon from '@mui/icons-material/Mood';
+import HailIcon from '@mui/icons-material/Hail';
 
 const CommunityPost = () => {
     const { logout } = useAuth();
@@ -72,7 +78,7 @@ const CommunityPost = () => {
         if(!Object.keys(obj).includes(params.title)){
             navigate('*')
         }
-    }, [open]);
+    }, [open, params.title]);
 
 
     const getPostsByCommId = async(commId) => {
@@ -110,6 +116,43 @@ const CommunityPost = () => {
         }
     };
 
+    const bottomNavigationItems = [
+        { label: "자유", icon: <AirplanemodeActiveIcon /> },
+        { label: "유머", icon: <MoodIcon /> },
+        { label: "운동", icon: <FitnessCenterIcon /> },
+        { label: "질문", icon: <PsychologyAltIcon /> },
+        { label: "지역", icon: <PlaceIcon /> },
+        { label: "홍보", icon: <HailIcon /> },
+    ];
+
+    const handleBottomNavigationChange = (event, newValue) => {
+        let newPath = '/';
+        switch (newValue) {
+            case 0:
+                newPath = '/communitypost/자유';
+                break;
+            case 1:
+                newPath = '/communitypost/유머';
+                break;
+            case 2:
+                newPath = '/communitypost/운동';
+                break;
+            case 3:
+                newPath = '/communitypost/질문';
+                break;
+            case 4:
+                newPath = '/communitypost/지역';
+                break;
+            case 5:
+                newPath = '/communitypost/홍보';
+                break;
+            default:
+                newPath = '/';
+                break;
+        }
+        navigate(newPath);
+    };
+
     return ( 
         <section className={styles.notice}>
             <div className={styles.pageTitle}>
@@ -119,6 +162,18 @@ const CommunityPost = () => {
                     </div>
                 </div>
             </div>
+
+            <Box sx={{ width: 1000, margin: '10px auto' }}>
+                <BottomNavigation
+                    showLabels
+                    value={obj[params.title] - 1} // 현재 카테고리에 해당하는 인덱스 설정
+                    onChange={handleBottomNavigationChange}
+                >
+                    {bottomNavigationItems.map((item, index) => (
+                        <BottomNavigationAction key={index} label={item.label} icon={item.icon} />
+                    ))}
+                </BottomNavigation>
+            </Box>
 
             <div id={styles.boardSearch}>
                 <div className={styles.container}>

@@ -123,7 +123,7 @@ export default function SignIn() {
 
                 <Grid container justifyContent="flex-end">
                     <Grid item>
-                        <Link href="/signup" variant="body2">
+                        <Link href="/signup" variant="body2" color="#00aeda">
                             아직 회원가입을 안하셨나요?
                         </Link>
                     </Grid>
