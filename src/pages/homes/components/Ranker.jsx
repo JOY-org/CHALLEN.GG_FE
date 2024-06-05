@@ -35,7 +35,7 @@ export default function Ranker() {
                     alt={`${r.nickname}'s profile`}
                 />
                 <div>
-                    <span>{r.nickname} 님</span>
+                    <span>{r.nickname}님</span>
                 </div>
             </div>
             )

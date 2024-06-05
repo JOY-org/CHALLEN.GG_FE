@@ -132,12 +132,11 @@ const ChallengeCard = ({ challenge, handleOpen }) => {
     <Card
       key={challenge.id}
       sx={{ maxWidth: 345, boxShadow: "5px 5px 20px 1px gray" }}
-      className={`${styleHome.Challenge}`}
     >
       <CardActionArea onClick={() => handleOpen(challenge)}>
         <CardMedia
           component="img"
-          height="140"
+          height="200"
           image={`http://localhost:8000${challenge.img}`}
           alt="챌린지사진"
         />

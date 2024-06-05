@@ -1,7 +1,6 @@
 import styleHome from "../pages/homes/css_module/Home.module.css"
 import Challenge from "../pages/homes/components/Challenge";
 import Ranker from "../pages/homes/components/Ranker";
-import AdMain from "../pages/homes/components/AdMain";
 import Menufilter from "./homes/components/MenuFilter";
 import { useState, useEffect } from "react";
 import { challengApi } from "../api/services/challenge";
@@ -19,7 +18,7 @@ const Home = () => {
     const [sortKey, setSortKey] = useState();
     const [searchTerm, setSearchTerm] = useState("");
     const [challengeList, setChallengeList] = useState([]);
-    
+
     useEffect(() => {
         kakaoLogin();
     }, []);
@@ -92,7 +91,7 @@ const Home = () => {
             </div>
 
             <div className={styleHome.threeImg}>
-                <img src={threeimg} alt="운동하는 여성"/>
+                <img src={threeimg} alt="다리운동하는 여성"/>
                 <div>
                     <h1>CHALLEN.GG(챌린지지)</h1>
                     <div>
@@ -136,6 +135,30 @@ const Home = () => {
                 <div >
                     <img src={fiveimg}  className={styleHome.menuImg}/>
                 </div>
+            </div>
+
+            <div>
+                <img src={sevenimg} alt="남자가 앉아있는 이미지" className={styleHome.StartImg}/>
+                <box  className={styleHome.StartBox}>
+                    <p>자 이제 챌린지지를 이해하셨나요?<br/>그럼 당장 도전하세요 당신의 새로운 미래를 위해</p>
+                </box>
+            </div>
+
+            <div>
+                <Menufilter
+                    sortKey={sortKey}
+                    setSortKey={setSortKey}
+                    handleSearchInputChange={handleSearchInputChange}
+                    handleSearch={handleSearch}
+                />
+            </div>
+
+            <div className={styleHome.challengeContainer}>
+                <Challenge challengeList={challengeList} />
+            </div>
+
+            <div>
+                <Ranker />
             </div>
 
             <div className={styleHome.develop}>
@@ -193,31 +216,6 @@ const Home = () => {
                     </p>
                 </div>
             </div>
-
-            <div>
-                <img src={sevenimg} alt="남자가 앉아있는 이미지" className={styleHome.lastImg}/>
-                <box  className={styleHome.Box}>
-                    <p>자 이제 챌린지지를 이해하셨나요?<br/>그럼 당장 도전하세요 당신의 새로운 미래를 위해</p>
-                </box>
-            </div>
-
-            <div>
-                <Menufilter
-                    sortKey={sortKey}
-                    setSortKey={setSortKey}
-                    handleSearchInputChange={handleSearchInputChange}
-                    handleSearch={handleSearch}
-                />
-            </div>
-
-            <div className={styleHome.challengeContainer}>
-                <Challenge challengeList={challengeList} />
-            </div>
-
-            <div>
-                <Ranker />
-            </div>
-            {/* <AdMain /> */}
         </div>
     );
 };
