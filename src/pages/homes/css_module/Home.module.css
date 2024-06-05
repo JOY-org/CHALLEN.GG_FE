@@ -6,19 +6,23 @@
 }
 *{
     font-family: 'Giants-Bold';
-
+    box-sizing: border-box;
 }
+
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
 .Home{
     margin:0px;
     background-color:  #f2f5fa;
-    width: 100%;
-    overflow-x: auto;
-    /* overflow-y: hidden; 이거 생성하면 스크롤바가비활성화됨*/
-    white-space: nowrap;
 }
+
 .girlImg {
     width: 100%;
-    position: relative;
     z-index: 1;
 }
 
@@ -128,26 +132,16 @@
         margin-bottom: 20px;
     }
 }
+/* 남자가 앉아있는 이미지 */
 .lastImg {
     width: 100%;
     position: relative;
     z-index: 1;
-
 }
 
-.lastText {
-    margin: 10px;
-    position: absolute;
-    top: 3000px;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    color: white;
-    font-size: 50px;
-    z-index: 3;
-    font-weight: 600;
-}
-.Box{
+/* 자그럼 챌린지를 이해하셨나요? 문구 */
+
+.Box {
     height: 300px;
     width: 100%;
     position: absolute;
@@ -157,56 +151,40 @@
     display: flex;
     background-color: #2e2e30;
     z-index: 2;
-    opacity:0.7
+    opacity: 0.7;
 }
 
-.challengeContainer {
-    display: flex;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    position: relative;
-    overflow: hidden;
+.Box p {
+    width: 70%;
+    margin: 10px;
+    position: absolute;
+    top: 50%;  /* Center vertically within .Box */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 50px;
+    z-index: 3;
+    font-weight: 600;
 }
 
-.Challenge {
-    scroll-snap-align: start;
-    flex: 0 0 auto;
-    white-space: pre-line;
-    min-height: 300px;
-    margin: 30px 30px;
-    width: 280px;
-    min-width: 280px;
-    max-width: 100%;
-
-}
-.Slide{
-    border: none;
-    font-size: 40px;
-    margin: 20px;
-    cursor: pointer;
-    background-color:#00aeda;
-}
-
-
+/* 메뉴 필터 전체신규 등등 */
 .btn{
-    height: 20px;
-    margin-top: 20px;
-    margin-left: 60px;
+    margin-left: 2rem;
     display: flex;
+    margin-top: 100px;
+}
+
+.inputWrapper{
+    display: flex;
+    align-items: center;
+    width: 400px;
 }
 
 .menuInput {
-    height: 25px;
-    left: 15px;
-    padding: 0 5px;
-    margin-right: 10px;
-    width: 100%;
+    padding: 5px 10px;
+    width: 70%;
     border-bottom: 1px solid black;
     border-radius: 10px;
-    position: relative;
-    z-index: 1;
     background-color: transparent;
 }
 
@@ -223,7 +201,11 @@
 }
 
 .body3{
-    font-family: Giants-Bold
+    font-family: 'Giants-Bold';
+}
+
+.challengeContainer {
+    margin: 10px 0px;
 }
 /* .AdMain{
     width: 90%;
@@ -237,32 +219,28 @@
 
 .RankerName{
     background: linear-gradient(to right, rgba(128, 128, 128, 0.3), white);
-    margin-top: 100px;
     display: flex;
+    align-items: center;
+    width: 100%;
+    height: 350px;
     justify-content: center;
-    height: 300px;
-    margin-bottom: 150px;
+    margin: 10px 0;
     & h1{
-        display: flex;
-        transform: translate(-10%, -50%);
-        margin: 140px 5px;
         background-color: red;
         font-size: 35px;
     }
 }
 .Ranker {
     background-color: #00aeda;
-    columns: row;
     align-items: center;
-    margin: 5px 50px;
-    width: 200px;
+    margin: 5px 10px;
+    width: 220px;
+    height: 100%;
     display: flex;
     justify-content: center;
 
-
     & div {
-        margin-right: 20px;
-        margin-left: 10px;
+        margin: 0 10px;
         font-size: 20px;
         font-weight: bold;
     }
@@ -270,9 +248,7 @@
         width: 150px;
         height: 150px;
         border-radius: 50%;
-
     }
-
 }
 
 

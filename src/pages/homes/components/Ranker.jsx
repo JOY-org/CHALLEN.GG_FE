@@ -26,21 +26,19 @@ export default function Ranker() {
 
 
     return (
-        <div  className={styleHome.RankerName}>
+        <div className={styleHome.RankerName}>
             <h1>Who is pro-challenger?</h1>
-            <div>
-                </div>
             {newRanker.slice(0, 3).map((r)=>(
-                    <div key={r.id} className={styleHome.Ranker} >
-                    <img
-                        src={`http://localhost:8000/${r.img}`}
-                        alt={`${r.nickname}'s profile`}
-                    />
-                    <div>
-                        <span>{r.nickname} 님</span>
-                    </div>
+            <div key={r.id} className={styleHome.Ranker} >
+                <img
+                    src={`http://localhost:8000/${r.img}`}
+                    alt={`${r.nickname}'s profile`}
+                />
+                <div>
+                    <span>{r.nickname} 님</span>
                 </div>
-                )
+            </div>
+            )
             )}
         </div>
     );

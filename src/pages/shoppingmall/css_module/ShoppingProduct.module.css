@@ -1,8 +1,3 @@
-/* 오른쪽 끝이 객체들이 짤려서 설정 */
-body {
-  width: 100vw;
-}
-
 .container {
   margin-bottom: 100px;
 }
