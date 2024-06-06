@@ -1,108 +1,126 @@
-
 import styled from "./css_module/ShoppingCart.module.css";
-import { Link, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-
+import { cartApi } from "../../api/services/cart";
+import cartBanner from "./images/cart_image.png";
 
 const ShoppingCart = () => {
-  // const location = useLocation(); // 현재 위치의 상태를 가져옴
-  // const initialProducts = location.state?.cartItems || []; // 초기 제품목록을 위치 상태에서 가져옴, 없으면 빈 배열 사용. location.state에 있는 cartItems를 초기 목록으로 설정
+  const [products, setProducts] = useState([]); // 장바구니 목록 
+  const [selectedItems, setSelectedItems] = useState([]); // 선택된 상품 
+  const [selectAll, setSelectAll] = useState(false); // 전체 선택 체크박스
 
-  // 임시데이터
-  const initialProcuts = [
-    {name: '상품1', price: 10000, quantity: 1, point: 100, total: 10000, checked: false},
-    {name: '상품2', price: 20000, quantity: 2, point: 200, total: 20000, checked: false},
-    {name: '상품3', price: 30000, quantity: 3, point: 300, total: 30000, checked: false},
-  ]
-  const [products, setProducts] = useState(initialProcuts); // 제품목록을 상태로 관리
-  const [allChecked, setAllChecked] = useState(false); // 전체 선택 체크박스 상태 관리
+  // 로컬 스토리지에서 토큰 가져옴
+  const token = localStorage.getItem('token');
 
-  // 전체선택 체크박스
-  const handleAllChecked = (event) => {
-    const isChecked = event.target.checked; // 체크박스의 현재상태를 나타냄
-    const updatedProducts = products.map(product => ({ ...product, checked: isChecked})); // 모든 제품의 checked 상태를 isChecked 로 업데이트한 배열
-    setProducts(updatedProducts);
-    setAllChecked(isChecked);
+  // 페이지 이동함수
+  const navigate = useNavigate();
+
+  const getCartItems = async () => {
+    // 장바구니 상품 목록을 API로부터 가져옴
+    const res = await cartApi.getCartItems(token);
+    // 응답 데이터로 상태 업데이트
+    setProducts(res.data.payload);
   }
 
-  // 선택된 제품 삭제, 선택 되지 않은것만 남김
-  const handleDelete = () => {
-    // updatedProducts의 checked 상태가 false 인 제품만 남긴 배열
-    const updatedProducts = products.filter(product => !product.checked); 
-    setProducts(updatedProducts);
-    setAllChecked(false);
-  }
-  
-  // 개별 체크박스 , 개별제품의 checked 상태를 토글
-  const handleCheckboxChange = (index) => {
-    const updatedProducts = [...products];
-    // 클릭된 제품의 checked 상태를 토글한 배열
-    updatedProducts[index].checked = !updatedProducts[index].checked;
-    setProducts(updatedProducts);
-  }
-
-  // 전체선택 상태 업데이트
   useEffect(() => {
-    const allProductsChecked = products.length > 0 && products.every(product => product.checked);
-    setAllChecked(allProductsChecked); // 모든제품의 checked 상태가 true 인지 확인
-  }, [products]); // product 상태가 변경될 때마다 전테 선택 체크박스 상태를 업데이트
-  
+    // 컴포넌트가 마운트 될 때 장바구니 상품 목록 가져오기
+    getCartItems();
+  }, []);  
+
+  const deleteCartItems = async () => {
+    // 선택된 상품들을 장바구니에서 삭제하는 함수
+    
+    // 각 상품 삭제 요청
+    selectedItems.forEach( async(id) => {
+      await cartApi.deleteCartItems(token, id);  
+    });
+
+    const updatedProducts = products.filter(p => !selectedItems.includes(p.id));
+    setProducts(updatedProducts);
+
+    setSelectedItems([]);
+  }
+
+  // 삭제버튼 클릭 시 호출
+  const handleDelete = () => {
+    deleteCartItems();
+  }
+
+  const handleCardClick = () => {
+    // 뒤로가기 버튼 클릭 시 호출, 이전 페이지로 이동
+    navigate(-1);
+  }
+
+  const handleSelectAll = () => {
+    // 전체 선택 체크박스 상태 변경
+    if (selectAll) {
+      setSelectedItems([]); // 모든 선택 해제
+    } else {
+      setSelectedItems(products.map((p) => p.id)); // 모든 상품 선택
+    }
+    setSelectAll(!selectAll); // 체크박스 상태 토글
+  }
+
+  const handleSelectItem = (index) => {
+    // 개별 상품 선택 체크박스 상태 변경
+    if (selectedItems.includes(index)) {
+      setSelectedItems(selectedItems.filter(i => i !== index)); // 선택 해제
+    } else {
+      setSelectedItems([...selectedItems, index]); //선택 추가
+    }
+  }
 
   return (
     <div className={styled.container}>
-      <div style={{
-        height: "150px", 
-        display: "flex", 
-        justifyContent: "center", 
-        alignItems: "center",
-        backgroundColor: "#F4F4F4",
-        marginBottom: "30px"
-        }}>
-        <h1>장바구니 페이지 입니다.</h1>
-      </div>
-      <h2 className={styled.cart_title}>장바구니</h2>
-        <table className={styled.cart_form}>
-            <thead className={styled.t_title}>
-              <tr>
-                <th className={styled.product_check}><input type="checkBox" onChange={handleAllChecked} checked={allChecked} />
-                </th>
-                <th className={styled.product_name}>물품명</th>
-                <th className={styled.product_price}>가격</th>
-                <th className={styled.product_quantity}>수량</th>
-                <th className={styled.product_point}>포인트</th>
-                <th className={styled.product_total}>합계</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* --------실제 DB로 연결 시켜서 추가되어야 하는 부분 -------- */}
-              {products.map((product, index) => (
-              <tr key={index} className={styled.tr_body}>
-                  <td><input type="checkBox" name={`select_${index}`} checked={product.checked} onChange={() => {handleCheckboxChange(index)}} /></td>
-                  <td>{product.name}</td>
-                  <td>{product.price}</td>
-                  <td>{product.quantity}</td>
-                  <td>{product.point * product.quantity}</td>
-                  <td>{product.total * product.quantity}</td>
-              </tr>
-              ))}
-            </tbody>
-        </table>
-              <div className={styled.del_button_box}>
-                <button className={styled.del_button} onClick={handleDelete}>삭제하기</button>
-              </div>
-              <div className={styled.payment}>
-                <span className={styled.final_pay}>최종 결제 금액</span>
-                <span className={styled.won}>{
-            products.reduce((total, product) => total + (product.price * product.quantity), 0)
-          }원</span>
-              </div>
-            <div className={styled.buttons}>
-              <Link to="/ShoppingDetail">
-                  <button className={styled.back_button} >뒤로가기</button>
-              </Link>
-              <button className={styled.order_button} >구매하기</button>
+      <div className={styled.overlay}></div>
+            <div className={styled.banner_img_container}>
+                <img
+                className={styled.banner_img}
+                src={cartBanner}
+                />
+                <p className={styled.shop_text}>Cart</p>
             </div>
+      <h2 className={styled.cart_title}>장바구니</h2>
+      <table className={styled.cart_form}>
+        <thead className={styled.t_title}>
+          <tr>
+            <th>
+              <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
+            </th>
+            <th className={styled.product_name}>물품명</th>
+            <th className={styled.product_price}>가격</th>
+            <th className={styled.product_quantity}>수량</th>
+            <th className={styled.product_total}>합계</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products?.map((p, index) => (
+            <tr key={index} className={styled.tr_body}>
+              <td>
+                <input type="checkbox" checked={selectedItems.includes(p.id)} onChange={() => handleSelectItem(p.id)} />
+              </td>
+              <td>{p.Product.name}</td>
+              <td>{p.Product.price}</td>
+              <td>{p.count}</td>
+              <td>{p.Product.price * p.count}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className={styled.del_button_box}>
+        <button className={styled.del_button} onClick={handleDelete}>삭제하기</button>
       </div>
+      <div className={styled.payment}>
+        <span className={styled.final_pay}>최종 결제 금액</span>
+        <span className={styled.won}>{
+          products?.reduce((total, p) => total + (p.Product.price * p.count), 0)
+        }원</span>
+      </div>
+      <div className={styled.buttons}>
+        <button className={styled.back_button} onClick={handleCardClick}>뒤로가기</button>
+        <button className={styled.order_button}>구매하기</button>
+      </div>
+    </div>
   )
 }
 

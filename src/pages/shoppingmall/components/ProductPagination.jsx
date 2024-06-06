@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@mui/material';
 
 // 상품페이지 페이지네이션
-const ProductPagination = ({ currentCardPage, totalPages, handleCardPageChange, styled}) => {
+const ProductPagination = ({ currentCardPage, totalPages, handleCardPageChange, styled }) => {
   const renderPageNumbers = () => {
     const pageNumbers = [];
     let startPage = Math.max(currentCardPage - 2, 1);

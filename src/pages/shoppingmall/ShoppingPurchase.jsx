@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import styled from "./css_module/ShoppingPurchase.module.css";
+import purchaseImg from "./images/purchase.png";
+import adidasPants from './images/adidas_pants2.png';
+import nikeShose from './images/nike_shose.png';
+import umbroShort from './images/umbro_short.png';
+
 
 
 
@@ -11,20 +16,20 @@ const ShoppingPurchase = () => {
   const orders = [
     {
       date: new Date('2024-05-22'),
-      imgSrc: 'http://via.placeholder.com/90',
-      info: '아디다스 바지',
+      imgSrc: adidasPants,
+      info: '아디다스 트랙 팬츠',
       state: '배송완료'
     },
     {
       date: new Date('2024-05-22'),
-      imgSrc: 'http://via.placeholder.com/90',
-      info: '나이키 신발',
+      imgSrc: nikeShose,
+      info: '나이키 팬텀 GX2',
       state: '배송중'
     },
     {
       date: new Date('2024-05-23'),
-      imgSrc: 'http://via.placeholder.com/90',
-      info: '언더아머 반팔',
+      imgSrc: umbroShort,
+      info: '엄브로 반팔티',
       state: '배송 준비중'
     },
   ];
@@ -75,16 +80,14 @@ const ShoppingPurchase = () => {
 
   return (
     <div className={styled.container}>
-      <div style={{
-        height: "150px", 
-        display: "flex", 
-        justifyContent: "center", 
-        alignItems: "center",
-        backgroundColor: "#F4F4F4",
-        marginBottom: "30px"
-      }}>
-        <h1>쇼핑몰 구매목록 페이지입니다.</h1>
-      </div>
+  <div className={styled.overlay}></div>
+            <div className={styled.banner_img_container}>
+                <img
+                className={styled.banner_img}
+                src={purchaseImg}
+                />
+                <p className={styled.shop_text}>Purchase List</p>
+            </div>
 
       <h2 className={styled.purchase_title}>구매목록</h2>
       <div className={styled.form}>
@@ -124,7 +127,7 @@ const ShoppingPurchase = () => {
                 {groupedOrders[date].map((order, index) => (
                   <tr className={styled.add_prd} key={index}>
                     <td className={styled.small_img}>
-                      <img src={order.imgSrc} alt='상품 이미지'></img>
+                      <img src={order.imgSrc} alt='상품 이미지' className={styled.resizedImage}></img>
                     </td>
                     <td className={styled.info}>{order.info}</td>
                     <td className={styled.status}>{order.state}</td>
