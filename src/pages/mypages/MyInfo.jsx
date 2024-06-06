@@ -5,6 +5,9 @@ import { useParams } from "react-router-dom";
 import Follow from "./Follow";
 import { useAuth } from "../../hooks/useAuth";
 import { userApi } from "../../api/services/user";
+import ChallengeManage from "./ChallengeManage";
+import Kcal from "./Kcal";
+import MyButtons from "./MyButtons";
 
 const MyInfo = () => {
     const token = localStorage.getItem('token');
@@ -113,57 +116,89 @@ const MyInfo = () => {
 
 
     return (
-
             <div className={MyStyle.MyInfo} >
-                <div className={MyStyle.BgInfo}>
+                <div className={MyStyle.Info1}>
                     {/* 프로필이미지 */}
-                    <div className={MyStyle.profileImg}>
-                        <img
-                            src={`http://localhost:8000/${profileImg}`}
-                        />
-                    </div>
-                    {/* 프로필이미지변경버튼 */}
-                    <form onSubmit={uploadProfileImg}  className={MyStyle.ImgBtn}>
-                        <input type="file" id="fileInput" onChange={handleChange} />
-                        {change ?
-                        <button type='submit' >click !</button>
-                        :
-                        <label htmlFor="fileInput" className={MyStyle.profile} >프로필을 변경할까요?</label>
-                        }
-                    </form>
-                    {/* 닉네임 */}
-                    {userProfile ? <p className={MyStyle.Nick}>{userProfile.nickname}</p> : <p>Loading...</p>}
-                    {/* 닉네임변경버튼 */}
-                    <form onSubmit={uploadNickname}>
-                        <label htmlFor="changename" className={MyStyle.changname} onClick={openName}>닉네임을 변경할까요?</label>
-                        {nickname?
-                            <div className={MyStyle.changBtn}>
-                                <input
-                                    type="text"
-                                    name='nickname'
-                                    id="changename"
-                                    placeholder="닉네임을 입력해주세요"/>
-                                <button type='submit'>save</button>
-                            </div>
+                    <div >
+                            <img
+                                src={`http://localhost:8000/${profileImg}`}
+                                id={MyStyle.profileImg}
+                            />
+                        </div>
+                        <div className={MyStyle.MyInfos}>
+                        {/* 프로필이미지변경버튼 */}
+                        <form onSubmit={uploadProfileImg}  >
+                            <input
+                                type="file"
+                                id="fileInput"
+                                onChange={handleChange}
+                                className={MyStyle.ImgBtn}/>
+                            {change ?
+                            <button type='submit' >click !</button>
                             :
-                            <div className={MyStyle.changBtn} style={{display:'none' }}>
-                                <input
-                                    type="text"
-                                    name='nickname'
-                                    id="changename"
-                                    placeholder="닉네임을 입력해주세요"/>
-                                <button type='submit' >save</button>
-                            </div>}
-                    </form>
+                            <label htmlFor="fileInput" className={MyStyle.ProfileText} >프로필을 변경할까요?</label>
+                            }
+                        </form>
+                        {/* 닉네임 */}
+                        {userProfile ? <span className={MyStyle.Nick}>{userProfile.nickname}</span> : <p>Loading...</p>}
+                        {/* 닉네임변경버튼 */}
+                        <form onSubmit={uploadNickname}>
+                            <label htmlFor="changename" className={MyStyle.changname} onClick={openName}>닉네임을 변경할까요?</label>
+                            {nickname?
+                                <div className={MyStyle.changBtn}>
+                                    <input
+                                        type="text"
+                                        name='nickname'
+                                        id="changename"
+                                        placeholder="닉네임을 입력해주세요"/>
+                                    <button type='submit'>save</button>
+                                </div>
+                                :
+                                <div className={MyStyle.changBtn} style={{display:'none' }}>
+                                    <input
+                                        type="text"
+                                        name='nickname'
+                                        id="changename"
+                                        placeholder="닉네임을 입력해주세요"/>
+                                    <button type='submit' >save</button>
+                                </div>}
+                        </form>
+                        <div className={MyStyle.Lv} >
+                        {/* 유저레벨 레벨을 강조해주세요 각 레벨별로 색으로 표시하는등*/}
+                        {userProfile ? <p>LV.{level}</p> : <p >Loading...</p>}
+                        </div>
 
-                    {/* 유저레벨 레벨을 강조해주세요 각 레벨별로 색으로 표시하는등*/}
-                    {userProfile ? <p className={MyStyle.Lv}>LV.{level}</p> : <p className={MyStyle.Lv} >Loading...</p>}
-                    {/* 유저포인트 */}
-                    {myPoint ? <p className={MyStyle.Lv}>{myPoint.point}Point</p> : <p className={MyStyle.Lv} >Loading...</p>}
-                    {/* 팔로우팔로잉버튼 */}
-                    {userProfile &&
-                        <Follow user={userProfile}/>}
-                </div>
+                        <div className={MyStyle.Points} >
+                        {/* 유저포인트 */}
+                        {myPoint ? <p >{myPoint.point}Point</p> : <p >Loading...</p>}
+                        </div>
+                        <div className={MyStyle.Challengg}>
+                            <p>CHALLEN.GG</p>
+                        </div>
+                    </div>
+                    </div>
+                    <div className={MyStyle.FollowAndChallenge}>
+                    <div  className={MyStyle.Info2}>
+                        {/* 팔로우팔로잉버튼 */}
+                        {userProfile &&
+                            <Follow user={userProfile}/>}
+                    </div>
+
+                    {/* 챌린지 진행.완료목록 */}
+                    <div  className={MyStyle.Info3}>
+                        <ChallengeManage/>
+                    </div>
+                    </div>
+                    {/* 칼로리캘린더 */}
+                    <div>
+                        <div className={MyStyle.kcals}>
+                            <Kcal />
+                        </div>
+                        {/* 챌린지개설 구매목록 */}
+                        <div className={MyStyle.Buttons}>
+                            <MyButtons/>
+                        </div>
+                    </div>
             </div>
 
     );

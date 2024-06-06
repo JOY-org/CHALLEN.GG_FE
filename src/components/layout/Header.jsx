@@ -107,6 +107,9 @@ const Header = () => {
         width: "700px",
         backgroundColor: "transparent"
     };
+    const activeStyle = {
+        color: "orange",
+    };
 
     return (
         <>
@@ -126,7 +129,10 @@ const Header = () => {
                 {
                     menus.map((m, idx) => (
                         <BottomNavigationAction
-                            sx={{color:"black"}}
+                        sx={{
+                            color: "black",
+                            '&.Mui-selected': activeStyle,
+                        }}
                             className={styleHeader.BottomNavigationAction}
                             key={idx}
                             icon={m.icon ? <m.icon /> : null}

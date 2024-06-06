@@ -7,7 +7,7 @@ import Certification from "./Certification";
 const ChallengeManage = () => {
     const { loginUser } = useAuth();
     const token = localStorage.getItem('token');
-    const [openChallengeList, setOpenChallengeList] = useState(false);
+    const [openChallengeList, setOpenChallengeList] = useState(true);
     const closeList = () => { setOpenChallengeList(false) };
     const openList = () => { setOpenChallengeList(true) };
 
@@ -29,8 +29,10 @@ const ChallengeManage = () => {
 
         return (
             <div className={MyStyle.ChallengeManag}>
-                <button onClick={openList} id={MyStyle.btn1}>진행중</button>
-                <button onClick={closeList} id={MyStyle.btn2}>완료</button>
+                <div className={MyStyle.btn1}>
+                    <button onClick={closeList}  className={MyStyle.btn2}>완료</button>
+                    <button onClick={openList}  className={MyStyle.btn2}>진행중</button>
+                </div>
                 {openChallengeList ? (
                 <ChallengeList challenges={myChallenge.filter((challengeItem) => !challengeItem.success)}
                 />
@@ -47,11 +49,13 @@ export const UserChallengeItem = createContext("챌린지 정보가없습니다"
 
 export const ChallengeList = ({ challenges }) => {
     return (
-        <ul >
+        <div className={MyStyle.ChallengeMap}>
             {challenges.map((challengeItem) => (
-                <UserChallengeItem.Provider key={challengeItem.Challenge.id} value={challengeItem}>
+                <UserChallengeItem.Provider
+                    key={challengeItem.Challenge.id}
+                    value={challengeItem}>
                     {challengeItem.Challenge && (
-                        <li key={challengeItem.Challenge.id} >
+                        <li className={MyStyle.ChallengeLists} key={challengeItem.Challenge.id} >
                             {challengeItem.Challenge.name}
                             {!challengeItem.success ?
                                 <Certification challengeItem={challengeItem} />
@@ -61,7 +65,7 @@ export const ChallengeList = ({ challenges }) => {
                     )}
                 </UserChallengeItem.Provider>
             ))}
-        </ul>
+        </div>
     );
 };
 

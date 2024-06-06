@@ -4,11 +4,11 @@ import PurchaseList from "../mypages/PurchaseList";
 
 const MyButtons = () => {
     return (
-    <div className={MyStyle.MyButtons} >
-        <PurchaseList/>
-        <MadeChallenge/>
-
-    </div> );
+    <>
+        <PurchaseList className={MyStyle.Buttons1}/>
+        <MadeChallenge className={MyStyle.Buttons2}/>
+    </>
+    );
 }
 
 export default MyButtons;

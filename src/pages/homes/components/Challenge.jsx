@@ -131,7 +131,8 @@ const ChallengeCard = ({ challenge, handleOpen }) => {
 
     <Card
       key={challenge.id}
-      sx={{ maxWidth: 345, boxShadow: "5px 5px 20px 1px gray" }}
+      className={styleHome.ChallengeCard}
+      sx={{Width: 300, boxShadow: "5px 5px 20px 1px gray" }}
     >
       <CardActionArea onClick={() => handleOpen(challenge)}>
         <CardMedia

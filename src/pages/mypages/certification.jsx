@@ -3,7 +3,7 @@ import MyStyle from "../mypages/css_module/MyPage.module.css";
 import Modal from 'react-modal';
 import { UserChallengeItem } from "./ChallengeManage"
 import { challengApi } from "../../api/services/challenge";
-import MyPage from "../MyPage";
+
 
 const Certification = () => {
 
@@ -74,8 +74,7 @@ export const CertificationModal = ({close,modal}) => {
             console.log(id);
             const res = await challengApi.getCheckByChallengeId(id);
             if (res && res.data) {
-                setShowChallengeList(res.data);  // res.data를 사용해 상태 설정
-                console.log(res.data);
+                setShowChallengeList(res.data);
             } else {
                 console.error("Unexpected response structure", res);
             }
@@ -86,7 +85,7 @@ export const CertificationModal = ({close,modal}) => {
 
     useEffect(() => {
         showList();
-    }, []);
+    }, [modal]);
 
     const customStyles = {
         content: {
@@ -147,13 +146,16 @@ export const CertificationModal = ({close,modal}) => {
             <button onClick={uploadChallenge}>인증완료</button>
 
             <p>일자별 인증 현황리스트</p>
-            <div className={MyStyle.CertificationList}>
+            <div >
                 {showChallengeList.map(item => (
                     item.SuccessId === challengeItem.id && (
-                        <div key={item.id}>
+                        <div key={item.id} className={MyStyle.CertificationList}>
                             <p>ID: {challengeItem.UserId}</p>
                             <p>Date: {item.createdAt}</p>
-                            <img src={`http://localhost:8000${item.img}`} alt="타 유저의 인증 이미지" />
+                            <img
+                                src={`http://localhost:8000${item.img}`}
+                                alt="타 유저의 인증 이미지"
+                                className={MyStyle.CertificationImg}/>
                         </div>
                     )
                 ))}
