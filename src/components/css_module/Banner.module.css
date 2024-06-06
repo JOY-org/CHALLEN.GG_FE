@@ -7,28 +7,20 @@
     background-color: transparent;
 
     > span {
-        height: 20px;
+        height: 8px;
         display:block;
         padding: 0 20px;
-        animation: move-left 8s linear infinite;
+        animation: move-left 10s linear infinite;
         margin: 3px;
-
-        &::after {
-            position: fixed;
-            content: attr(data-text);
-            top: 0;
-            display: inline;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-
-        }
+        white-space: nowrap;
     }
 }
 
 @keyframes move-left {
-    to {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
         transform: translateX(-100%);
     }
 }
