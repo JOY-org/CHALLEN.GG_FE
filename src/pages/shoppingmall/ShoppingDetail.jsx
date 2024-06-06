@@ -180,9 +180,12 @@ const handleThumbnailClick = (clickedImage) => {
           </div>
           <div className={styled.buttons}>
             <button className={styled.cart_button} onClick={handleAddToCart}>장바구니 담기</button>
-            <Link to='/ShoppingPurchase'>
+
+            {/* ------- 마이페이지 구매목록 버튼으로 이동 시킴 --------*/}
+            {/* <Link to='/ShoppingPurchase'>
               <img src="http://via.placeholder.com/30" alt="cart_icon" />
-            </Link>
+            </Link> */}
+            
             <button className={styled.cart_button} onClick={handleBuyNow}>구매하기</button>
           </div>
           </div>
