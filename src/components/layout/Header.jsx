@@ -105,7 +105,8 @@ const Header = () => {
     }
     const bottonNavStyle = {
         width: "700px",
-        backgroundColor: "transparent"
+        backgroundColor: "transparent",
+        color:'black'
     };
     const activeStyle = {
         color: "orange",
@@ -130,7 +131,7 @@ const Header = () => {
                     menus.map((m, idx) => (
                         <BottomNavigationAction
                         sx={{
-                            color: "black",
+                            color: "white",
                             '&.Mui-selected': activeStyle,
                         }}
                             className={styleHeader.BottomNavigationAction}
