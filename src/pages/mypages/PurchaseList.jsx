@@ -5,7 +5,7 @@ const PurchaseList = () => {
         <div>
             <button className={MyStyle.PurchaseList}>구매목록</button>
         </div>
-     );
+    );
 }
 
 export default PurchaseList;
