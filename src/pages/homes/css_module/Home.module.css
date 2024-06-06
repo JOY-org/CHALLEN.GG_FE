@@ -178,6 +178,25 @@ body {
 }
 
 /* 챌린지 카드 */
+.ChallengeCard {
+    width: 300px; /* Set the width to 300px */
+    box-shadow: 5px 5px 20px 1px gray;
+    margin: 10px;
+  }
+.ModalBox{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%, -50%);
+    width: 400px;
+    border-top:10px solid #00aeda;
+    border-bottom:10px solid #00aeda;
+    overflow: auto;
+    height: 650px;
+    background-color: white;
+    padding: 20px;
+    font-family: 'Giants-Bold'
+}
 #title{
     font-family: 'Giants-Bold';
     display: flex;
@@ -191,11 +210,11 @@ body {
     width: 318px;
     height: 318px;
 }
-
-
+#body4{
+    margin: 1px;
+}
 .challengeContainer {
     margin: 50px 0px;
-
 }
 
 
@@ -282,10 +301,54 @@ body {
 
 /* 마이메세지(알림창) */
 
-.Messages{
-
-    &.Message{
-        padding: 10px 20px;
-        border-bottom: 1px solid #00aeda;
+.messageHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    text-align: center;
+    font-size: 15px;
     }
-}
+
+    .Messages {
+    padding: 16px;
+    height: 650px;
+    overflow: auto;
+    background-color: rgb(179, 178, 178);
+    }
+
+    .messageContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1px;
+    border-bottom:2px solid rgb(212, 212, 212);
+    padding: 5px 20px;
+
+    }
+
+    .Message {
+        margin-bottom: 1px;
+        flex-grow: 1;
+
+    }
+
+    .deleteButton {
+    margin-left: 10px;
+    margin-bottom: 1px;
+    background-color: #00aeda;
+    border: none;
+    padding: 5px;
+    width: 50px;
+    border-radius: 20px;
+    box-shadow: 1px 1px 3px 1px black;
+    cursor: pointer;
+    }
+    .Footer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 20px;
+        text-align: center;
+        font-size: 15px;
+    }

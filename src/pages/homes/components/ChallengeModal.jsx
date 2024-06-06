@@ -106,13 +106,17 @@ const ChallengeModal = ({isModalOpen, handleClose, challenge}) => {
             aria-describedby="body"
 
         >
-            <Box sx={style} >
+            <Box 
+                className={styleHome.ModalBox} >
                 <div key={challenge.id} >
                     <Typography id={styleHome.title} variant="h6" component="h2">
                         {challenge.name}
                     </Typography>
-                    <Typography id={styleHome.body2}>
-                        <img src={`http://localhost:8000${challenge.img}`} alt="챌린지 이미지" />
+                    <Typography >
+                        <img
+                            src={`http://localhost:8000${challenge.img}`}
+                            alt="챌린지 이미지"
+                            id={styleHome.body2}/>
                     </Typography>
                     <Typography sx={{fontFamily: 'Giants-Bold'}}>
                         -설명: {challenge.comment}<br />
@@ -120,17 +124,17 @@ const ChallengeModal = ({isModalOpen, handleClose, challenge}) => {
                         -시작일: {challenge.startDay}<br />
                         -완료일: {challenge.endDay}
                     </Typography>
-                    <Typography id="body4">
-                        <p>모집인원:{number}/{challenge.max}명</p>
+                    <Typography >
+                        <p id={styleHome.body4}>-모집인원:{number}/{challenge.max}명</p>
                     </Typography>
-                    <Typography className={styleHome.body3}>
+                    <Typography >
                         {number>=challenge.max?
                             (<p>모집인원마감</p>)
                         :
                             (userAttend ?
-                                <Button onClick={openAttend}>취소하기</Button>
+                                <Button onClick={openAttend} className={styleHome.body3}>취소하기</Button>
                             :
-                                <Button onClick={closeAttend}>참여하기</Button>
+                                <Button onClick={closeAttend} className={styleHome.body3}>참여하기</Button>
                             )
                         }
                     </Typography>
@@ -153,6 +157,8 @@ const style = {
     borderBottom:'10px solid #00aeda',
     boxShadow: 24,
     p: 4,
+    overflow: 'auto',
+    height: '650px'
     };
 
 export default ChallengeModal;

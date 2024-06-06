@@ -139,7 +139,7 @@ const Home = () => {
 
             <div className={styleHome.level}>
                 <div>
-                    <h1 className={styleHome.LevelTitle}>레벨 시스템</h1>
+                    <h1 className={styleHome.LevelTitle}>5단계 레벨</h1>
                 </div>
                 <div>
                     <p className={styleHome.LevelText}>1.스타터: 신규가입자및 챌린지 4회이하 챌린저</p>

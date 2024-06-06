@@ -2,7 +2,6 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
-import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { userApi } from '../api/services/user';
 import { useEffect } from 'react';
@@ -29,7 +28,7 @@ function SwipeableEdgeDrawer({openDrawer,toggleDrawer}) {
         setNotis(["알림이 없습니다"]);
       }else{
         setNotis(res.data.payload);
-        console.log(res.data.payload);}
+      }
     } catch (err) {
       console.error(err);
     }
@@ -37,7 +36,7 @@ function SwipeableEdgeDrawer({openDrawer,toggleDrawer}) {
 
   useEffect(() => {
     GetNotification();
-  }, []); // useEffect를 이 함수 내에서 호출하도록 이동
+  }, [openDrawer]); // useEffect를 이 함수 내에서 호출하도록 이동
 
   const deleteNotification = async (id) => {
     const res = await userApi.deleteNotification(id, localStorage.getItem("token"));
@@ -52,35 +51,30 @@ function SwipeableEdgeDrawer({openDrawer,toggleDrawer}) {
 
 
   return (
-    <Root >
+    <Root>
       <SwipeableDrawer
         open={openDrawer}
-        onClose={() => { toggleDrawer(false) }}
-        onOpen={() => { toggleDrawer(true) }}
+        onClose={() => { toggleDrawer(false); }}
+        onOpen={() => { toggleDrawer(true); }}
         swipeAreaWidth={drawerBleeding}
         disableSwipeToOpen={false}
-        ModalProps={{
-          keepMounted: true,
-        }}
-        sx={{
-          width: 400,
-        }}
+        ModalProps={{ keepMounted: true }}
+        sx={{ width: '400px' }}
       >
-          <Typography sx={{ p: 2, }}>&lt;My Message/&gt;</Typography>
-          <div className={styleHome.Messages}>
-            {notis.map((noti, index) => (
-              <div key={noti.id || index}>
-                <Typography className={styleHome.Message}>{noti.content || noti}</Typography>
-                <button
-                  onClick={() => {
-                  deleteNotification(noti.id);
-                  }}>
+        <div className={styleHome.messageHeader}>
+          <p>&lt;My Message/&gt;</p>
+        </div>
+        <div className={styleHome.Messages}>
+          {notis.map((noti, index) => (
+            <div key={noti.id || index} className={styleHome.messageContainer}>
+              <p className={styleHome.Message}>{noti.content || noti}</p>
+              <button className={styleHome.deleteButton} onClick={() => deleteNotification(noti.id)}>
                 삭제
-                </button>
-              </div>
-            ))
-          }
-          </div>
+              </button>
+            </div>
+          ))}
+        </div>
+        <p className={styleHome.Footer}>CHALLEN.GG</p>
       </SwipeableDrawer>
     </Root>
   );
