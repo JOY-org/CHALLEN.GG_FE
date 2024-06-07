@@ -2,7 +2,7 @@ import { Box, Modal, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import { useState,useEffect } from "react";
 import { challengApi } from "../../../api/services/challenge"
-import styleHome from "../css_module/Home.module.css"
+import ChallengesList from "../css_module/ChallengesList.module.css";
 
 const ChallengeModal = ({isModalOpen, handleClose, challenge}) => {
     const token = localStorage.getItem('token');
@@ -106,18 +106,18 @@ const ChallengeModal = ({isModalOpen, handleClose, challenge}) => {
             aria-describedby="body"
 
         >
-            <Box 
-                className={styleHome.ModalBox} >
+            <Box
+                className={ChallengesList.ModalBox} >
                 <div key={challenge.id} >
-                    <Typography id={styleHome.title} variant="h6" component="h2">
+                    <Typography id={ChallengesList.title} variant="h6" component="h2">
                         {challenge.name}
                     </Typography>
-                    <Typography >
+                    <div>
                         <img
                             src={`http://localhost:8000${challenge.img}`}
                             alt="챌린지 이미지"
-                            id={styleHome.body2}/>
-                    </Typography>
+                            id={ChallengesList.body2}/>
+                        </div>
                     <Typography sx={{fontFamily: 'Giants-Bold'}}>
                         -설명: {challenge.comment}<br />
                         -주의:{challenge.caution}<br />
@@ -125,16 +125,16 @@ const ChallengeModal = ({isModalOpen, handleClose, challenge}) => {
                         -완료일: {challenge.endDay}
                     </Typography>
                     <Typography >
-                        <p id={styleHome.body4}>-모집인원:{number}/{challenge.max}명</p>
+                        <p id={ChallengesList.body4}>-모집인원:{number}/{challenge.max}명</p>
                     </Typography>
                     <Typography >
                         {number>=challenge.max?
                             (<p>모집인원마감</p>)
                         :
                             (userAttend ?
-                                <Button onClick={openAttend} className={styleHome.body3}>취소하기</Button>
+                                <Button onClick={openAttend} className={ChallengesList.body3}>취소하기</Button>
                             :
-                                <Button onClick={closeAttend} className={styleHome.body3}>참여하기</Button>
+                                <Button onClick={closeAttend} className={ChallengesList.body3}>참여하기</Button>
                             )
                         }
                     </Typography>

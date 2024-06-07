@@ -6,7 +6,7 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { userApi } from '../api/services/user';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import styleHome from "../pages/homes/css_module/Home.module.css"
+import myMessage from "./css_module/MyMessage.module.css"
 import Swal from "sweetalert2";
 const drawerBleeding = 56;
 
@@ -61,20 +61,20 @@ function SwipeableEdgeDrawer({openDrawer,toggleDrawer}) {
         ModalProps={{ keepMounted: true }}
         sx={{ width: '400px' }}
       >
-        <div className={styleHome.messageHeader}>
+        <div className={myMessage.messageHeader}>
           <p>&lt;My Message/&gt;</p>
         </div>
-        <div className={styleHome.Messages}>
+        <div className={myMessage.Messages}>
           {notis.map((noti, index) => (
-            <div key={noti.id || index} className={styleHome.messageContainer}>
-              <p className={styleHome.Message}>{noti.content || noti}</p>
-              <button className={styleHome.deleteButton} onClick={() => deleteNotification(noti.id)}>
+            <div key={noti.id || index} className={myMessage.messageContainer}>
+              <p className={myMessage.Message}>{noti.content || noti}</p>
+              <button className={myMessage.deleteButton} onClick={() => deleteNotification(noti.id)}>
                 삭제
               </button>
             </div>
           ))}
         </div>
-        <p className={styleHome.Footer}>CHALLEN.GG</p>
+        <p className={myMessage.Footer}>CHALLEN.GG</p>
       </SwipeableDrawer>
     </Root>
   );

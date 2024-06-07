@@ -1,6 +1,6 @@
 import { Button } from "@material-ui/core";
 import { useState, useEffect } from "react";
-import MyStyle from "../mypages/css_module/MyPage.module.css";
+import follow from "./css_module/Follow.module.css";
 import { userApi } from "../../api/services/user";
 
 const Follow = ({ user }) => {
@@ -15,23 +15,22 @@ const Follow = ({ user }) => {
     };
 
     return (
-        <div>
-            <div className={MyStyle.followBtn}>
+        <div className={follow.Info2}>
+            <div className={follow.followBtn}>
                 <Button
                     onClick={openFollow}
-                    className={MyStyle.followBtn1}
+                    className={follow.followBtn1}
                 >
                     팔로워
                 </Button>
                 <Button
                     onClick={closeFollow}
-                    className={MyStyle.followBtn2}
+                    className={follow.followBtn2}
                 >
                     팔로잉
                 </Button>
             </div>
                 <FollowList user={user} view={view} />
-
         </div>
     );
 };
@@ -102,18 +101,18 @@ export const FollowList = ({user,view}) => {
 
         <>
             { view ? (
-                <div className={MyStyle.followLists}>
-                    {/* <h2 className={MyStyle.followText}>Followers</h2> */}
-                    <div className={MyStyle.followUl}>
+                <div className={follow.followLists}>
+                    {/* <h2 className={follow.followText}>Followers</h2> */}
+                    <div className={follow.followUl}>
                         {followerList.map((follower) => (
                             <li key={follower.id}>
                                 <div>
-                                    <img className={MyStyle.followImg}
+                                    <img className={follow.followImg}
                                         src={`http://localhost:8000/${follower.img}`}
                                     />
                                 </div>
-                                <div className={MyStyle.flexContainer}>
-                                    <div className={MyStyle.followNick}>
+                                <div className={follow.flexContainer}>
+                                    <div className={follow.followNick}>
                                         {follower.nickname}
                                         <button
                                             onClick={() => { handleFollowYou(follower.id) }}
@@ -142,18 +141,18 @@ export const FollowList = ({user,view}) => {
             )
             :
             (
-                <div className={MyStyle.followLists}>
-                    {/* <h2 className={MyStyle.followText}>Followings</h2> */}
-                    <di  className={MyStyle.followUl}>
+                <div className={follow.followLists}>
+                    {/* <h2 className={follow.followText}>Followings</h2> */}
+                    <di  className={follow.followUl}>
                         {followingList.map((following) => (
                             <li key={following.id}>
                                 <div>
-                                    <img className={MyStyle.followImg}
+                                    <img className={follow.followImg}
                                         src={`http://localhost:8000/${following.img}`}
                                     />
                                 </div>
-                                <div className={MyStyle.flexContainer}>
-                                    <div className={MyStyle.followNick}>
+                                <div className={follow.flexContainer}>
+                                    <div className={follow.followNick}>
                                         {following.nickname}
                                         <button
                                             onClick={() => { unFollow(following.id) }}

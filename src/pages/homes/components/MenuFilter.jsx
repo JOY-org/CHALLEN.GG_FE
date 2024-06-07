@@ -1,7 +1,7 @@
 import { useAuth } from "../../../hooks/useAuth";
 import Btn from "./Btn";
-import styleHome from "../css_module/Home.module.css"
-import { useEffect, useRef, useState } from "react";
+import menuFilter from "../css_module/MenuFilter.module.css"
+import { useEffect, useState } from "react";
 
 const Menufilter = ({setSortKey,handleSearchInputChange,handleSearch}) => {
     const { loginUser } = useAuth();
@@ -30,7 +30,7 @@ const Menufilter = ({setSortKey,handleSearchInputChange,handleSearch}) => {
     }, []);
     return (
         <>
-            <div className={styleHome.btn}>
+            <div className={menuFilter.btn}>
                 {/* 그냥 전체 나열 */}
                 <Btn btnEvent={()=>handleFilterClick('전체')}>전체</Btn>
                 {/* createdAt 최근순 */}
@@ -43,11 +43,11 @@ const Menufilter = ({setSortKey,handleSearchInputChange,handleSearch}) => {
                 {loginUser && <Btn btnEvent={() => handleFilterClick('관심')}>관심</Btn>}
                 {/* 제목을 기준으로 */}
 
-                <div className={styleHome.inputWrapper}>
+                <div className={menuFilter.inputWrapper}>
                     <input
                         type="text"
                         onChange={handleSearchInputChange}
-                        className={styleHome.menuInput}
+                        className={menuFilter.menuInput}
                         placeholder={adText}
                     />
                     <Btn btnEvent={handleSearch}>&lt;검색/&gt;</Btn>

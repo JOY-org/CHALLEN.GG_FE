@@ -1,4 +1,4 @@
-import MyStyle from "../mypages/css_module/MyPage.module.css"
+import kcal from "./css_module/Kcal.module.css"
 import * as React from "react";
 import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
@@ -7,6 +7,7 @@ import moment from "moment";
 import Modal from 'react-modal';
 import { userApi } from "../../api/services/user";
 import Box from '@mui/material/Box';
+
 
 // 마이페이지의 칼로리 달력 코드입니다
 // 칼로리달력, 칼로리 계산 모달창
@@ -41,24 +42,11 @@ const Kcal = () => {
 
   return (
     <Box
-      className={MyStyle.Kcal}
+      className={kcal.Kcal}
       sx={{
-        '& .react-calendar': {
-          borderTop: '3px solid #00aeda;',
-          borderBottom: '3px solid #00aeda;',
-          borderLeft:'none',
-          borderRight:'none',
-          padding: '10px',
-        },
-        '& .react-calendar__tile': {
-          textAlign: 'center',
-          height: '80px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'column',
-        },
-      }}
+        '.react-calendar': { ...kcal.reactCalendar },
+        '.react-calendar__tile': { ...kcal.reactCalendarTile }
+    }}
     >
       <Calendar
         value={value}
@@ -68,14 +56,14 @@ const Kcal = () => {
           const formattedDate = moment(date).format("YYYY-MM-DD");
           const kcalInfo = dateKcal.find((item) => item.date === formattedDate);
           if (kcalInfo) {
-            return <p className={MyStyle.KcalTile}>{kcalInfo.sum}K</p>;
+            return <p className={kcal.KcalTile}>{kcalInfo.sum}K</p>;
           } else {
             return null; // 칼로리 정보가 없는 날짜는 표시하지 않음
           }
         }}
       />
       <KcalCalc
-        className={MyStyle.KcalCalc}
+        className={kcal.KcalCalc}
         handleOpen={handleOpen}
         handleClose={() => setIsOpen(false)}
         isOpen={isOpen}
@@ -122,12 +110,12 @@ const KcalCalc = ({ isOpen, handleOpen, handleClose, selectedDate }) => {
         isOpen={isOpen}
         onAfterOpen={handleOpen}
         onRequestClose={handleClose}
-        className={MyStyle.KcalWrite}
+        className={kcal.KcalWrite}
         // style={customStyles}
         contentLabel="KcalCalc Modal"
       >
-        <h2 id={MyStyle.KcalText}>오늘 섭취 칼로리를 입력해주세요</h2>
-        <div className={MyStyle.FoodKcal}>
+        <h2 id={kcal.KcalText}>오늘 섭취 칼로리를 입력해주세요</h2>
+        <div className={kcal.FoodKcal}>
           <label>아침 : </label>
           <input
             type="number"
@@ -135,7 +123,7 @@ const KcalCalc = ({ isOpen, handleOpen, handleClose, selectedDate }) => {
             onChange={(e) => setMorning(parseInt(e.target.value))}
           />
         </div>
-        <div className={MyStyle.FoodKcal}>
+        <div className={kcal.FoodKcal}>
           <label>점심 : </label>
           <input
             type="number"
@@ -143,7 +131,7 @@ const KcalCalc = ({ isOpen, handleOpen, handleClose, selectedDate }) => {
             onChange={(e) => setLunch(parseInt(e.target.value))}
           />
         </div>
-        <div className={MyStyle.FoodKcal}>
+        <div className={kcal.FoodKcal}>
           <label>저녁 : </label>
           <input
             type="number"
@@ -151,7 +139,7 @@ const KcalCalc = ({ isOpen, handleOpen, handleClose, selectedDate }) => {
             onChange={(e) => setDinner(parseInt(e.target.value))}
           />
         </div>
-        <div className={MyStyle.FoodKcal}>
+        <div className={kcal.FoodKcal}>
           <label>간식 : </label>
           <input
             type="number"
@@ -159,13 +147,13 @@ const KcalCalc = ({ isOpen, handleOpen, handleClose, selectedDate }) => {
             onChange={(e) => setSnack(parseInt(e.target.value))}
           />
         </div>
-        <div  className={MyStyle.btn3}>
-          <button onClick={sumKcal} className={MyStyle.btn4}>계산하기</button>
-          <p className={MyStyle.sum}>총 칼로리: {Kcal}Kcal</p>
+        <div  className={kcal.btn3}>
+          <button onClick={sumKcal} className={kcal.btn4}>계산하기</button>
+          <p className={kcal.sum}>총 칼로리: {Kcal}Kcal</p>
           <button
             type="submit"
             onClick={handleClose}
-            className={MyStyle.btn4}>
+            className={kcal.btn4}>
             저장하기
           </button>
         </div>

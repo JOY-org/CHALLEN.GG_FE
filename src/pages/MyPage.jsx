@@ -1,7 +1,7 @@
 import  Styles  from "../pages/mypages/css_module/MyPage.module.css"
 import { Box } from "@material-ui/core";
 import mainimg from "../images/main.jpg"
-import MyDashBoard from "../pages/mypages/MyDashBoard"
+import MyInfo from "./mypages/MyInfo";
 
 const MyPage = () => {
     return (
@@ -12,7 +12,7 @@ const MyPage = () => {
             className={Styles.mainImg}
         />
         <p className={Styles.mainText}>MY PAGE</p>
-        <MyDashBoard/>
+        <MyInfo/>
     </Box>
     );
 }

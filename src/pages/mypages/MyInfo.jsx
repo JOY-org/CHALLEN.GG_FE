@@ -1,13 +1,14 @@
-import axios from "axios";
-import MyStyle from "../mypages/css_module/MyPage.module.css"
+
+import myInfo from "./css_module/MyInfo.module.css"
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Follow from "./Follow";
-import { useAuth } from "../../hooks/useAuth";
 import { userApi } from "../../api/services/user";
 import ChallengeManage from "./ChallengeManage";
 import Kcal from "./Kcal";
 import MyButtons from "./MyButtons";
+import kcal from "./css_module/Kcal.module.css"
+import myButtons from "./css_module/Buttons.module.css"
 
 const MyInfo = () => {
     const token = localStorage.getItem('token');
@@ -116,36 +117,38 @@ const MyInfo = () => {
 
 
     return (
-            <div className={MyStyle.MyInfo} >
-                <div className={MyStyle.Info1}>
+            <div className={myInfo.MyInfo} >
+                <div className={myInfo.Info1}>
                     {/* 프로필이미지 */}
                     <div >
-                            <img
-                                src={`http://localhost:8000/${profileImg}`}
-                                id={MyStyle.profileImg}
-                            />
-                        </div>
-                        <div className={MyStyle.MyInfos}>
+                        <img
+                            src={`http://localhost:8000/${profileImg}`}
+                            id={myInfo.profileImg}
+                        />
+                    </div>
+
+                    <div className={myInfo.MyInfos}>
                         {/* 프로필이미지변경버튼 */}
                         <form onSubmit={uploadProfileImg}  >
                             <input
                                 type="file"
                                 id="fileInput"
                                 onChange={handleChange}
-                                className={MyStyle.ImgBtn}/>
+                                className={myInfo.ImgBtn}/>
                             {change ?
                             <button type='submit' >click !</button>
                             :
-                            <label htmlFor="fileInput" className={MyStyle.ProfileText} >프로필을 변경할까요?</label>
+                            <label htmlFor="fileInput" className={myInfo.ProfileText} >프로필을 변경할까요?</label>
                             }
                         </form>
+
                         {/* 닉네임 */}
-                        {userProfile ? <span className={MyStyle.Nick}>{userProfile.nickname}</span> : <p>Loading...</p>}
+                        {userProfile ? <span className={myInfo.Nick}>{userProfile.nickname}</span> : <p>Loading...</p>}
                         {/* 닉네임변경버튼 */}
                         <form onSubmit={uploadNickname}>
-                            <label htmlFor="changename" className={MyStyle.changname} onClick={openName}>닉네임을 변경할까요?</label>
+                            <label htmlFor="changename" className={myInfo.changname} onClick={openName}>닉네임을 변경할까요?</label>
                             {nickname?
-                                <div className={MyStyle.changBtn}>
+                                <div className={myInfo.changBtn}>
                                     <input
                                         type="text"
                                         name='nickname'
@@ -154,7 +157,7 @@ const MyInfo = () => {
                                     <button type='submit'>save</button>
                                 </div>
                                 :
-                                <div className={MyStyle.changBtn} style={{display:'none' }}>
+                                <div className={myInfo.changBtn} style={{display:'none' }}>
                                     <input
                                         type="text"
                                         name='nickname'
@@ -163,42 +166,47 @@ const MyInfo = () => {
                                     <button type='submit' >save</button>
                                 </div>}
                         </form>
-                        <div className={MyStyle.Lv} >
-                        {/* 유저레벨 레벨을 강조해주세요 각 레벨별로 색으로 표시하는등*/}
-                        {userProfile ? <p>LV.{level}</p> : <p >Loading...</p>}
+
+                        <div className={myInfo.Lv} >
+                            {/* 유저레벨 */}
+                            {userProfile ? <p>LV.{level}</p> : <p >LV.스타터</p>}
                         </div>
 
-                        <div className={MyStyle.Points} >
-                        {/* 유저포인트 */}
-                        {myPoint ? <p >{myPoint.point}Point</p> : <p >Loading...</p>}
+                        <div className={myInfo.Points} >
+                            {/* 유저포인트 */}
+                            {myPoint ? <p >{myPoint.point}Point</p> : <p >0Point</p>}
                         </div>
-                        <div className={MyStyle.Challengg}>
+
+                        <div className={myInfo.Challengg}>
                             <p>CHALLEN.GG</p>
                         </div>
                     </div>
-                    </div>
-                    <div className={MyStyle.FollowAndChallenge}>
-                    <div  className={MyStyle.Info2}>
+                </div>
+
+                <div className={myInfo .FollowAndChallenge}>
+                    <div>
                         {/* 팔로우팔로잉버튼 */}
                         {userProfile &&
                             <Follow user={userProfile}/>}
                     </div>
 
-                    {/* 챌린지 진행.완료목록 */}
-                    <div  className={MyStyle.Info3}>
+                    <div >
+                        {/* 챌린지 진행.완료목록 */}
                         <ChallengeManage/>
                     </div>
-                    </div>
+                </div>
+
+                <div>
+                <div className={kcal.kcals}>
                     {/* 칼로리캘린더 */}
-                    <div>
-                        <div className={MyStyle.kcals}>
-                            <Kcal />
-                        </div>
-                        {/* 챌린지개설 구매목록 */}
-                        <div className={MyStyle.Buttons}>
-                            <MyButtons/>
-                        </div>
-                    </div>
+                    <Kcal />
+                </div>
+
+                <div className={myButtons.Buttons}>
+                    {/* 챌린지개설 구매목록 */}
+                    <MyButtons/>
+                </div>
+            </div>
             </div>
 
     );

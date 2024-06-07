@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import MyStyle from "../mypages/css_module/MyPage.module.css";
+import challengeManage from "./css_module/ChallengeManage.module.css";
 import { challengApi } from "../../api/services/challenge";
 import { useAuth } from "../../hooks/useAuth";
 import Certification from "./Certification";
@@ -28,10 +28,10 @@ const ChallengeManage = () => {
     }, []);
 
         return (
-            <div className={MyStyle.ChallengeManag}>
-                <div className={MyStyle.btn1}>
-                    <button onClick={closeList}  className={MyStyle.btn2}>완료</button>
-                    <button onClick={openList}  className={MyStyle.btn2}>진행중</button>
+            <div className={challengeManage.ChallengeManag}>
+                <div className={challengeManage.btn1}>
+                    <button onClick={closeList}  className={challengeManage.btn2}>완료</button>
+                    <button onClick={openList}  className={challengeManage.btn2}>진행중</button>
                 </div>
                 {openChallengeList ? (
                 <ChallengeList challenges={myChallenge.filter((challengeItem) => !challengeItem.success)}
@@ -49,13 +49,13 @@ export const UserChallengeItem = createContext("챌린지 정보가없습니다"
 
 export const ChallengeList = ({ challenges }) => {
     return (
-        <div className={MyStyle.ChallengeMap}>
+        <div className={challengeManage.ChallengeMap}>
             {challenges.map((challengeItem) => (
                 <UserChallengeItem.Provider
                     key={challengeItem.Challenge.id}
                     value={challengeItem}>
                     {challengeItem.Challenge && (
-                        <li className={MyStyle.ChallengeLists} key={challengeItem.Challenge.id} >
+                        <li className={challengeManage.ChallengeLists} key={challengeItem.Challenge.id} >
                             {challengeItem.Challenge.name}
                             {!challengeItem.success ?
                                 <Certification challengeItem={challengeItem} />
