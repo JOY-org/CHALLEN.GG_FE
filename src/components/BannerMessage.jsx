@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Banner = () => {
+const BannerMessage = () => {
     const [currentAd, setCurrentAd] = useState('');
 
     useEffect(() => {
@@ -29,4 +29,4 @@ const Banner = () => {
     );
 }
 
-export default Banner;
+export default BannerMessage;

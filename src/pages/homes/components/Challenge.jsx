@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
-import styleHome from "../css_module/Home.module.css";
+import ChallengesList from "../css_module/ChallengesList.module.css";
 import { RiStarSmileFill } from "react-icons/ri";
 import { useState, useEffect } from "react";
 import { useAuth } from "../../../hooks/useAuth";
@@ -131,7 +131,7 @@ const ChallengeCard = ({ challenge, handleOpen }) => {
 
     <Card
       key={challenge.id}
-      className={styleHome.ChallengeCard}
+      className={ChallengesList.ChallengeCard}
       sx={{Width: 300, boxShadow: "5px 5px 20px 1px gray" }}
     >
       <CardActionArea onClick={() => handleOpen(challenge)}>

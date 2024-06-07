@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styleHome from "../css_module/Home.module.css"
+import proChallenger from "../css_module/Ranker.module.css"
 import { useEffect, useState } from "react";
 import { userApi } from "../../../api/services/user";
 
@@ -26,10 +26,10 @@ export default function Ranker() {
 
 
     return (
-        <div className={styleHome.RankerName}>
+        <div className={ proChallenger.RankerName}>
             <h1>Who is pro-challenger?</h1>
             {newRanker.slice(0, 3).map((r)=>(
-            <div key={r.id} className={styleHome.Ranker} >
+            <div key={r.id} className={ proChallenger.Ranker} >
                 <img
                     src={`http://localhost:8000/${r.img}`}
                     alt={`${r.nickname}'s profile`}

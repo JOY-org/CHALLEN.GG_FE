@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styleHeader from  "../css_module/Header.module.css"
-import {useLocation, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import PeopleIcon from '@mui/icons-material/People';//커뮤니티아이콘
@@ -8,7 +8,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';//마이페이지 아이
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';//쇼핑몰아이콘
 import LogoutIcon from '@mui/icons-material/Logout';//로그아웃 아이콘
 import Banner from "../Banner";
-import AdMessage from "../AdMessage";
+import BannerMessage from "../BannerMessage";
 import NotificationsIcon from '@mui/icons-material/Notifications';//마이메세지아이콘
 import SwipeableEdgeDrawer from "../MyMessage"
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';//로그인아이콘
@@ -115,7 +115,7 @@ const Header = () => {
     return (
         <>
         {/* 최상단 광고배너 */}
-        <Banner ><AdMessage /></Banner>
+        <Banner ><BannerMessage /></Banner>
         {/* 챌린지 홈 마크 */}
         <div className={`${styleHeader.HeaderClass} ${showNav && styleHeader.TestClass}`}>
             <h1 id={styleHeader['logo']}

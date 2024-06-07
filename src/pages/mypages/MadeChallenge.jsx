@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
-import MyStyle from "../mypages/css_module/MyPage.module.css"
+import { useState } from "react";
 import Modal from 'react-modal';
-import { useAuth } from "../../hooks/useAuth";
 import { challengApi } from "../../api/services/challenge";
-
+import myButtons from "./css_module/Buttons.module.css"
+import madeChallenge from './css_module/MadeChallenge.module.css'
 
 const MadeChallenge = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -13,7 +12,7 @@ const MadeChallenge = () => {
     return (
         <div>
             <button
-                className={MyStyle.MadeChallenge}
+                className={myButtons.MadeChallenge}
                 onClick={OpenModal}
             >
             챌린지개설
@@ -104,12 +103,12 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
                 isOpen={isOpen}
                 onRequestClose={CloseModal}
                 contentLabel="챌린지 기획서"
-                className={MyStyle.MadeModal}
+                className={ madeChallenge.MadeModal}
             >
-                <h3 className={MyStyle.name}>챌린지 기획서</h3>
-                <div className={MyStyle.image}>
-                    <label  htmlFor={MyStyle.mainImg} id={MyStyle.Click}>이미지 등록하기 click!</label>
-                    <input type="file" onChange={handleImageUpload} id={MyStyle.mainImg}></input>
+                <h3 className={ madeChallenge.name}>챌린지 기획서</h3>
+                <div className={ madeChallenge.image}>
+                    <label  htmlFor={ madeChallenge.mainImg} id={ madeChallenge.Click}>이미지 등록하기 click!</label>
+                    <input type="file" onChange={handleImageUpload} id={ madeChallenge.mainImg}></input>
                     {imagePreview && <img src={imagePreview} alt="대표 이미지 미리보기" />}
                     <div>
                         <label>챌린지 이름</label>
@@ -127,7 +126,7 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
                             type="text"
                             placeholder="당신의 챌린지를 소개해주세요"
                             onChange={handleIntroductionChange}
-                            className={MyStyle.Input}
+                            className={ madeChallenge.Input}
                             ></input>
                     </div>
                     <div>
@@ -136,7 +135,7 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
                             type="text"
                             placeholder="이건 꼭챙기자!"
                             onChange={handleIntroductionChange}
-                            className={MyStyle.Input}
+                            className={ madeChallenge.Input}
                             ></input>
                     </div>
                     <div>

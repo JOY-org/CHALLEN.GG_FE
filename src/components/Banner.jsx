@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from '../components/css_module/Banner.module.css';
 
-const Message = ({ children, style }) => {
+const Banner = ({ children, style }) => {
     return (
         <button style={style} className={`${styles.btn} ${styles['btn-marquee']}`}>
             <span>{children}</span>
@@ -10,4 +10,4 @@ const Message = ({ children, style }) => {
     );
 }
 
-export default Message;
+export default Banner;

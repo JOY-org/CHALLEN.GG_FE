@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import MyStyle from "../mypages/css_module/MyPage.module.css";
+import myButtons from "./css_module/Buttons.module.css";
 
 const PurchaseList = () => {
     const navigate = useNavigate();
@@ -11,7 +11,7 @@ const PurchaseList = () => {
 
     return (
         <div>
-            <button className={MyStyle.PurchaseList} onClick={handleNavigate}>구매목록</button>
+            <button className={myButtons.PurchaseList} onClick={handleNavigate}>구매목록</button>
         </div>
     );
 }
