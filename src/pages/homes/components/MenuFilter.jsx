@@ -50,7 +50,9 @@ const Menufilter = ({setSortKey,handleSearchInputChange,handleSearch}) => {
                         className={menuFilter.menuInput}
                         placeholder={adText}
                     />
-                    <Btn btnEvent={handleSearch}>&lt;검색/&gt;</Btn>
+                    <Btn btnEvent={handleSearch} className={menuFilter.menuFilterBtn}>
+                        &lt;검색/&gt;
+                    </Btn>
                 </div>
             </div>
         </>

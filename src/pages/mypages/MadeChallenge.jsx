@@ -124,7 +124,7 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
                         <label>챌린지 소개</label>
                         <input
                             type="text"
-                            placeholder="당신의 챌린지를 소개해주세요"
+                            placeholder="챌린지 소개와 인증방법을소개해주세요"
                             onChange={handleIntroductionChange}
                             className={ madeChallenge.Input}
                             ></input>

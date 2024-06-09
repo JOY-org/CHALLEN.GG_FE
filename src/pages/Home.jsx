@@ -47,7 +47,7 @@ const Home = () => {
             setChallengeList([...data]);
         }
         if (sortKey === "마감임박") {
-            data = [...arr.sort((a, b) => new Date(b.endDay) - new Date(a.endDay))];
+            data = [...arr.sort((a, b) =>  new Date(a.startDay) - new Date(b.startDay) )];
             setChallengeList([...data]);
         }
         if (sortKey === "인기") {
