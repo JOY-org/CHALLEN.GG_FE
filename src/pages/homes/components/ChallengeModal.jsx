@@ -146,20 +146,7 @@ const ChallengeModal = ({isModalOpen, handleClose, challenge}) => {
         </Modal>
     );
 };
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    borderTop:'10px solid #00aeda',
-    borderBottom:'10px solid #00aeda',
-    boxShadow: 24,
-    p: 4,
-    overflow: 'auto',
-    height: '650px'
-    };
+;
 
 export default ChallengeModal;
 

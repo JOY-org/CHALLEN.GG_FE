@@ -1,20 +1,27 @@
-.btn{
-    margin-left: 2rem;
+.btn {
     display: flex;
     margin-top: 100px;
+    flex-wrap: nowrap;
+    gap: 10px;
 }
 
-.inputWrapper{
+.inputWrapper {
     display: flex;
     align-items: center;
-    width: 400px;
+    width: auto;
+    flex-direction: row;
+    gap: 10px;
 }
 
 .menuInput {
     padding: 5px 10px;
-    width: 70%;
+    width: 55%;
     border-bottom: 1px solid black;
     border-radius: 10px;
     background-color: transparent;
 }
 
+.menuFilterBtn {
+    display: inline-flex;
+    margin-right: 10px;
+}
