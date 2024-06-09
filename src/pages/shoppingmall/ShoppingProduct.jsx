@@ -99,7 +99,8 @@ const ShoppingProduct = () => {
       // 공백 구분 없이, 띄어쓰지 않아도 검색됨
       const sanitizedSearchTerm = searchTerm.toLowerCase().replace(/\s/g, '');
       const filtered = products.filter(product =>
-        product.name.toLowerCase().replace(/\s/g, '').includes(sanitizedSearchTerm)
+        product.name.toLowerCase().replace(/\s/g, '').includes(sanitizedSearchTerm) ||
+        product.brand.toLowerCase().replace(/\s/g, '').includes(sanitizedSearchTerm)
       );
       setFilteredProducts(filtered);
     }

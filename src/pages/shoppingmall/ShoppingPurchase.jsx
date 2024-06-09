@@ -6,8 +6,6 @@ import nikeShose from './images/nike_shose.png';
 import umbroShort from './images/umbro_short.png';
 
 
-
-
 const ShoppingPurchase = () => {
 
   const [searchTerm, setSearchTerm] = useState(''); // 검색어 상태 
