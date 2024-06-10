@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Modal from 'react-modal';
 import { challengApi } from "../../api/services/challenge";
-import myButtons from "./css_module/Buttons.module.css"
-import madeChallenge from './css_module/MadeChallenge.module.css'
+import myButtons from "./css_module/Buttons.module.css";
+import madeChallenge from './css_module/MadeChallenge.module.css';
 
 const MadeChallenge = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -20,16 +20,15 @@ const MadeChallenge = () => {
             <MadeChallengeModal
                 isOpen={isOpen}
                 CloseModal={CloseModal}
-                />
+            />
         </div>
     );
 }
 
 export default MadeChallenge;
 
-
 //챌린지 기획 모달--------------------------------------------------------
-export const MadeChallengeModal = ({isOpen, CloseModal}) => {
+export const MadeChallengeModal = ({ isOpen, CloseModal }) => {
     const token = localStorage.getItem('token');
     //전체파일 상태관리
     const [uploadPlan, setUploadPlan] = useState();
@@ -60,8 +59,8 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
     const handleStartDateChange = (e) => setStartDate(e.target.value);
     const handleEndDateChange = (e) => setEndDate(e.target.value);
     const handleIntroductionChange = (e) => setIntroduction(e.target.value);
-    const handlemaxChange = (e) => setMax(e.target.value);
     const handleCautionChange = (e) => setCaution(e.target.value);
+    const handleMaxChange = (e) => setMax(e.target.value);
     const handleDepositChange = (e) => setDeposit(e.target.value);
 
     const uploadChallenge = async () => {
@@ -78,16 +77,15 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
             comment: introduction,
             caution: caution,
             point: deposit,
-            max:max,
-            img:img
+            max: max,
+            img: img
         };
-        try{
-                const res = await challengApi.uploadChallenge(data, token);
-                setUploadPlan(res.data.payload);
-                alert("챌린지 등록이 완료되었습니다");
-                CloseModal();
-        }
-        catch(err){
+        try {
+            const res = await challengApi.uploadChallenge(data, token);
+            setUploadPlan(res.data.payload);
+            alert("챌린지 등록이 완료되었습니다");
+            CloseModal();
+        } catch (err) {
             console.error(err);
         }
     }
@@ -97,17 +95,17 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
     }
 
     return (
-        <div >
+        <div>
             <Modal
                 isOpen={isOpen}
                 onRequestClose={CloseModal}
                 contentLabel="챌린지 기획서"
-                className={ madeChallenge.MadeModal}
+                className={madeChallenge.MadeModal}
             >
-                <h3 className={ madeChallenge.name}>챌린지 기획서</h3>
-                <div className={ madeChallenge.image}>
-                    <label  htmlFor={ madeChallenge.mainImg} id={ madeChallenge.Click}>이미지 등록하기 click!</label>
-                    <input type="file" onChange={handleImageUpload} id={ madeChallenge.mainImg}></input>
+                <h3 className={madeChallenge.name}>챌린지 기획서</h3>
+                <div className={madeChallenge.image}>
+                    <label htmlFor={madeChallenge.mainImg} id={madeChallenge.Click}>이미지 등록하기 click!</label>
+                    <input type="file" onChange={handleImageUpload} id={madeChallenge.mainImg}></input>
                     {imagePreview && <img src={imagePreview} alt="대표 이미지 미리보기" />}
                     <div>
                         <label>챌린지 이름</label>
@@ -123,23 +121,23 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
                         <label>챌린지 소개</label>
                         <input
                             type="text"
-                            placeholder="챌린지 소개와 인증방법을소개해주세요"
+                            placeholder="챌린지 소개와 인증방법을 소개해주세요"
                             onChange={handleIntroductionChange}
-                            className={ madeChallenge.Input}
-                            ></input>
+                            className={madeChallenge.Input}
+                        ></input>
                     </div>
                     <div>
                         <label>챌린지 주의사항</label>
                         <input
                             type="text"
-                            placeholder="이건 꼭챙기자!"
-                            onChange={handleIntroductionChange}
-                            className={ madeChallenge.Input}
-                            ></input>
+                            placeholder="이건 꼭 챙기자!"
+                            onChange={handleCautionChange}
+                            className={madeChallenge.Input}
+                        ></input>
                     </div>
                     <div>
                         <label>모집인원</label>
-                        <input type="text"  onChange={handlemaxChange}></input>:명
+                        <input type="text" onChange={handleMaxChange}></input>:명
                     </div>
                     <div>
                         <label>우승상금</label>
