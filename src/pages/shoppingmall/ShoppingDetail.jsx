@@ -140,7 +140,7 @@ const handleThumbnailClick = (clickedImage) => {
                 <p className={styled.shop_text}>Detail</p>
             </div>
 
-      <h2 className={styled.path}>경로</h2>
+      <h2 className={styled.path}></h2>
       <div className={styled.main_box}>
         <div className={styled.main_img_box}>
           {/* 아래 product?.name 처럼 이미지도 똑같이 써주면 됨 */}

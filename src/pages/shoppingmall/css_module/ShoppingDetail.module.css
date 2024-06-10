@@ -1,6 +1,5 @@
 /* 전체 div, footer와 거리 띄움 */
 
-
 .container {
   margin-bottom: 100px;
 }
@@ -34,14 +33,15 @@
 
 
 .info_content {
-height: 400px;
-
+  height: 400px;
 }
+
 /* 상품명, 가격,수량  간격 조정 */
 
 /* 경로 */
 .path {
-  width: 810px;
+  height: 40px;
+  width: 820px;
   margin: auto;
 }
 
@@ -105,10 +105,7 @@ height: 400px;
 	border-color: #222225;
 }
 
-/* .cart_button:active {
-  box-shadow: 1px 1px 4px #174194 inset;
-  background-color: #326de4;
-} */
+
 
 /* 메인 박스와 아래 큰 이미지 구분선 */
 .line {
@@ -121,13 +118,13 @@ height: 400px;
 
 .modal_box {
   width: 400px;
-  height: 150px;
+  height: 170px;
   background-color:white;
   margin: auto;
   padding: 10px;
-  /* align-items: center; */
-  /* display: flex; */
   justify-content: center;
+  border-top:10px solid #00aeda;
+  border-bottom:10px solid #00aeda;
 }
 
 .modal_button_wrap {
@@ -175,10 +172,6 @@ height: 400px;
 }
 
 
-/* 모달창 메시지 */
-.modal_msg {
-
-}
 
 /* 모달 컴포넌트 */
 .modal {
@@ -242,9 +235,15 @@ height: 400px;
   align-items: center;
 }
 
+.brief_info {
+  text-decoration: none;
+}  
+
+
 /* 인증사진 묶음 */
 .photo_box {
   display: flex;
+  list-style-type: none;
 }
 
 /* 인증 사진 */
