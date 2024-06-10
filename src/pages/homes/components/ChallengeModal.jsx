@@ -33,7 +33,6 @@ const ChallengeModal = ({isModalOpen, handleClose, challenge}) => {
         try{
             const id = challenge.id
             const res = await challengApi.getSuccess(id,token)
-            console.log(res.data.payload);
             setUserAttend(Boolean(res.data.payload.length))
             //.length 빈배열이면 0(false)
         }

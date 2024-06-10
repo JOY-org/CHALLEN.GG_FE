@@ -96,8 +96,6 @@ const KcalCalc = ({ isOpen, handleOpen, handleClose, selectedDate }) => {
       };
       const res = await userApi.uploadCalorie(data, token);
       setKcal(res.data.payload.sum);
-      console.log(res.data.payload.sum);
-      console.log(res.data.payload);
     } catch (err) {
       console.error(err);
     }
