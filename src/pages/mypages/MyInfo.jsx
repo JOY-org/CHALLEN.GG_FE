@@ -93,7 +93,6 @@ const MyInfo = () => {
             const formData = new FormData();
                 formData.append('img', e.target[0].files[0])
             const response = await userApi.patchUploadImg(formData, token)
-                console.log(response.data);
                 setProfileImg(response.data.img + `?timestamp=${new Date().getTime()}`); //이미지 바뀔때마다 url이 바로알수잇도록
                 setChange(false);//클릭에서 다시 프로필 변경 버튼으로
         }catch(err){

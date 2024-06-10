@@ -53,7 +53,6 @@ export default function PostCreate({commId, setPosts, posts, setOriginalPosts}) 
                     title: "게시글 등록!",
                     icon: "success"
                 });
-                // console.log(res.data.payload);
                 setPosts([res.data.payload, ...posts]);
                 setOriginalPosts([res.data.payload, ...posts]);
                 handleClose();
@@ -78,8 +77,8 @@ export default function PostCreate({commId, setPosts, posts, setOriginalPosts}) 
         <React.Fragment>
             <Button variant="contained" endIcon={<UploadIcon />} onClick={handleClickOpen} style={{height:'56px', backgroundColor: '#00aeda'}}>
                 게시글 등록
-            </Button>   
-            
+            </Button>
+
             <Dialog
             open={open}
             onClose={handleClose}
@@ -139,7 +138,7 @@ export default function PostCreate({commId, setPosts, posts, setOriginalPosts}) 
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button 
+                    <Button
                         type="submit"
                         disabled={isSubmitting}
                     >등록</Button>
