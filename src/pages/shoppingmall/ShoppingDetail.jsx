@@ -7,24 +7,37 @@ import InquiryPagination from "./components/InquiryPagination";
 import { cartApi } from "../../api/services/cart";
 import detailBanner from "./images/detail_banner.png";
 import warningIcon from './images/warning_icon.png';
-
+import reviewImages1 from './images/reviewsImages/review_adidas1.png';
+import reviewImages2 from './images/reviewsImages/review_adidas2.png';
+import reviewImages3 from './images/reviewsImages/review_adidas3.png';
+import reviewImages4 from './images/reviewsImages/review_adidas4.png';
+import reviewImages5 from './images/reviewsImages/review_adidas5.png';
+import reviewImages6 from './images/reviewsImages/review_adidas6.png';
+import reviewImages7 from './images/reviewsImages/review_adidas7.png';
+import reviewImages8 from './images/reviewsImages/review_adidas8.png';
+import reviewImages9 from './images/reviewsImages/review_adidas9.png';
+import reviewImages10 from './images/reviewsImages/review_adidas10.png';
+import reviewImages11 from './images/reviewsImages/review_adidas11.png';
+import reviewImages12 from './images/reviewsImages/review_adidas12.png';
+import reviewImages13 from './images/reviewsImages/review_adidas13.png';
+import reviewImages14 from './images/reviewsImages/review_adidas14.png';
 
 
 // 후기글 페이지네이션 임시 데이터
 const reviews = [
-  { name: 'User1', date: '2024.5.23', rating: "⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
-  { name: 'User2', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
-  { name: 'User3', date: '2024.5.23', rating: "⭐⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
-  { name: 'User4', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
-  { name: 'User5', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
-  { name: 'User6', date: '2024.5.23', rating: "⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
-  { name: 'User7', date: '2024.5.23', rating: "⭐⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
-  { name: 'User8', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
-  { name: 'User9', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
-  { name: 'User10', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
-  { name: 'User11', date: '2024.5.23', rating: "⭐⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
-  { name: 'User12', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
-  { name: 'User13', date: '2024.5.23', rating: "⭐⭐", content: '원단 좋아요.', images: ['http://localhost:8000/uploads/product/review/default.png']},
+  { name: 'User1', date: '2024.5.23', rating: "⭐", content: '배송이 느리네요...', images: [reviewImages1]},
+  { name: 'User2', date: '2024.5.23', rating: "⭐⭐", content: '그냥 무난한.', images: [reviewImages2]},
+  { name: 'User3', date: '2024.5.23', rating: "⭐⭐⭐", content: '배송이 빠릅니다!!.', images: [reviewImages3]},
+  { name: 'User4', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: [reviewImages4]},
+  { name: 'User5', date: '2024.5.23', rating: "⭐⭐", content: '사이즈가 표시된거랑 다르네요.', images: [reviewImages5]},
+  { name: 'User6', date: '2024.5.23', rating: "⭐", content: '품질이 너무 좋지 않네요.', images: [reviewImages13]},
+  { name: 'User7', date: '2024.5.23', rating: "⭐⭐⭐⭐⭐", content: '핏도 예쁘고 딱이네요.', images: [reviewImages6]},
+  { name: 'User8', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '배송이 엄청 빠릅니다.', images: [reviewImages7]},
+  { name: 'User9', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '원단 좋아요.', images: [reviewImages8]},
+  { name: 'User10', date: '2024.5.23', rating: "⭐⭐⭐⭐", content: '매번구매하는데 죠습니다.', images: [reviewImages9]},
+  { name: 'User11', date: '2024.5.23', rating: "⭐⭐⭐", content: '무난하네요.', images: [reviewImages10]},
+  { name: 'User12', date: '2024.5.23', rating: "⭐⭐", content: '그럭저럭...', images: [reviewImages11]},
+  { name: 'User13', date: '2024.5.23', rating: "⭐⭐", content: '별로네요.', images: [reviewImages12]},
 ]
 
 // 문의글 페이지네이션 임시데이터
