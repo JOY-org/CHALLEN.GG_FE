@@ -31,7 +31,6 @@ const Home = () => {
         try {
             const res = await challengApi.getChallenge();
             sortData(res.data.payload);
-            console.log(res.data.payload);
         } catch (err) {
             console.error(err);
         }
@@ -68,7 +67,6 @@ const Home = () => {
             // 검색어가 비어있으면 전체 리스트 보여주기
             getChallenge(); // 검색어가 없을 때는 전체 리스트를 다시 불러오기
         } else {
-            console.log("ddddd");
             // 검색어가 입력되면 해당 검색어를 기준으로 필터링
             const filteredList = challengeList.filter(challenge =>
                 challenge.name.toLowerCase().includes(searchTerm.toLowerCase()) // name을 기준으로 검색

@@ -30,7 +30,7 @@ const ShoppingProduct = () => {
 
   // useEffect(() => {
   //   const fetchProducts = async () => {
-  //     // API 호출 
+  //     // API 호출
   //     // 임시 데이터, index 값을 이용해서 카테고리 값도 적용
   //     const data = Array.from({length: 12}, (_, index) => ({
   //       id: index,
@@ -47,42 +47,43 @@ const ShoppingProduct = () => {
   //       largeImageUrl: "http://via.placeholder.com/834"
   //     }));
   //     setProducts(data); // data.reverse() 상품 1번이 맨 밑으로 감
-  //     setFilteredProducts(data); 
+  //     setFilteredProducts(data);
   //   };
   //   fetchProducts();
   // }, []);
 
+  const fetchProducts = async () => {
+    // 실제 API 호출
+    try {
+      const response = await axios('http://localhost:8000/v1/product/');
+      const data = await response.data.payload;
+      // 임시 데이터 형태로 변환
+      const formattedData = data.map((item, index) => ({
+        id: item.id,
+        name: item.name,
+        brand: item.brand,
+        price: `${item.price}원`,
+        count: item.count,
+        description: item.description,
+        // 이미지가 출력이 되지 않는 문제 해결됨. 데이터 쪽 단어랑 똑같아야함
+        imageUrl: `http://localhost:8000/${item.ProductImgs[0].img}`,
+
+        // API에 카테고리 없어서 임의로 추가함.
+        category: index % 3 === 0 ? '남성' : '여성',
+        isNew: index < 6,
+        isRecommended: index % 2 === 0,
+        isPopular: index % 4 === 0,
+        onSale: index % 5 === 0,
+      }));
+
+      setProducts(formattedData);
+      setFilteredProducts(formattedData);
+    } catch (error) {
+      console.error("Failed to fetch products", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchProducts = async () => {
-      // 실제 API 호출 
-      try {
-        const response = await axios('http://localhost:8000/v1/product/');
-        const data = await response.data.payload.product;
-        // 임시 데이터 형태로 변환
-        const formattedData = data.map((item, index) => ({
-          id: item.id,
-          name: item.name,
-          brand: item.brand,
-          price: `${item.price}원`,
-          count: item.count,
-          description: item.description,
-          // 이미지가 출력이 되지 않는 문제 해결됨. 데이터 쪽 단어랑 똑같아야함
-          imageUrl: `http://localhost:8000/${item.ProductImgs[0].img}`,
-
-          // API에 카테고리 없어서 임의로 추가함.
-          category: index % 3 === 0 ? '남성' : '여성',
-          isNew: index < 6,
-          isRecommended: index % 2 === 0,
-          isPopular: index % 4 === 0,
-          onSale: index % 5 === 0,
-        }));
-
-        setProducts(formattedData);
-        setFilteredProducts(formattedData);
-      } catch (error) {
-        console.error("Failed to fetch products", error);
-      }
-    };
     fetchProducts();
   }, []);
 
@@ -164,8 +165,8 @@ const handleAllFilterClick = () => {
             onChange={handleSearchChange}
             onKeyDown={handleKeyDown}
           />
-          <button 
-            className={styled.search_button} 
+          <button
+            className={styled.search_button}
             onClick={handleSearchClick}
           >검색</button>
         </div>
@@ -173,7 +174,7 @@ const handleAllFilterClick = () => {
           {currentCards.map((product) => (
             <div
               className={styled.product_card}
-              key={product.id} 
+              key={product.id}
               onClick={() => handleCardClick(product)} // ShoppingDetail로 정보 전달
             >
               <img className={styled.product_img} src={product.imageUrl} alt="Product" />

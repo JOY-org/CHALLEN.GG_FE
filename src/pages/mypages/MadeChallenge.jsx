@@ -84,7 +84,6 @@ export const MadeChallengeModal = ({isOpen, CloseModal}) => {
         try{
                 const res = await challengApi.uploadChallenge(data, token);
                 setUploadPlan(res.data.payload);
-                console.log(res.data.payload);
                 alert("챌린지 등록이 완료되었습니다");
                 CloseModal();
         }

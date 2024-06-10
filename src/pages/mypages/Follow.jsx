@@ -93,7 +93,6 @@ export const FollowList = ({user,view}) => {
     useEffect(()=>{
         getFollowerList();
         getFollowingList();
-        console.log("true");
     },[])
 
     return (
